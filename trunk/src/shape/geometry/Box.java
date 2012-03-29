@@ -13,8 +13,6 @@ public class Box extends Shape {
         this.height = height;
         this.depth = depth;
     }
-    
-    
 
     @Override
     public void draw() {
