@@ -38,4 +38,12 @@ public class Rotation extends Transform {
     public void setAngle(float angle) {
         this.angle = angle;
     }
+
+    public static float degToRad(float degrees) {
+        return (degrees * 3.1415926535897932384f) / 180;
+    }
+
+    public static float radToDeg(float radians) {
+        return (radians * 180) / 3.1415926535897932384f;
+    }
 }
