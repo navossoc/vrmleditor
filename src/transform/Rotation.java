@@ -13,9 +13,7 @@ public class Rotation extends Transform {
     }
 
     public Rotation(float x, float y, float z, float angle) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(x, y, z);
         this.angle = angle;
     }
 
