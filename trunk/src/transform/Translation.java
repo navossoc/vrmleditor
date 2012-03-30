@@ -11,8 +11,6 @@ public class Translation extends Transform {
     }
 
     public Translation(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(x, y, z);
     }
 }

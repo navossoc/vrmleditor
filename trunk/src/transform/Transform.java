@@ -1,8 +1,33 @@
 package transform;
 
-public class Transform {
+public abstract class Transform {
 
     protected float x, y, z;
+
+    public Transform() {
+        this(0, 0, 0);
+    }
+
+    public Transform(float x, float y) {
+        this(x, y, 0);
+    }
+
+    public Transform(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    public void set(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public void set(float x, float y, float z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
 
     public float getX() {
         return x;
@@ -25,17 +50,6 @@ public class Transform {
     }
 
     public void setZ(float z) {
-        this.z = z;
-    }
-
-    public void set(float x, float y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public void set(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
         this.z = z;
     }
 }
