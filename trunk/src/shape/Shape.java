@@ -13,15 +13,9 @@ public abstract class Shape {
     protected Vector2 position;
     protected Color color;
     // transforms
-    protected ArrayList<Scale> scales;
-    protected ArrayList<Rotation> rotations;
-    protected ArrayList<Translation> translations;
     protected ArrayList<Transform> transformations;
 
     public Shape() {
-        scales = new ArrayList<Scale>();
-        rotations = new ArrayList<Rotation>();
-        translations = new ArrayList<Translation>();
         transformations = new ArrayList<Transform>();
     }
 
@@ -38,7 +32,6 @@ public abstract class Shape {
 
     // transformations methods
     public void scale(Scale scale) {
-        scales.add(scale);
         transformations.add(scale);
     }
 
@@ -47,7 +40,6 @@ public abstract class Shape {
     }
 
     public void rotate(Rotation rotation) {
-        rotations.add(rotation);
         transformations.add(rotation);
     }
 
@@ -56,7 +48,6 @@ public abstract class Shape {
     }
 
     public void translate(Translation translation) {
-        translations.add(translation);
         transformations.add(translation);
     }
 
