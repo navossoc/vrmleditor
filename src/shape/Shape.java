@@ -1,6 +1,7 @@
 package shape;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 import math.Vector2;
 import transform.Rotation;
@@ -16,11 +17,14 @@ public abstract class Shape {
     protected ArrayList<Transform> transformations;
 
     public Shape() {
+        color = new Color(0, 0, 0);
+        position = new Vector2(0, 0);
         transformations = new ArrayList<Transform>();
     }
 
-    // abstract methods
-    public abstract void draw();
+    public void draw(Graphics g) {
+        g.setColor(color);
+    }
 
     public Color getColor() {
         return color;
