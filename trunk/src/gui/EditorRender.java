@@ -13,7 +13,7 @@ import shape.Shape;
 public class EditorRender extends javax.swing.JPanel {
 
     private int w, h;
-    DefaultListModel shapes;
+    DefaultListModel shapes = new DefaultListModel();
 
     /**
      * Creates new form EditorRender
@@ -25,19 +25,24 @@ public class EditorRender extends javax.swing.JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        System.out.println("paint(" + w + "," + h + ")");
 
         // adjust "camera"
+        Graphics2D g2 = (Graphics2D) g;
+
+        // adjust origin
         w = getWidth() / 2;
         h = getHeight() / 2;
-        g.translate(w, h);
+        g2.translate(w, h);
 
-        Graphics2D g2 = (Graphics2D) g;
+        // adjust sizes and swap y axis
         g2.scale(10, -10);
 
-        Enumeration<Shape> e = (Enumeration<Shape>) shapes.elements();
+        // draw all shapes
+        Enumeration e = shapes.elements();
+        Shape shape;
         while (e.hasMoreElements()) {
-            e.nextElement().draw(g);
+            shape = (Shape) e.nextElement();
+            shape.draw(g);
         }
 
     }
