@@ -2,10 +2,9 @@ package gui;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import shape.geometry.Box;
-import shape.geometry.Cone;
-import shape.geometry.Cylinder;
-import shape.geometry.Sphere;
+import java.util.Enumeration;
+import javax.swing.DefaultListModel;
+import shape.Shape;
 
 /**
  *
@@ -14,49 +13,38 @@ import shape.geometry.Sphere;
 public class EditorRender extends javax.swing.JPanel {
 
     private int w, h;
-    
+    DefaultListModel shapes;
+
     /**
      * Creates new form EditorRender
      */
     public EditorRender() {
         initComponents();
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
         System.out.println("paint(" + w + "," + h + ")");
-        
+
         // adjust "camera"
         w = getWidth() / 2;
         h = getHeight() / 2;
         g.translate(w, h);
-        
+
         Graphics2D g2 = (Graphics2D) g;
-        g2.scale(1, -1);
-        
-        // TODO: draw a list of objects
-        {
-            /*   
-            Box b = new Box(100, 20, 5);
-            b.draw(g);
-            */
-            
-            Cone c = new Cone(100, 50);
-            c.draw(g);
-            
-            /*
-            Cylinder cc = new Cylinder(50, 20);
-            cc.draw(g);
-            */
-        /*
-            Sphere s = new Sphere(50);
-            s.draw(g);
-            * 
-            */
+        g2.scale(10, -10);
+
+        Enumeration<Shape> e = (Enumeration<Shape>) shapes.elements();
+        while (e.hasMoreElements()) {
+            e.nextElement().draw(g);
         }
-        
-    }   
+
+    }
+
+    public void setRenderList(DefaultListModel shapes) {
+        this.shapes = shapes;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.

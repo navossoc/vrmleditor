@@ -1,6 +1,7 @@
 package shape.geometry;
 
 import java.awt.Graphics;
+import java.awt.Polygon;
 import shape.Shape;
 
 public class Cone extends Shape {
@@ -31,5 +32,10 @@ public class Cone extends Shape {
         yPoints[2] = h;
 
         g.fillPolygon(xPoints, yPoints, 3);
+    }
+
+    @Override
+    public String toString() {
+        return "Cone " + ID;
     }
 }
