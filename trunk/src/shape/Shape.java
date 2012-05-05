@@ -11,15 +11,17 @@ import transform.Translation;
 
 public abstract class Shape {
 
+    public static int ID_COUNTER = 1;
+    protected int ID;
     protected Vector2 position;
     protected Color color;
-    // transforms
     protected ArrayList<Transform> transformations;
 
     public Shape() {
         color = new Color(0, 0, 0);
         position = new Vector2(0, 0);
         transformations = new ArrayList<Transform>();
+        ID = ID_COUNTER++;
     }
 
     public void draw(Graphics g) {
@@ -57,5 +59,10 @@ public abstract class Shape {
 
     public void translate(float x, float y, float z) {
         translate(new Translation(x, y, z));
+    }
+
+    @Override
+    public String toString() {
+        return "Shape " + ID;
     }
 }

@@ -26,4 +26,9 @@ public class Box extends Shape {
 
         g.fillRect((x - (w / 2)), (y - (h / 2)), w, h);
     }
+
+    @Override
+    public String toString() {
+        return "Caixa " + ID;
+    }
 }

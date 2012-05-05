@@ -21,4 +21,9 @@ public class Sphere extends Shape {
 
         g.fillOval((x - (r / 2)), (y - (r / 2)), r, r);
     }
+
+    @Override
+    public String toString() {
+        return "Esfera " + ID;
+    }
 }

@@ -8,7 +8,7 @@ public class Cylinder extends Shape {
     private float height;
     private float radius;
 
-    public Cylinder(float height, float radius) {
+    public Cylinder(float radius, float height) {
         this.height = height;
         this.radius = radius;
     }
@@ -23,5 +23,10 @@ public class Cylinder extends Shape {
         int h = (int) height;
 
         g.fillRect((x - (w / 2)), (y - (h / 2)), w, h);
+    }
+
+    @Override
+    public String toString() {
+        return "Cilindro " + ID;
     }
 }
