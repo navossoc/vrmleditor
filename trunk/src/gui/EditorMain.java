@@ -21,12 +21,12 @@ public class EditorMain extends javax.swing.JFrame {
      */
     public EditorMain() {
         initComponents();
-        editorRender1.setRenderList(listModel);
+        //editorRender1.setRenderList(listModel);
     }
 
     private void addShape(Shape shape) {
         listModel.addElement(shape);
-        editorRender1.repaint();
+        //editorRender1.repaint();
     }
 
     /**
@@ -39,13 +39,13 @@ public class EditorMain extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem10 = new javax.swing.JMenuItem();
-        editorRender1 = new gui.EditorRender();
         jButtonCone = new javax.swing.JButton();
         jButtonBox = new javax.swing.JButton();
         jButtonCylinder = new javax.swing.JButton();
         jButtonSphere = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListShapes = new javax.swing.JList();
+        jPanelRender = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -70,19 +70,6 @@ public class EditorMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setPreferredSize(new java.awt.Dimension(640, 480));
-
-        editorRender1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout editorRender1Layout = new javax.swing.GroupLayout(editorRender1);
-        editorRender1.setLayout(editorRender1Layout);
-        editorRender1Layout.setHorizontalGroup(
-            editorRender1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
-        );
-        editorRender1Layout.setVerticalGroup(
-            editorRender1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
-        );
 
         jButtonCone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cone-64.png"))); // NOI18N
         jButtonCone.setToolTipText("Cilindro");
@@ -116,9 +103,22 @@ public class EditorMain extends javax.swing.JFrame {
             }
         });
 
-        jList1.setModel(listModel);
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(jList1);
+        jListShapes.setModel(listModel);
+        jListShapes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(jListShapes);
+
+        jPanelRender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout jPanelRenderLayout = new javax.swing.GroupLayout(jPanelRender);
+        jPanelRender.setLayout(jPanelRenderLayout);
+        jPanelRenderLayout.setHorizontalGroup(
+            jPanelRenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 522, Short.MAX_VALUE)
+        );
+        jPanelRenderLayout.setVerticalGroup(
+            jPanelRenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
 
         jMenu1.setMnemonic('a');
         jMenu1.setText("Arquivo");
@@ -207,8 +207,8 @@ public class EditorMain extends javax.swing.JFrame {
                             .addComponent(jButtonBox, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButtonCylinder, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editorRender1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanelRender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -216,7 +216,7 @@ public class EditorMain extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(editorRender1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelRender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -228,7 +228,7 @@ public class EditorMain extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonSphere, javax.swing.GroupLayout.DEFAULT_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -293,12 +293,11 @@ public class EditorMain extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private gui.EditorRender editorRender1;
     private javax.swing.JButton jButtonBox;
     private javax.swing.JButton jButtonCone;
     private javax.swing.JButton jButtonCylinder;
     private javax.swing.JButton jButtonSphere;
-    private javax.swing.JList jList1;
+    private javax.swing.JList jListShapes;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -317,6 +316,7 @@ public class EditorMain extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanelRender;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     // End of variables declaration//GEN-END:variables
