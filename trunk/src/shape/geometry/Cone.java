@@ -1,35 +1,60 @@
 package shape.geometry;
 
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.math.MathUtils;
 import shape.Shape;
 
 public class Cone extends Shape {
 
     private float bottomRadius;
     private float height;
-    private int[] xPoints, yPoints;
 
     public Cone(float bottomRadius, float height) {
         this.bottomRadius = bottomRadius;
         this.height = height;
-        this.xPoints = new int[3];
-        this.yPoints = new int[3];
+
+        primitiveType = GL10.GL_TRIANGLES;
+        calculateCone();
     }
 
-    @Override
-    public void draw() {
-        super.draw();
+    private void calculateCone() {
+        short slices = (short) (6 * Math.cbrt(bottomRadius));
 
-        int b = (int) bottomRadius / 2;
-        int h = (int) height / 2;
+        mesh = new Mesh(true, slices + 2, slices * 6, new VertexAttribute(Usage.Position, 3, "a_position"));
 
-        xPoints[0] = -b;
-        yPoints[0] = -h;
-        xPoints[1] = b;
-        yPoints[1] = -h;
-        xPoints[2] = 0;
-        yPoints[2] = h;
+        float[] vertices = new float[(slices + 2) * 3];
+        float angle = 360f / slices;
 
-        //g.fillPolygon(xPoints, yPoints, 3);
+        int i = 0;
+        for (int s = 0; s < slices; s++) {
+            vertices[i++] = bottomRadius * MathUtils.cosDeg(s * angle);
+            vertices[i++] = -height / 2;
+            vertices[i++] = bottomRadius * MathUtils.sinDeg(s * angle);
+        }
+        vertices[i++] = vertices[i + 2] = 0;
+        vertices[i++] = -height / 2;
+        vertices[i + 2] = height / 2;
+        vertices[i++] = vertices[i + 2] = 0;
+
+        short[] indices = new short[slices * 6];
+
+        short p = 0;
+        for (i = 0; i < indices.length - 6; i += 3) {
+            indices[i++] = indices[i + 2] = p++;
+            indices[i++] = indices[i + 2] = p;
+            indices[i++] = indices[i + 2] = slices;
+            indices[i + 2]++;
+        }
+        indices[i++] = indices[i + 2] = p;
+        indices[i++] = indices[i + 2] = 0;
+        indices[i++] = indices[i + 2] = slices;
+        indices[i + 2]++;
+
+        mesh.setVertices(vertices);
+        mesh.setIndices(indices);
     }
 
     @Override

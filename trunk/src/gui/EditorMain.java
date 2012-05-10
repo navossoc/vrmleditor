@@ -22,13 +22,11 @@ public class EditorMain extends javax.swing.JFrame {
      */
     public EditorMain() {
         initComponents();
-        //editorRender1.setRenderList(listModel);
-
+        setExtendedState(MAXIMIZED_BOTH);
 
         canvas = new LwjglCanvas(new EditorRender(listModel), false);
         jPanelRender.add(canvas.getCanvas());
         jPanelRender.validate();
-
     }
 
     private void addShape(Shape shape) {
@@ -237,15 +235,15 @@ public class EditorMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBoxActionPerformed
-        addShape(new Box(100, 100, 100));
+        addShape(new Box(300, 300, 300));
     }//GEN-LAST:event_jButtonBoxActionPerformed
 
     private void jButtonCylinderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCylinderActionPerformed
-        addShape(new Cylinder(3, 6));
+        addShape(new Cylinder(150, 300));
     }//GEN-LAST:event_jButtonCylinderActionPerformed
 
     private void jButtonConeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConeActionPerformed
-        addShape(new Cone(6, 6));
+        addShape(new Cone(150, 300));
     }//GEN-LAST:event_jButtonConeActionPerformed
 
     private void jButtonSphereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSphereActionPerformed
