@@ -20,7 +20,7 @@ public class Cylinder extends Shape {
         calculateCylinder();
     }
 
-    private void calculateCylinder() {
+    public final void calculateCylinder() {
         short slices = (short) (6 * Math.cbrt(radius));
 
         mesh = new Mesh(true, (slices + 1) * 2, slices * 12, new VertexAttribute(VertexAttributes.Usage.Position, 3, "a_position"));
@@ -81,6 +81,24 @@ public class Cylinder extends Shape {
         mesh.setVertices(vertices);
         mesh.setIndices(indices);
     }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public void setRadius(float radius) {
+        this.radius = radius;
+    }
+    
+    
 
     @Override
     public String toString() {

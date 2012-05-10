@@ -21,7 +21,7 @@ public class Box extends Shape {
         calculateBox();
     }
 
-    private void calculateBox() {
+    public final void calculateBox() {
         mesh = new Mesh(true, 8, 36, new VertexAttribute(Usage.Position, 3, "a_position"));
 
         float[] vertices = {
@@ -52,6 +52,30 @@ public class Box extends Shape {
 
         mesh.setVertices(vertices);
         mesh.setIndices(indices);
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getDepth() {
+        return depth;
+    }
+
+    public void setDepth(float depth) {
+        this.depth = depth;
     }
 
     @Override

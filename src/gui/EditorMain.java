@@ -31,6 +31,7 @@ public class EditorMain extends javax.swing.JFrame {
 
     private void addShape(Shape shape) {
         listModel.addElement(shape);
+        new ShapeProperty(shape).setVisible(true);
     }
 
     /**
@@ -72,6 +73,7 @@ public class EditorMain extends javax.swing.JFrame {
         jMenuItem10.setText("jMenuItem10");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("VRML Editor");
         setLocationByPlatform(true);
         setPreferredSize(new java.awt.Dimension(640, 480));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -247,7 +249,7 @@ public class EditorMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonConeActionPerformed
 
     private void jButtonSphereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSphereActionPerformed
-        addShape(new Sphere(3));
+        addShape(new Sphere(150));
     }//GEN-LAST:event_jButtonSphereActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
