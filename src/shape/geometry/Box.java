@@ -24,7 +24,7 @@ public class Box extends Shape {
     private void calculateBox() {
         mesh = new Mesh(true, 8, 36, new VertexAttribute(Usage.Position, 3, "a_position"));
 
-        float[] cubeVerts = {
+        float[] vertices = {
             -1.0f, +1.0f, +1.0f, // 0
             +1.0f, +1.0f, +1.0f, // 1
             +1.0f, -1.0f, +1.0f, // 2
@@ -35,10 +35,10 @@ public class Box extends Shape {
             -1.0f, -1.0f, -1.0f, // 7
         };
 
-        for (int i = 0; i < cubeVerts.length;) {
-            cubeVerts[i++] *= width;
-            cubeVerts[i++] *= height;
-            cubeVerts[i++] *= depth;
+        for (int i = 0; i < vertices.length;) {
+            vertices[i++] *= width / 2;
+            vertices[i++] *= height / 2;
+            vertices[i++] *= depth / 2;
         }
 
         short[] indices = {
@@ -50,7 +50,7 @@ public class Box extends Shape {
             0, 3, 7, 0, 4, 7, // left
         };
 
-        mesh.setVertices(cubeVerts);
+        mesh.setVertices(vertices);
         mesh.setIndices(indices);
     }
 
