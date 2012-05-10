@@ -1,5 +1,6 @@
 package gui;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
 import javax.swing.DefaultListModel;
 import shape.Shape;
 import shape.geometry.Box;
@@ -13,8 +14,8 @@ import shape.geometry.Sphere;
  */
 public class EditorMain extends javax.swing.JFrame {
 
-    DefaultListModel listModel = new DefaultListModel();
-    int counter;
+    private LwjglCanvas canvas;
+    private DefaultListModel listModel = new DefaultListModel();
 
     /**
      * Creates new form EditorMain
@@ -22,11 +23,16 @@ public class EditorMain extends javax.swing.JFrame {
     public EditorMain() {
         initComponents();
         //editorRender1.setRenderList(listModel);
+
+
+        canvas = new LwjglCanvas(new EditorRender(listModel), false);
+        jPanelRender.add(canvas.getCanvas());
+        jPanelRender.validate();
+
     }
 
     private void addShape(Shape shape) {
         listModel.addElement(shape);
-        //editorRender1.repaint();
     }
 
     /**
@@ -70,6 +76,11 @@ public class EditorMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
         setPreferredSize(new java.awt.Dimension(640, 480));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButtonCone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cone-64.png"))); // NOI18N
         jButtonCone.setToolTipText("Cilindro");
@@ -108,17 +119,7 @@ public class EditorMain extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jListShapes);
 
         jPanelRender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout jPanelRenderLayout = new javax.swing.GroupLayout(jPanelRender);
-        jPanelRender.setLayout(jPanelRenderLayout);
-        jPanelRenderLayout.setHorizontalGroup(
-            jPanelRenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
-        );
-        jPanelRenderLayout.setVerticalGroup(
-            jPanelRenderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        jPanelRender.setLayout(new java.awt.GridLayout(1, 0));
 
         jMenu1.setMnemonic('a');
         jMenu1.setText("Arquivo");
@@ -208,7 +209,7 @@ public class EditorMain extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButtonCylinder, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelRender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelRender, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -250,6 +251,11 @@ public class EditorMain extends javax.swing.JFrame {
     private void jButtonSphereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSphereActionPerformed
         addShape(new Sphere(3));
     }//GEN-LAST:event_jButtonSphereActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO: fix "AL lib: ReleaseALC: 1 device not closed"
+        canvas.stop();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
