@@ -237,7 +237,7 @@ public class EditorMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBoxActionPerformed
-        addShape(new Box(10, 10, 10));
+        addShape(new Box(100, 100, 100));
     }//GEN-LAST:event_jButtonBoxActionPerformed
 
     private void jButtonCylinderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCylinderActionPerformed

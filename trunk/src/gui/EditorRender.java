@@ -3,8 +3,6 @@ package gui;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.math.MathUtils;
 import java.util.Enumeration;
 import javax.swing.DefaultListModel;
 import shape.Shape;

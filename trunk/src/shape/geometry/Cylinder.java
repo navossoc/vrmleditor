@@ -16,8 +16,8 @@ public class Cylinder extends Shape {
     public void draw() {
         super.draw();
 /*
-        int x = (int) position.x;
-        int y = (int) position.y;
+        int x = (int) translation.x;
+        int y = (int) translation.y;
         int w = (int) radius;
         int h = (int) height;
 */
