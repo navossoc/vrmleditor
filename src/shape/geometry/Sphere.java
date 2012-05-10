@@ -14,8 +14,8 @@ public class Sphere extends Shape {
     public void draw() {
         super.draw();
 /*
-        int x = (int) position.x;
-        int y = (int) position.y;
+        int x = (int) translation.x;
+        int y = (int) translation.y;
         int r = (int) radius;
 */
 
