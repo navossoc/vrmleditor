@@ -1,9 +1,12 @@
 package shape;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import java.util.ArrayList;
-import math.Vector2;
 import transform.Rotation;
 import transform.Scale;
 import transform.Transform;
@@ -13,19 +16,35 @@ public abstract class Shape {
 
     public static int ID_COUNTER = 1;
     protected int ID;
-    protected Vector2 position;
+    protected Vector3 position;
     protected Color color;
     protected ArrayList<Transform> transformations;
 
+    protected Mesh mesh;
+
     public Shape() {
-        color = new Color(0, 0, 0);
-        position = new Vector2(0, 0);
-        transformations = new ArrayList<Transform>();
         ID = ID_COUNTER++;
+
+        color = new Color(0, 0, 0, 0);
+        //position = new Vector3(0, 0, 0);
+        position = new Vector3(
+                    MathUtils.random(0, 100),
+                    MathUtils.random(0, 100),
+                    MathUtils.random(0, 100)
+                );
+        transformations = new ArrayList<Transform>();
     }
 
-    public void draw(Graphics g) {
-        g.setColor(color);
+    public void draw() {
+        // adjust color
+        Gdx.gl10.glColor4f(color.r, color.g, color.b, color.a);
+        // TODO: scale
+
+        // TODO: rotate
+
+        // TODO: translate
+        Gdx.gl10.glPushMatrix();
+        Gdx.gl10.glLoadMatrixf(new Matrix4().translate(position).val, 0);
     }
 
     public Color getColor() {

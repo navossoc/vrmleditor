@@ -1,6 +1,5 @@
 package shape.geometry;
 
-import java.awt.Graphics;
 import shape.Shape;
 
 public class Cylinder extends Shape {
@@ -14,15 +13,15 @@ public class Cylinder extends Shape {
     }
 
     @Override
-    public void draw(Graphics g) {
-        super.draw(g);
-
-        int x = (int) position.getX();
-        int y = (int) position.getY();
+    public void draw() {
+        super.draw();
+/*
+        int x = (int) position.x;
+        int y = (int) position.y;
         int w = (int) radius;
         int h = (int) height;
+*/
 
-        g.fillRect((x - (w / 2)), (y - (h / 2)), w, h);
     }
 
     @Override

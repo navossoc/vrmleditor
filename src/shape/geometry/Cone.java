@@ -1,7 +1,5 @@
 package shape.geometry;
 
-import java.awt.Graphics;
-import java.awt.Polygon;
 import shape.Shape;
 
 public class Cone extends Shape {
@@ -18,8 +16,8 @@ public class Cone extends Shape {
     }
 
     @Override
-    public void draw(Graphics g) {
-        super.draw(g);
+    public void draw() {
+        super.draw();
 
         int b = (int) bottomRadius / 2;
         int h = (int) height / 2;
@@ -31,7 +29,7 @@ public class Cone extends Shape {
         xPoints[2] = 0;
         yPoints[2] = h;
 
-        g.fillPolygon(xPoints, yPoints, 3);
+        //g.fillPolygon(xPoints, yPoints, 3);
     }
 
     @Override
