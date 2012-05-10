@@ -106,82 +106,13 @@ public class EditorRender implements ApplicationListener {
     }
 
     private void drawShapes() {
-        /*
         // draw all shapes
         Enumeration e = shapes.elements();
         Shape shape;
         while (e.hasMoreElements()) {
             shape = (Shape) e.nextElement();
-            //shape.draw(g);
+            shape.draw();
         }
-        */
-
-        //
-
-        float bottomRadius = 150f;
-        float height = 250f;
-
-        int segments = (int) (6 * Math.cbrt(bottomRadius));
-        //int segments = 3;
-        System.out.println("segments = " + segments);
-        float angle = 2 * 3.1415926f / segments;
-        float cos = MathUtils.cos(angle);
-        float sin = MathUtils.sin(angle);
-        float cx = bottomRadius, cz = 0;
-
-        int nVertices = segments + 2;
-        float[] v = new float[nVertices * 3];
-        int i;
-        for (i = 0; i < ((nVertices - 3) * 3);) {
-            v[i++] = cx;
-            v[i++] = 0;
-            v[i++] = cz;
-            float temp = cx;
-            cx = cos * cx - sin * cz;
-            cz = sin * temp + cos * cz;
-        }
-        // adiciona o ultimo vertice
-        v[i++] = cx;
-        v[i++] = 0;
-        v[i++] = cz;
-
-        //adicionado o vertice do meio
-        v[i++] = 0;
-        v[i++] = 0;
-        v[i++] = 0;
-
-        //adicionado o vertice do topo
-        v[i++] = 0;
-        v[i++] = height;
-        v[i++] = 0;
-
-        short[] idc = new short[segments * 3 * 2];
-        short index = 0;
-        for (i = 0; i < idc.length - 6;) {
-            // circulo da parte de cima
-            idc[i++] = index;
-            idc[i++] = (short) (index + 1);
-            idc[i++] = (short) (nVertices - 2);
-            idc[i++] = index++;
-            idc[i++] = index;
-            idc[i++] = (short) (nVertices - 1);
-        }
-
-        // circulo da parte de cima
-        idc[i++] = index;
-        idc[i++] = 0;
-        idc[i++] = (short) (nVertices - 2);
-        idc[i++] = index;
-        idc[i++] = 0;
-        idc[i++] = (short) (nVertices - 1);
-
-        Mesh m = new Mesh(true, v.length, idc.length, new VertexAttribute(Usage.Position, 3, "a_position"));
-        m.setVertices(v);
-        m.setIndices(idc);
-
-        m.render(GL10.GL_TRIANGLES);
-        //
-
     }
 
     @Override
