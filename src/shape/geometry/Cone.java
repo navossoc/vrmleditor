@@ -72,8 +72,6 @@ public class Cone extends Shape {
     public void setHeight(float height) {
         this.height = height;
     }
-    
-    
 
     @Override
     public String toString() {
