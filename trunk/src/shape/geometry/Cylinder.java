@@ -97,8 +97,6 @@ public class Cylinder extends Shape {
     public void setRadius(float radius) {
         this.radius = radius;
     }
-    
-    
 
     @Override
     public String toString() {

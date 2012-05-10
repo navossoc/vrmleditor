@@ -1,7 +1,10 @@
 package gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import shape.Shape;
 import shape.geometry.Box;
 import shape.geometry.Cone;
@@ -31,7 +34,6 @@ public class EditorMain extends javax.swing.JFrame {
 
     private void addShape(Shape shape) {
         listModel.addElement(shape);
-        new ShapeProperty(shape).setVisible(true);
     }
 
     /**
@@ -116,6 +118,16 @@ public class EditorMain extends javax.swing.JFrame {
 
         jListShapes.setModel(listModel);
         jListShapes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListShapes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jListShapesMousePressed(evt);
+            }
+        });
+        jListShapes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jListShapesKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jListShapes);
 
         jPanelRender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -256,6 +268,30 @@ public class EditorMain extends javax.swing.JFrame {
         // TODO: fix "AL lib: ReleaseALC: 1 device not closed"
         canvas.stop();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            Shape shape = (Shape) jListShapes.getSelectedValue();
+            if (JOptionPane.showConfirmDialog(this,
+                    "Deseja remover o objeto?",
+                    shape.toString(),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                listModel.removeElement(jListShapes.getSelectedValue());
+            }
+        }
+    }//GEN-LAST:event_jListShapesKeyPressed
+
+    private void jListShapesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListShapesMousePressed
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            if (evt.getClickCount() == 2) {
+                Shape shape = (Shape) jListShapes.getSelectedValue();
+                if (shape != null) {
+                    new ShapeProperty(shape).setVisible(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_jListShapesMousePressed
 
     /**
      * @param args the command line arguments

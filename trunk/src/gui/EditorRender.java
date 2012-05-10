@@ -2,7 +2,10 @@ package gui;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import java.util.Enumeration;
 import javax.swing.DefaultListModel;
 import shape.Shape;
@@ -10,7 +13,6 @@ import shape.Shape;
 public class EditorRender implements ApplicationListener {
 
     private DefaultListModel shapes;
-
     private OrthographicCamera cameraFront;
     private OrthographicCamera cameraSide;
     private OrthographicCamera cameraTop;
@@ -98,9 +100,6 @@ public class EditorRender implements ApplicationListener {
         Gdx.gl10.glMatrixMode(GL10.GL_MODELVIEW);
         Gdx.gl10.glLoadIdentity();
         Gdx.gl10.glViewport(x / 2, y / 2, width / 2, height / 2);
-        // TODO: remover, apenas debug
-        Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_LINE);
-        //Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_FILL);
     }
 
     private void drawShapes() {
@@ -109,6 +108,8 @@ public class EditorRender implements ApplicationListener {
         Shape shape;
         while (e.hasMoreElements()) {
             shape = (Shape) e.nextElement();
+            // TODO: remover (debug apenas)
+            Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_LINE);
             shape.draw();
         }
     }
