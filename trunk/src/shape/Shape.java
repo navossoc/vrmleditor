@@ -22,9 +22,9 @@ public abstract class Shape {
         ID = ID_COUNTER++;
 
         color = new Color(//0, 0, 0, 1
-                MathUtils.random(0, 1),
-                MathUtils.random(0, 1),
-                MathUtils.random(0, 1), 1);
+                MathUtils.random(0f, 1f),
+                MathUtils.random(0f, 1f),
+                MathUtils.random(0f, 1f), 1);
         scale = new Vector3(1, 1, 1);
         rotation = new Quaternion(0, 0, 0, 0);
         translation = new Vector3(0, 0, 0);
@@ -54,8 +54,48 @@ public abstract class Shape {
         return color;
     }
 
+    public java.awt.Color getColorAWT() {
+        return new java.awt.Color(color.r, color.g, color.b, color.a);
+    }
+
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void setColorAWT(java.awt.Color color) {
+        this.color.set(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public Quaternion getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(Quaternion rotation) {
+        this.rotation = rotation;
+    }
+
+    public Vector3 getScale() {
+        return scale;
+    }
+
+    public void setScale(Vector3 scale) {
+        this.scale = scale;
+    }
+
+    public Vector3 getTranslation() {
+        return translation;
+    }
+
+    public void setTranslation(Vector3 translation) {
+        this.translation = translation;
     }
 
     // transformations methods
