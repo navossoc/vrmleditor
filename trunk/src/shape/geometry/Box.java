@@ -3,7 +3,6 @@ package shape.geometry;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import shape.Shape;
 
 public class Box extends Shape {
@@ -22,7 +21,7 @@ public class Box extends Shape {
     }
 
     public final void calculateBox() {
-        mesh = new Mesh(true, 8, 36, new VertexAttribute(Usage.Position, 3, "a_position"));
+        mesh = new Mesh(true, 8, 36, VertexAttribute.Position());
 
         float[] vertices = {
             -1.0f, +1.0f, +1.0f, // 0

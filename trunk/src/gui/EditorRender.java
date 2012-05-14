@@ -2,12 +2,11 @@ package gui;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.*;
 import java.util.Enumeration;
 import javax.swing.DefaultListModel;
+import shape.Axis;
+import shape.Border;
 import shape.Shape;
 
 public class EditorRender implements ApplicationListener {
@@ -30,29 +29,27 @@ public class EditorRender implements ApplicationListener {
 
         // 1 - Camera Front (x/y)
         cameraFront = new OrthographicCamera(width, height);
-        cameraFront.far = 10000;
+        cameraFront.far = Short.MAX_VALUE;
         //cameraFront.rotate(0, 0, 0, 0);
         cameraFront.position.set(0, 0, 500);
 
         // 2 - Camera Side (z/y)
         cameraSide = new OrthographicCamera(width, height);
-        cameraSide.far = 10000;
+        cameraSide.far = Short.MAX_VALUE;
         cameraSide.rotate(90, 0, 1, 0);
         cameraSide.position.set(500, 0, 0);
 
         // 3 - Camera Top (x/z)
         cameraTop = new OrthographicCamera(width, height);
-        cameraTop.far = 10000;
+        cameraTop.far = Short.MAX_VALUE;
         cameraTop.rotate(-90, 1, 0, 0);
         cameraTop.position.set(0, 500, 0);
 
         // 4 - Camera 3D (Free)
         camera3D = new PerspectiveCamera(45, width, height);
-        camera3D.far = 10000;
+        camera3D.far = Short.MAX_VALUE;
         camera3D.position.set(300, 600, 500);
         camera3D.lookAt(0, 0, 0);
-
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -90,6 +87,9 @@ public class EditorRender implements ApplicationListener {
         // 4 - Camera 3D (free)
         adjustCamera(camera3D, width, 0);
         drawShapes();
+
+        // All - Draw borders
+        Border.draw(width, height);
     }
 
     private void adjustCamera(Camera camera, int x, int y) {
@@ -103,12 +103,14 @@ public class EditorRender implements ApplicationListener {
     }
 
     private void drawShapes() {
+        // draw axis
+        Axis.draw();
         // draw all shapes
         Enumeration e = shapes.elements();
         Shape shape;
         while (e.hasMoreElements()) {
             shape = (Shape) e.nextElement();
-            // TODO: remover (debug apenas)
+            // FIXME: apenas para debug
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_LINE);
             shape.draw();
         }
