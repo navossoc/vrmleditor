@@ -2,7 +2,10 @@ package gui;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.PerspectiveCamera;
 import java.util.Enumeration;
 import javax.swing.DefaultListModel;
 import shape.Axis;
@@ -64,7 +67,6 @@ public class EditorRender implements ApplicationListener {
         this.cameraTop.viewportHeight = height;
         this.camera3D.viewportWidth = width;
         this.camera3D.viewportHeight = height;
-
     }
 
     @Override
@@ -118,16 +120,13 @@ public class EditorRender implements ApplicationListener {
 
     @Override
     public void pause() {
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void resume() {
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void dispose() {
-        //throw new UnsupportedOperationException("Not supported yet.");
     }
 }
