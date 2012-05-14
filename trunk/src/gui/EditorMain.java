@@ -1,10 +1,12 @@
 package gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
+import com.badlogic.gdx.backends.lwjgl.LwjglCanvas2;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import shape.Shape;
 import shape.geometry.Box;
 import shape.geometry.Cone;
@@ -27,7 +29,7 @@ public class EditorMain extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
 
-        canvas = new LwjglCanvas(new EditorRender(listModel), false);
+        canvas = new LwjglCanvas2(new EditorRender(listModel), false);
         jPanelRender.add(canvas.getCanvas());
         jPanelRender.validate();
     }
@@ -317,7 +319,10 @@ public class EditorMain extends javax.swing.JFrame {
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {
+                // fix the problem with the menu items appearing behind drawing canvas
+                JPopupMenu.setDefaultLightWeightPopupEnabled(false);
                 new EditorMain().setVisible(true);
             }
         });
