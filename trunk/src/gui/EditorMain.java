@@ -265,7 +265,6 @@ public class EditorMain extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSphereActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO: fix "AL lib: ReleaseALC: 1 device not closed"
         canvas.stop();
     }//GEN-LAST:event_formWindowClosing
 

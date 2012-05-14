@@ -1,10 +1,11 @@
 package com.badlogic.gdx.backends.lwjgl;
 
 import com.badlogic.gdx.ApplicationListener;
+import org.lwjgl.opengl.Display;
 
 /**
- * Class that extends LwjglCanvas to fix a problem with audio.dispose() not being
- * called on stop method
+ * Class that extends LwjglCanvas to fix a problem with audio.dispose() not
+ * being called on stop method
  */
 public class LwjglCanvas2 extends LwjglCanvas {
 
@@ -14,7 +15,13 @@ public class LwjglCanvas2 extends LwjglCanvas {
 
     @Override
     public void stop() {
-        super.stop();
-        this.audio.dispose();
+        if (!running) {
+            return;
+        }
+        running = false;
+        listener.pause();
+        listener.dispose();
+        Display.destroy();
+        audio.dispose();
     }
 }
