@@ -3,7 +3,6 @@ package shape.geometry;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.math.MathUtils;
 import shape.Shape;
 
@@ -51,7 +50,7 @@ public class Sphere extends Shape {
             }
 
         }
-        mesh = new Mesh(true, VertexCount, 0, new VertexAttribute(Usage.Position, 3, "a_position"));
+        mesh = new Mesh(true, VertexCount, 0, VertexAttribute.Position());
         mesh.setVertices(v);
     }
 

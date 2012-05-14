@@ -3,7 +3,6 @@ package shape.geometry;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.math.MathUtils;
 import shape.Shape;
 
@@ -23,7 +22,7 @@ public class Cylinder extends Shape {
     public final void calculateCylinder() {
         short slices = (short) (6 * Math.cbrt(radius));
 
-        mesh = new Mesh(true, (slices + 1) * 2, slices * 12, new VertexAttribute(VertexAttributes.Usage.Position, 3, "a_position"));
+        mesh = new Mesh(true, (slices + 1) * 2, slices * 12, VertexAttribute.Position());
 
         float[] vertices = new float[(slices + 1) * 6];
         float angle = 360f / slices;

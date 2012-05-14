@@ -3,7 +3,6 @@ package shape.geometry;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
-import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.math.MathUtils;
 import shape.Shape;
 
@@ -23,7 +22,7 @@ public class Cone extends Shape {
     public final void calculateCone() {
         short slices = (short) (6 * Math.cbrt(bottomRadius));
 
-        mesh = new Mesh(true, slices + 2, slices * 6, new VertexAttribute(Usage.Position, 3, "a_position"));
+        mesh = new Mesh(true, slices + 2, slices * 6, VertexAttribute.Position());
 
         float[] vertices = new float[(slices + 2) * 3];
         float angle = 360f / slices;

@@ -22,9 +22,9 @@ public abstract class Shape {
         ID = ID_COUNTER++;
 
         color = new Color(//0, 0, 0, 1
-                MathUtils.random(0f, 1f),
-                MathUtils.random(0f, 1f),
-                MathUtils.random(0f, 1f), 1);
+                MathUtils.random(0, 1),
+                MathUtils.random(0, 1),
+                MathUtils.random(0, 1), 1);
         scale = new Vector3(1, 1, 1);
         rotation = new Quaternion(0, 0, 0, 0);
         translation = new Vector3(0, 0, 0);
