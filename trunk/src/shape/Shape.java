@@ -59,7 +59,7 @@ public abstract class Shape {
     }
 
     public void setColor(Color color) {
-        this.color = color;
+        this.color.set(color);
     }
 
     public void setColorAWT(java.awt.Color color) {
@@ -74,52 +74,40 @@ public abstract class Shape {
         this.ID = ID;
     }
 
-    public Quaternion getRotation() {
-        return rotation;
-    }
-
-    public void setRotation(Quaternion rotation) {
-        this.rotation = rotation;
-    }
-
     public Vector3 getScale() {
         return scale;
     }
 
+    public void setScale(float x, float y, float z) {
+        this.scale.set(x, y, z);
+    }
+
     public void setScale(Vector3 scale) {
-        this.scale = scale;
+        this.scale.set(scale);
+    }
+
+    public Quaternion getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float x, float y, float z, float angle) {
+        this.rotation.set(x, y, z, angle);
+    }
+
+    public void setRotation(Quaternion rotation) {
+        this.rotation.set(rotation);
     }
 
     public Vector3 getTranslation() {
         return translation;
     }
 
+    public void setTranslation(float x, float y, float z) {
+        this.translation.set(x, y, -z);
+    }
+
     public void setTranslation(Vector3 translation) {
-        this.translation = translation;
-    }
-
-    // transformations methods
-    public void scale(float x, float y, float z) {
-        this.scale.set(x, y, z);
-    }
-
-    public void scale(Vector3 scale) {
-        this.scale.set(scale);
-    }
-
-    public void rotate(float x, float y, float z, float angle) {
-        this.rotation.set(x, y, z, angle);
-    }
-
-    public void rotate(Quaternion rotation) {
-        this.rotation.set(rotation);
-    }
-
-    public void translate(float x, float y, float z) {
-        this.translation.set(x, y, z);
-    }
-
-    public void translate(Vector3 translation) {
+        translation.z = -translation.z;
         this.translation.set(translation);
     }
 

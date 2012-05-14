@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 public class MenuEdit {
 
-    public static class Undo implements ActionListener {
+    public static class ItemUndo implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -13,7 +13,7 @@ public class MenuEdit {
         }
     }
 
-    public static class Redo implements ActionListener {
+    public static class ItemRedo implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -21,7 +21,7 @@ public class MenuEdit {
         }
     }
 
-    public static class Delete implements ActionListener {
+    public static class ItemDelete implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -29,7 +29,7 @@ public class MenuEdit {
         }
     }
 
-    public static class Scale implements ActionListener {
+    public static class ItemScale implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -37,7 +37,7 @@ public class MenuEdit {
         }
     }
 
-    public static class Rotate implements ActionListener {
+    public static class ItemRotate implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -45,7 +45,7 @@ public class MenuEdit {
         }
     }
 
-    public static class Translate implements ActionListener {
+    public static class ItemTranslate implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {

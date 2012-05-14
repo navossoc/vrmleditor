@@ -41,6 +41,10 @@ public class EditorMain extends javax.swing.JFrame {
         listModel.addElement(shape);
     }
 
+    public void stopCanvas() {
+        canvas.stop();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -125,28 +129,28 @@ public class EditorMain extends javax.swing.JFrame {
 
         jMenuFileNew.setMnemonic('n');
         jMenuFileNew.setText("Novo");
-        jMenuFileNew.addActionListener(new MenuFile.New());
+        jMenuFileNew.addActionListener(new MenuFile.ItemNew());
         jMenuFile.add(jMenuFileNew);
 
         jMenuFileOpen.setMnemonic('a');
         jMenuFileOpen.setText("Abrir");
-        jMenuFileOpen.addActionListener(new MenuFile.Open());
+        jMenuFileOpen.addActionListener(new MenuFile.ItemOpen());
         jMenuFile.add(jMenuFileOpen);
 
         jMenuFileSave.setMnemonic('s');
         jMenuFileSave.setText("Salvar");
-        jMenuFileSave.addActionListener(new MenuFile.Save());
+        jMenuFileSave.addActionListener(new MenuFile.ItemSave());
         jMenuFile.add(jMenuFileSave);
 
         jMenuFileExport.setMnemonic('e');
         jMenuFileExport.setText("Exportar");
-        jMenuFileExport.addActionListener(new MenuFile.Export());
+        jMenuFileExport.addActionListener(new MenuFile.ItemExport());
         jMenuFile.add(jMenuFileExport);
         jMenuFile.add(jSeparator1);
 
         jMenuFileExit.setMnemonic('i');
         jMenuFileExit.setText("Sair");
-        jMenuFileExit.addActionListener(new MenuFile.Exit());
+        jMenuFileExit.addActionListener(new MenuFile.ItemExit());
         jMenuFile.add(jMenuFileExit);
 
         jMenuBar.add(jMenuFile);
@@ -156,33 +160,33 @@ public class EditorMain extends javax.swing.JFrame {
 
         jMenuEditUndo.setMnemonic('d');
         jMenuEditUndo.setText("Desfazer");
-        jMenuEditUndo.addActionListener(new MenuEdit.Undo());
+        jMenuEditUndo.addActionListener(new MenuEdit.ItemUndo());
         jMenuEdit.add(jMenuEditUndo);
 
         jMenuEditRedo.setMnemonic('r');
         jMenuEditRedo.setText("Refazer");
-        jMenuEditRedo.addActionListener(new MenuEdit.Redo());
+        jMenuEditRedo.addActionListener(new MenuEdit.ItemRedo());
         jMenuEdit.add(jMenuEditRedo);
         jMenuEdit.add(jSeparator2);
 
         jMenuEditDelete.setMnemonic('x');
         jMenuEditDelete.setText("Excluir");
-        jMenuEditDelete.addActionListener(new MenuEdit.Delete());
+        jMenuEditDelete.addActionListener(new MenuEdit.ItemDelete());
         jMenuEdit.add(jMenuEditDelete);
 
         jMenuEditScale.setMnemonic('e');
         jMenuEditScale.setText("Escala");
-        jMenuEditScale.addActionListener(new MenuEdit.Scale());
+        jMenuEditScale.addActionListener(new MenuEdit.ItemScale());
         jMenuEdit.add(jMenuEditScale);
 
         jMenuEditRotate.setMnemonic('r');
         jMenuEditRotate.setText("Girar");
-        jMenuEditRotate.addActionListener(new MenuEdit.Rotate());
+        jMenuEditRotate.addActionListener(new MenuEdit.ItemRotate());
         jMenuEdit.add(jMenuEditRotate);
 
         jMenuEditTranslate.setMnemonic('m');
         jMenuEditTranslate.setText("Mover");
-        jMenuEditTranslate.addActionListener(new MenuEdit.Translate());
+        jMenuEditTranslate.addActionListener(new MenuEdit.ItemTranslate());
         jMenuEdit.add(jMenuEditTranslate);
 
         jMenuBar.add(jMenuEdit);
@@ -260,7 +264,7 @@ public class EditorMain extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        canvas.stop();
+        stopCanvas();
     }//GEN-LAST:event_formWindowClosing
 
     private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed

@@ -16,7 +16,7 @@
                 <Property name="text" type="java.lang.String" value="Novo"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileNew.addActionListener(new MenuFile.New());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileNew.addActionListener(new MenuFile.ItemNew());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuFileOpen">
@@ -25,7 +25,7 @@
                 <Property name="text" type="java.lang.String" value="Abrir"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileOpen.addActionListener(new MenuFile.Open());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileOpen.addActionListener(new MenuFile.ItemOpen());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuFileSave">
@@ -34,7 +34,7 @@
                 <Property name="text" type="java.lang.String" value="Salvar"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileSave.addActionListener(new MenuFile.Save());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileSave.addActionListener(new MenuFile.ItemSave());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuFileExport">
@@ -43,7 +43,7 @@
                 <Property name="text" type="java.lang.String" value="Exportar"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileExport.addActionListener(new MenuFile.Export());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileExport.addActionListener(new MenuFile.ItemExport());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
@@ -54,7 +54,7 @@
                 <Property name="text" type="java.lang.String" value="Sair"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileExit.addActionListener(new MenuFile.Exit());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuFileExit.addActionListener(new MenuFile.ItemExit());"/>
               </AuxValues>
             </MenuItem>
           </SubComponents>
@@ -71,7 +71,7 @@
                 <Property name="text" type="java.lang.String" value="Desfazer"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditUndo.addActionListener(new MenuEdit.Undo());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditUndo.addActionListener(new MenuEdit.ItemUndo());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuEditRedo">
@@ -80,7 +80,7 @@
                 <Property name="text" type="java.lang.String" value="Refazer"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditRedo.addActionListener(new MenuEdit.Redo());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditRedo.addActionListener(new MenuEdit.ItemRedo());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
@@ -91,7 +91,7 @@
                 <Property name="text" type="java.lang.String" value="Excluir"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditDelete.addActionListener(new MenuEdit.Delete());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditDelete.addActionListener(new MenuEdit.ItemDelete());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuEditScale">
@@ -100,7 +100,7 @@
                 <Property name="text" type="java.lang.String" value="Escala"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditScale.addActionListener(new MenuEdit.Scale());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditScale.addActionListener(new MenuEdit.ItemScale());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuEditRotate">
@@ -109,7 +109,7 @@
                 <Property name="text" type="java.lang.String" value="Girar"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditRotate.addActionListener(new MenuEdit.Rotate());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditRotate.addActionListener(new MenuEdit.ItemRotate());"/>
               </AuxValues>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuEditTranslate">
@@ -118,7 +118,7 @@
                 <Property name="text" type="java.lang.String" value="Mover"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditTranslate.addActionListener(new MenuEdit.Translate());"/>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditTranslate.addActionListener(new MenuEdit.ItemTranslate());"/>
               </AuxValues>
             </MenuItem>
           </SubComponents>
