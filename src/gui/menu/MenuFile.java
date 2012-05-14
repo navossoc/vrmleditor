@@ -1,11 +1,12 @@
 package gui.menu;
 
+import gui.EditorMain;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuFile {
 
-    public static class New implements ActionListener {
+    public static class ItemNew implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -13,7 +14,7 @@ public class MenuFile {
         }
     }
 
-    public static class Open implements ActionListener {
+    public static class ItemOpen implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -21,7 +22,7 @@ public class MenuFile {
         }
     }
 
-    public static class Save implements ActionListener {
+    public static class ItemSave implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -29,7 +30,7 @@ public class MenuFile {
         }
     }
 
-    public static class Export implements ActionListener {
+    public static class ItemExport implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -37,12 +38,11 @@ public class MenuFile {
         }
     }
 
-    public static class Exit implements ActionListener {
+    public static class ItemExit implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("file -> exit");
-            //canvas.stop();
+            EditorMain.instance.stopCanvas();
         }
     }
 }
