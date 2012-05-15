@@ -43,6 +43,7 @@ public class EditorMain extends javax.swing.JFrame {
 
     public void stopCanvas() {
         canvas.stop();
+        System.exit(0);
     }
 
     /**
