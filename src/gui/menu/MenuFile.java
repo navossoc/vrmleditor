@@ -42,7 +42,7 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.stopCanvas();
+            EditorMain.instance.exitEditor();
         }
     }
 }
