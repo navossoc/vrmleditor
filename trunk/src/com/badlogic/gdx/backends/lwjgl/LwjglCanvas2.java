@@ -1,6 +1,7 @@
 package com.badlogic.gdx.backends.lwjgl;
 
 import com.badlogic.gdx.ApplicationListener;
+import java.awt.EventQueue;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -19,9 +20,17 @@ public class LwjglCanvas2 extends LwjglCanvas {
             return;
         }
         running = false;
-        listener.pause();
-        listener.dispose();
-        Display.destroy();
-        audio.dispose();
+        try {
+            Display.destroy();
+            audio.dispose();
+        } catch (Throwable ignored) {
+        }
+        EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                listener.pause();
+                listener.dispose();
+            }
+        });
     }
 }

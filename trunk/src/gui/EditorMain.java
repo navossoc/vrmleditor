@@ -34,16 +34,21 @@ public class EditorMain extends javax.swing.JFrame {
         jPanelRender.validate();
     }
 
-    /*
-     * Public Methods
+    /**
+     * Add a Shape to render
+     *
+     * @param shape
      */
     public void addShape(Shape shape) {
         listModel.addElement(shape);
     }
 
-    public void stopCanvas() {
+    /**
+     * Exit application properly
+     */
+    public void exitEditor() {
         canvas.stop();
-        System.exit(0);
+        dispose();
     }
 
     /**
@@ -84,11 +89,11 @@ public class EditorMain extends javax.swing.JFrame {
         jMenuInsertCone = new javax.swing.JMenuItem();
         jMenuInsertSphere = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("VRML Editor");
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
 
@@ -264,10 +269,6 @@ public class EditorMain extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        stopCanvas();
-    }//GEN-LAST:event_formWindowClosing
-
     private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
             Shape shape = (Shape) jListShapes.getSelectedValue();
@@ -291,6 +292,10 @@ public class EditorMain extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jListShapesMousePressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        exitEditor();
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
