@@ -39,14 +39,14 @@ public class EditorRender implements ApplicationListener {
         // 2 - Camera Side (z/y)
         cameraSide = new OrthographicCamera(width, height);
         cameraSide.far = Short.MAX_VALUE;
-        cameraSide.rotate(90, 0, 1, 0);
-        cameraSide.position.set(500, 0, 0);
+        cameraSide.rotate(90, 0, -1, 0);
+        cameraSide.position.set(-500, 0, 0);
 
         // 3 - Camera Top (x/z)
         cameraTop = new OrthographicCamera(width, height);
         cameraTop.far = Short.MAX_VALUE;
-        cameraTop.rotate(-90, 1, 0, 0);
-        cameraTop.position.set(0, 500, 0);
+        cameraTop.rotate(90, 1, 0, 0);
+        cameraTop.position.set(0, -500, 0);
 
         // 4 - Camera 3D (Free)
         camera3D = new PerspectiveCamera(45, width, height);

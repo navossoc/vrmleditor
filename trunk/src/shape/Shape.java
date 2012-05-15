@@ -103,11 +103,10 @@ public abstract class Shape {
     }
 
     public void setTranslation(float x, float y, float z) {
-        this.translation.set(x, y, -z);
+        this.translation.set(x, y, z);
     }
 
     public void setTranslation(Vector3 translation) {
-        translation.z = -translation.z;
         this.translation.set(translation);
     }
 
