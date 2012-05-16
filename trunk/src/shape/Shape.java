@@ -28,8 +28,9 @@ public abstract class Shape {
         scale = new Vector3(1, 1, 1);
         rotation = new Quaternion(0, 0, 0, 0);
         translation = new Vector3(0, 0, 0);
-
     }
+
+    public abstract Shape copy();
 
     public void draw() {
         // set color
@@ -90,6 +91,14 @@ public abstract class Shape {
         return rotation;
     }
 
+    public void set(Shape shape) {
+        shape.ID = ID;
+        shape.color.set(color);
+        shape.scale.set(scale);
+        shape.rotation.set(rotation);
+        shape.translation.set(translation);
+    }
+
     public void setRotation(float x, float y, float z, float angle) {
         this.rotation.set(x, y, z, angle);
     }
@@ -108,6 +117,28 @@ public abstract class Shape {
 
     public void setTranslation(Vector3 translation) {
         this.translation.set(translation);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Shape other = (Shape) obj;
+        if (this.ID != other.ID) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 29 * hash + this.ID;
+        return hash;
     }
 
     @Override

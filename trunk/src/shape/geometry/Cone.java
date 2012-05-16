@@ -56,6 +56,13 @@ public class Cone extends Shape {
         mesh.setIndices(indices);
     }
 
+    @Override
+    public Cone copy() {
+        Cone temp = new Cone(bottomRadius, height);
+        super.set(temp);
+        return temp;
+    }
+
     public float getBottomRadius() {
         return bottomRadius;
     }

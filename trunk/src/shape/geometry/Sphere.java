@@ -54,6 +54,13 @@ public class Sphere extends Shape {
         mesh.setVertices(v);
     }
 
+    @Override
+    public Sphere copy() {
+        Sphere temp = new Sphere(radius);
+        super.set(temp);
+        return temp;
+    }
+
     public float getRadius() {
         return radius;
     }
