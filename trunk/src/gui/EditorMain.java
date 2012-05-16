@@ -48,7 +48,13 @@ public class EditorMain extends javax.swing.JFrame {
      */
     public void exitEditor() {
         canvas.stop();
-        dispose();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        });
     }
 
     /**

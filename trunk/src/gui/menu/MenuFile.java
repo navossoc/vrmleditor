@@ -42,6 +42,7 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            EditorMain.instance.dispose();
             EditorMain.instance.exitEditor();
         }
     }
