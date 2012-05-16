@@ -58,6 +58,7 @@ public class Cone extends Shape {
 
     @Override
     public Cone copy() {
+        ID_COUNTER--;
         Cone temp = new Cone(bottomRadius, height);
         super.set(temp);
         return temp;

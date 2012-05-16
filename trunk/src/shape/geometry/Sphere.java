@@ -56,6 +56,7 @@ public class Sphere extends Shape {
 
     @Override
     public Sphere copy() {
+        ID_COUNTER--;
         Sphere temp = new Sphere(radius);
         super.set(temp);
         return temp;

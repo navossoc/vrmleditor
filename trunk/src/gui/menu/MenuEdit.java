@@ -1,5 +1,6 @@
 package gui.menu;
 
+import gui.EditorMain;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +11,7 @@ public class MenuEdit {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("edit -> undo");
+            EditorMain.instance.history.popUndo();
         }
     }
 
@@ -18,6 +20,7 @@ public class MenuEdit {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("edit -> redo");
+            EditorMain.instance.history.popRedo();
         }
     }
 

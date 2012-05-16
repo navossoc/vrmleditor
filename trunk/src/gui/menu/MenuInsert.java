@@ -1,8 +1,10 @@
 package gui.menu;
 
 import gui.EditorMain;
+import history.History;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import shape.Shape;
 import shape.geometry.Box;
 import shape.geometry.Cone;
 import shape.geometry.Cylinder;
@@ -10,11 +12,16 @@ import shape.geometry.Sphere;
 
 public class MenuInsert {
 
+    private static void addShape(Shape shape) {
+        EditorMain.instance.addShape(shape);
+        EditorMain.instance.history.pushUndo(new History(shape, History.Type.ADD));
+    }
+
     public static class ItemBox implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.addShape(new Box(300, 300, 300));
+            addShape(new Box(300, 300, 300));
         }
     }
 
@@ -22,7 +29,7 @@ public class MenuInsert {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.addShape(new Cone(150, 300));
+            addShape(new Cone(150, 300));
         }
     }
 
@@ -30,7 +37,7 @@ public class MenuInsert {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.addShape(new Cylinder(150, 300));
+            addShape(new Cylinder(150, 300));
         }
     }
 
@@ -38,7 +45,7 @@ public class MenuInsert {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.addShape(new Sphere(150));
+            addShape(new Sphere(150));
         }
     }
 }

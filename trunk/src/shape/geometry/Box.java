@@ -55,6 +55,7 @@ public class Box extends Shape {
 
     @Override
     public Box copy() {
+        ID_COUNTER--;
         Box temp = new Box(width, height, depth);
         super.set(temp);
         return temp;
