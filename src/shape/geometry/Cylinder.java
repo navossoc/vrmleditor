@@ -81,6 +81,13 @@ public class Cylinder extends Shape {
         mesh.setIndices(indices);
     }
 
+    @Override
+    public Cylinder copy() {
+        Cylinder temp = new Cylinder(radius, height);
+        super.set(temp);
+        return temp;
+    }
+
     public float getHeight() {
         return height;
     }

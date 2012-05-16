@@ -53,6 +53,13 @@ public class Box extends Shape {
         mesh.setIndices(indices);
     }
 
+    @Override
+    public Box copy() {
+        Box temp = new Box(width, height, depth);
+        super.set(temp);
+        return temp;
+    }
+
     public float getWidth() {
         return width;
     }
