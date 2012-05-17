@@ -3,6 +3,7 @@ package shape.geometry;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
+import java.util.Locale;
 import shape.Shape;
 
 public class Box extends Shape {
@@ -83,6 +84,15 @@ public class Box extends Shape {
 
     public void setDepth(float depth) {
         this.depth = depth;
+    }
+
+    @Override
+    public String printVrml() {
+        String temp = super.printVrml();
+        String box = String.format(Locale.US,
+                "\t\t\tsize %.2f %.2f %.2f\n",
+                width, height, depth);
+        return String.format(temp, box);
     }
 
     @Override

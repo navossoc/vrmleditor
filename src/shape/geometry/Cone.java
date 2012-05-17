@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.MathUtils;
+import java.util.Locale;
 import shape.Shape;
 
 public class Cone extends Shape {
@@ -78,6 +79,16 @@ public class Cone extends Shape {
 
     public void setHeight(float height) {
         this.height = height;
+    }
+
+    @Override
+    public String printVrml() {
+        String temp = super.printVrml();
+        String cone = String.format(Locale.US,
+                "\t\t\tbottomRadius %.2f\n"
+                + "\t\t\theight %.2f\n",
+                bottomRadius, height);
+        return String.format(temp, cone);
     }
 
     @Override
