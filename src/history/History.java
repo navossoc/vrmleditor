@@ -9,8 +9,10 @@ public class History {
     private final int MAX_UNDO = 15;
     protected Stack<HistoryInfo> redoStack;
     protected Stack<HistoryInfo> undoStack;
+    private boolean fileDirty;
 
     public History() {
+        fileDirty = false;
         redoStack = new Stack<HistoryInfo>();
         undoStack = new Stack<HistoryInfo>();
     }
@@ -22,6 +24,7 @@ public class History {
 
     public void insertRedo(HistoryInfo history) {
         redoStack.push(history);
+        fileDirty = true;
     }
 
     public void insertUndo(HistoryInfo history) {
@@ -29,6 +32,7 @@ public class History {
             undoStack.remove(0);
         }
         undoStack.push(history);
+        fileDirty = true;
     }
 
     public boolean isEmptyRedo() {
@@ -37,6 +41,14 @@ public class History {
 
     public boolean isEmptyUndo() {
         return undoStack.empty();
+    }
+
+    public boolean isFileDirty() {
+        return fileDirty;
+    }
+
+    public void setFileDirty(boolean fileDirty) {
+        this.fileDirty = fileDirty;
     }
 
     public void redo() {

@@ -16,9 +16,26 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Editor.singleton.getHistory().clear();
-            Editor.singleton.getListModel().clear();
-            Shape.reset();
+            if (Editor.singleton.getHistory().isFileDirty()) {
+                int option = JOptionPane.showConfirmDialog(Editor.singleton,
+                        "Deseja salvar as alterações?", "Novo",
+                        JOptionPane.YES_NO_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+                switch (option) {
+                    case JOptionPane.YES_OPTION: {
+                        new MenuFile.ItemSave().actionPerformed(null);
+                    }
+                    case JOptionPane.NO_OPTION: {
+                        Editor.singleton.getHistory().clear();
+                        Editor.singleton.getListModel().clear();
+                        Shape.reset();
+                    }
+                }
+            } else {
+                Editor.singleton.getHistory().clear();
+                Editor.singleton.getListModel().clear();
+                Shape.reset();
+            }
         }
     }
 
@@ -35,6 +52,8 @@ public class MenuFile {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("file -> save");
+            // TODO: chamar somente se salvar c/ sucesso
+            Editor.singleton.getHistory().setFileDirty(false);
         }
     }
 
