@@ -1,7 +1,7 @@
 package gui.menu;
 
 import gui.EditorMain;
-import history.History;
+import history.HistoryInfo;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import shape.Shape;
@@ -14,7 +14,7 @@ public class MenuInsert {
 
     private static void addShape(Shape shape) {
         EditorMain.instance.addShape(shape);
-        EditorMain.instance.history.pushUndo(new History(shape, History.Type.ADD));
+        EditorMain.instance.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.ADD));
     }
 
     public static class ItemBox implements ActionListener {

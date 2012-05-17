@@ -3,6 +3,7 @@ package gui.menu;
 import gui.EditorMain;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import shape.Shape;
 
 public class MenuFile {
 
@@ -10,7 +11,9 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("file -> new");
+            EditorMain.instance.getHistory().clear();
+            EditorMain.instance.getListModel().clear();
+            Shape.reset();
         }
     }
 
