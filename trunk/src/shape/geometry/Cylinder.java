@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.MathUtils;
+import java.util.Locale;
 import shape.Shape;
 
 public class Cylinder extends Shape {
@@ -103,6 +104,16 @@ public class Cylinder extends Shape {
 
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    @Override
+    public String printVrml() {
+        String temp = super.printVrml();
+        String cylinder = String.format(Locale.US,
+                "\t\t\theight %.2f\n"
+                + "\t\t\tradius %.2f\n",
+                height, radius);
+        return String.format(temp, cylinder);
     }
 
     @Override

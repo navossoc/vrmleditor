@@ -1,6 +1,7 @@
 package gui.menu;
 
 import gui.Editor;
+import gui.ExportVrml;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import shape.Shape;
@@ -38,6 +39,7 @@ public class MenuFile {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("file -> export");
+            new ExportVrml("C:\\teste.wrl", Editor.singleton.getListModel()).save();
         }
     }
 

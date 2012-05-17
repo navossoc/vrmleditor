@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import java.util.Locale;
 
 public abstract class Shape {
 
@@ -121,6 +122,32 @@ public abstract class Shape {
 
     public void setTranslation(Vector3 translation) {
         this.translation.set(translation);
+    }
+
+    public String printVrml() {
+        return String.format(Locale.US, "# %s"
+                + "Transform {\n"
+                + "\ttranslation %.2f %.2f %.2f\n"
+                + "\tscale %.2f %.2f %.2f\n"
+                + "\trotation %.2f %.2f %.2f %.2f\n"
+                + "\tchildren Shape {\n"
+                + "\t\tgeometry %s {\n"
+                + "%%s"
+                + "\t\t}\n"
+                + "\t\tappearance Appearance {\n"
+                + "\t\t\tmaterial Material {\n"
+                + "\t\t\t\tdiffuseColor %.2f %.2f %.2f\n"
+                + "\t\t\t\ttransparency %.2f\n"
+                + "\t\t\t}\n"
+                + "\t\t}\n"
+                + "\t}\n}",
+                this.toString(),
+                translation.x, translation.y, translation.z,
+                scale.x, scale.y, scale.z,
+                rotation.x, rotation.y, rotation.z, rotation.w,
+                this.getClass().getSimpleName(),
+                color.r, color.g, color.b,
+                1 - color.a);
     }
 
     @Override

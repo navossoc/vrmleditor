@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.MathUtils;
+import java.util.Locale;
 import shape.Shape;
 
 public class Sphere extends Shape {
@@ -68,6 +69,15 @@ public class Sphere extends Shape {
 
     public void setRadius(float radius) {
         this.radius = radius;
+    }
+
+    @Override
+    public String printVrml() {
+        String temp = super.printVrml();
+        String sphere = String.format(Locale.US,
+                "\t\t\tradius %.2f\n",
+                radius);
+        return String.format(temp, sphere);
     }
 
     @Override
