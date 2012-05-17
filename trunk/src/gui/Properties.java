@@ -14,12 +14,12 @@ import shape.geometry.Cone;
 import shape.geometry.Cylinder;
 import shape.geometry.Sphere;
 
-public class ShapeProperty extends javax.swing.JDialog {
+public class Properties extends javax.swing.JDialog {
 
     /**
-     * Creates new form ShapeProperty
+     * Creates new form Properties
      */
-    public ShapeProperty(Shape shape) {
+    public Properties(Shape shape) {
         initComponents();
         setLocationRelativeTo(null);
         setModal(true);
@@ -44,7 +44,7 @@ public class ShapeProperty extends javax.swing.JDialog {
     }
 
     private static void editShape(Shape shape) {
-        EditorMain.instance.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.EDIT));
+        Editor.singleton.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.EDIT));
     }
 
     final class BoxPanel extends JPanel implements ActionListener {

@@ -1,6 +1,6 @@
 package gui.menu;
 
-import gui.EditorMain;
+import gui.Editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import shape.Shape;
@@ -11,8 +11,8 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.getHistory().clear();
-            EditorMain.instance.getListModel().clear();
+            Editor.singleton.getHistory().clear();
+            Editor.singleton.getListModel().clear();
             Shape.reset();
         }
     }
@@ -45,8 +45,8 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.dispose();
-            EditorMain.instance.exitEditor();
+            Editor.singleton.dispose();
+            Editor.singleton.exitEditor();
         }
     }
 }

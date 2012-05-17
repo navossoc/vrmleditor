@@ -19,19 +19,19 @@ import shape.Shape;
  *
  * @author Rafael
  */
-public class EditorMain extends javax.swing.JFrame {
+public class Editor extends javax.swing.JFrame {
 
     private LwjglCanvas canvas;
     private DefaultListModel listModel;
     private History history;
-    public static EditorMain instance;
+    public static Editor singleton;
 
     /**
-     * Creates new form EditorMain
+     * Creates new form Editor
      */
-    public EditorMain() {
+    public Editor() {
         listModel = new DefaultListModel();
-        canvas = new LwjglCanvas2(new EditorRender(listModel), false);
+        canvas = new LwjglCanvas2(new Render(listModel), false);
         history = new History();
 
         initComponents();
@@ -48,6 +48,31 @@ public class EditorMain extends javax.swing.JFrame {
         listModel.addElement(shape);
     }
 
+    /**
+     * Delete a Shape from JList
+     */
+    public void deleteShape() {
+        if (jListShapes.isSelectionEmpty()) {
+            return;
+        }
+
+        Shape shape = (Shape) jListShapes.getSelectedValue();
+        if (JOptionPane.showConfirmDialog(this,
+                "Deseja remover o objeto?",
+                shape.toString(),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            history.insertUndo(new HistoryInfo(shape, HistoryInfo.Type.DELETE));
+            removeShape(shape);
+        }
+    }
+
+    /**
+     * Edit a Shape from JList
+     *
+     * @param shape
+     * @return
+     */
     public Shape editShape(Shape shape) {
         Enumeration e = listModel.elements();
         while (e.hasMoreElements()) {
@@ -60,6 +85,11 @@ public class EditorMain extends javax.swing.JFrame {
         return null;
     }
 
+    /**
+     * Remove a Shape
+     *
+     * @param shape
+     */
     public void removeShape(Shape shape) {
         listModel.removeElement(shape);
     }
@@ -308,15 +338,7 @@ public class EditorMain extends javax.swing.JFrame {
 
     private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            Shape shape = (Shape) jListShapes.getSelectedValue();
-            if (JOptionPane.showConfirmDialog(this,
-                    "Deseja remover o objeto?",
-                    shape.toString(),
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                history.insertUndo(new HistoryInfo(shape, HistoryInfo.Type.DELETE));
-                removeShape(shape);
-            }
+            deleteShape();
         }
     }//GEN-LAST:event_jListShapesKeyPressed
 
@@ -325,7 +347,7 @@ public class EditorMain extends javax.swing.JFrame {
             if (evt.getClickCount() == 2) {
                 Shape shape = (Shape) jListShapes.getSelectedValue();
                 if (shape != null) {
-                    new ShapeProperty(shape).setVisible(true);
+                    new Properties(shape).setVisible(true);
                 }
             }
         }
@@ -346,13 +368,13 @@ public class EditorMain extends javax.swing.JFrame {
         try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditorMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Editor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditorMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Editor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditorMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Editor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditorMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Editor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -365,8 +387,8 @@ public class EditorMain extends javax.swing.JFrame {
             public void run() {
                 // fix the problem with the menu items appearing behind drawing canvas
                 JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-                instance = new EditorMain();
-                instance.setVisible(true);
+                singleton = new Editor();
+                singleton.setVisible(true);
             }
         });
     }

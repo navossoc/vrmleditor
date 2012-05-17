@@ -1,6 +1,6 @@
 package history;
 
-import gui.EditorMain;
+import gui.Editor;
 import java.util.Stack;
 import shape.Shape;
 
@@ -47,16 +47,16 @@ public class History {
         HistoryInfo info = redoStack.pop();
         switch (info.type) {
             case ADD: {
-                EditorMain.instance.addShape(info.shape);
+                Editor.singleton.addShape(info.shape);
                 break;
             }
             case EDIT: {
-                Shape shape = EditorMain.instance.editShape(info.shape);
+                Shape shape = Editor.singleton.editShape(info.shape);
                 info.shape = shape;
                 break;
             }
             case DELETE: {
-                EditorMain.instance.removeShape(info.shape);
+                Editor.singleton.removeShape(info.shape);
                 break;
             }
         }
@@ -71,16 +71,16 @@ public class History {
         HistoryInfo info = undoStack.pop();
         switch (info.type) {
             case ADD: {
-                EditorMain.instance.removeShape(info.shape);
+                Editor.singleton.removeShape(info.shape);
                 break;
             }
             case EDIT: {
-                Shape shape = EditorMain.instance.editShape(info.shape);
+                Shape shape = Editor.singleton.editShape(info.shape);
                 info.shape = shape;
                 break;
             }
             case DELETE: {
-                EditorMain.instance.addShape(info.shape);
+                Editor.singleton.addShape(info.shape);
                 break;
             }
         }

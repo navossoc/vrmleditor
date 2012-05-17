@@ -12,7 +12,7 @@ import shape.Axis;
 import shape.Border;
 import shape.Shape;
 
-public class EditorRender implements ApplicationListener {
+public class Render implements ApplicationListener {
 
     private DefaultListModel shapes;
     private OrthographicCamera cameraFront;
@@ -21,7 +21,7 @@ public class EditorRender implements ApplicationListener {
     private PerspectiveCamera camera3D;
     private int width, height;
 
-    public EditorRender(DefaultListModel shapes) {
+    public Render(DefaultListModel shapes) {
         this.shapes = shapes;
     }
 
