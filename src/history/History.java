@@ -6,92 +6,84 @@ import shape.Shape;
 
 public class History {
 
-    private Shape shape;
-    private Type type;
-    public static Stack<History> undoStack;
-    public static Stack<History> redoStack;
-
-    public enum Type {
-
-        ADD, EDIT, DELETE
-    }
+    private final int MAX_UNDO = 15;
+    protected Stack<HistoryInfo> redoStack;
+    protected Stack<HistoryInfo> undoStack;
 
     public History() {
-        undoStack = new Stack<History>();
-        redoStack = new Stack<History>();
+        redoStack = new Stack<HistoryInfo>();
+        undoStack = new Stack<HistoryInfo>();
     }
 
-    public History(Shape shape, Type type) {
-        this.shape = shape;
-        this.type = type;
+    public void clear() {
+        undoStack.clear();
+        redoStack.clear();
     }
 
-    // add 
-    // edit
-    // delete
-    private void undo() {
-        switch (type) {
-            case ADD: {
-                System.out.println("ADD");
-                EditorMain.instance.removeShape(shape);
-                break;
-            }
-            case EDIT: {
-                System.out.println("EDIT");
-                Shape temp = EditorMain.instance.editShape(shape);
-                undoStack.peek().shape = temp;
-                break;
-            }
-            case DELETE: {
-                System.out.println("DELETE");
-                EditorMain.instance.addShape(shape);
-                break;
-            }
+    public void insertRedo(HistoryInfo history) {
+        redoStack.push(history);
+    }
+
+    public void insertUndo(HistoryInfo history) {
+        if (undoStack.size() >= MAX_UNDO) {
+            undoStack.remove(0);
         }
-
-        redoStack.push(undoStack.pop());
-    }
-
-    private void redo() {
-        switch (type) {
-            case ADD: {
-                System.out.println("ADD");
-                EditorMain.instance.addShape(shape);
-                break;
-            }
-            case EDIT: {
-                System.out.println("EDIT");
-                Shape temp = EditorMain.instance.editShape(shape);
-                redoStack.peek().shape = temp;
-                break;
-            }
-            case DELETE: {
-                System.out.println("DELETE");
-                EditorMain.instance.removeShape(shape);
-                break;
-            }
-        }
-
-        undoStack.push(redoStack.pop());
-    }
-
-    public void popUndo() {
-        if (!undoStack.empty()) {
-            undoStack.peek().undo();
-        }
-    }
-
-    public void pushUndo(History history) {
         undoStack.push(history);
     }
 
-    public void popRedo() {
-        if (!redoStack.empty()) {
-            redoStack.peek().redo();
-        }
+    public boolean isEmptyRedo() {
+        return redoStack.empty();
     }
 
-    public void pushRedo(History history) {
-        redoStack.push(history);
+    public boolean isEmptyUndo() {
+        return undoStack.empty();
+    }
+
+    public void redo() {
+        if (redoStack.empty()) {
+            return;
+        }
+
+        HistoryInfo info = redoStack.pop();
+        switch (info.type) {
+            case ADD: {
+                EditorMain.instance.addShape(info.shape);
+                break;
+            }
+            case EDIT: {
+                Shape shape = EditorMain.instance.editShape(info.shape);
+                info.shape = shape;
+                break;
+            }
+            case DELETE: {
+                EditorMain.instance.removeShape(info.shape);
+                break;
+            }
+        }
+        undoStack.push(info);
+    }
+
+    public void undo() {
+        if (undoStack.empty()) {
+            return;
+        }
+
+        HistoryInfo info = undoStack.pop();
+        switch (info.type) {
+            case ADD: {
+                EditorMain.instance.removeShape(info.shape);
+                break;
+            }
+            case EDIT: {
+                Shape shape = EditorMain.instance.editShape(info.shape);
+                info.shape = shape;
+                break;
+            }
+            case DELETE: {
+                EditorMain.instance.addShape(info.shape);
+                break;
+            }
+        }
+        redoStack.push(info);
     }
 }

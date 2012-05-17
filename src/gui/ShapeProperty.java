@@ -1,6 +1,6 @@
 package gui;
 
-import history.History;
+import history.HistoryInfo;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,9 +23,9 @@ public class ShapeProperty extends javax.swing.JDialog {
         initComponents();
         setLocationRelativeTo(null);
         setModal(true);
-        
+
         setTitle(shape.toString());
-        
+
         if (shape instanceof Box) {
             setContent(new BoxPanel((Box) shape));
         } else if (shape instanceof Cone) {
@@ -36,19 +36,19 @@ public class ShapeProperty extends javax.swing.JDialog {
             setContent(new SpherePanel((Sphere) shape));
         }
     }
-    
+
     private void setContent(JPanel panel) {
         setContentPane(panel);
         setSize(400, 400);
         validate();
     }
-    
+
     private static void editShape(Shape shape) {
-        EditorMain.instance.history.pushUndo(new History(shape.copy(), History.Type.EDIT));
+        EditorMain.instance.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.EDIT));
     }
-    
+
     final class BoxPanel extends JPanel implements ActionListener {
-        
+
         Box box;
         JTextField width;
         JTextField height;
@@ -58,16 +58,16 @@ public class ShapeProperty extends javax.swing.JDialog {
         JTextField translationx, translationy, translationz;
         JButton ok;
         JButton apply;
-        
+
         public BoxPanel(Box b) {
             this.box = b;
-            
+
             width = new JTextField(String.valueOf(b.getWidth()));
             height = new JTextField(String.valueOf(b.getHeight()));
             depth = new JTextField(String.valueOf(b.getDepth()));
             ok = new JButton("OK");
             apply = new JButton("Aplicar");
-            
+
             setLayout(new GridLayout(14, 2));
             add(new JLabel("Largura"));
             add(width);
@@ -75,7 +75,7 @@ public class ShapeProperty extends javax.swing.JDialog {
             add(height);
             add(new JLabel("Profundidade"));
             add(depth);
-            
+
             scalex = new JTextField(String.valueOf(b.getScale().x));
             scaley = new JTextField(String.valueOf(b.getScale().y));
             scalez = new JTextField(String.valueOf(b.getScale().z));
@@ -85,7 +85,7 @@ public class ShapeProperty extends javax.swing.JDialog {
             add(scaley);
             add(new JLabel("Escala - Z"));
             add(scalez);
-            
+
             rotationw = new JTextField(String.valueOf(b.getRotation().w));
             rotationx = new JTextField(String.valueOf(b.getRotation().x));
             rotationy = new JTextField(String.valueOf(b.getRotation().y));
@@ -98,7 +98,7 @@ public class ShapeProperty extends javax.swing.JDialog {
             add(rotationy);
             add(new JLabel("Rotação - Z"));
             add(rotationz);
-            
+
             translationx = new JTextField(String.valueOf(b.getTranslation().x));
             translationy = new JTextField(String.valueOf(b.getTranslation().y));
             translationz = new JTextField(String.valueOf(b.getTranslation().z));
@@ -108,17 +108,17 @@ public class ShapeProperty extends javax.swing.JDialog {
             add(translationy);
             add(new JLabel("Translação - Z"));
             add(translationz);
-            
+
             add(ok);
             add(apply);
-            
+
             ok.addActionListener(this);
             apply.addActionListener(this);
-            
+
             setSize(400, 400);
             validate();
         }
-        
+
         private void setBox() {
             box.setWidth(Float.valueOf(width.getText()));
             box.setHeight(Float.valueOf(height.getText()));
@@ -129,13 +129,13 @@ public class ShapeProperty extends javax.swing.JDialog {
             y = Float.valueOf(scaley.getText());
             z = Float.valueOf(scalez.getText());
             box.setScale(x, y, z);
-            
+
             w = Float.valueOf(rotationw.getText());
             x = Float.valueOf(rotationx.getText());
             y = Float.valueOf(rotationy.getText());
             z = Float.valueOf(rotationz.getText());
             box.setRotation(x, y, z, w);
-            
+
             x = Float.valueOf(translationx.getText());
             y = Float.valueOf(translationy.getText());
             z = Float.valueOf(translationz.getText());
@@ -143,7 +143,7 @@ public class ShapeProperty extends javax.swing.JDialog {
             //
             box.calculateBox();
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             editShape(box);
@@ -153,23 +153,23 @@ public class ShapeProperty extends javax.swing.JDialog {
             }
         }
     }
-    
+
     final class ConePanel extends JPanel implements ActionListener {
-        
+
         Cone cone;
         JTextField bottomRadius;
         JTextField height;
         JButton ok;
         JButton apply;
-        
+
         public ConePanel(Cone c) {
             this.cone = c;
-            
+
             bottomRadius = new JTextField(String.valueOf(cone.getBottomRadius()));
             height = new JTextField(String.valueOf(cone.getHeight()));
             ok = new JButton("OK");
             apply = new JButton("Aplicar");
-            
+
             setLayout(new GridLayout(3, 2));
             add(new JLabel("Raio da base"));
             add(bottomRadius);
@@ -177,21 +177,21 @@ public class ShapeProperty extends javax.swing.JDialog {
             add(height);
             add(ok);
             add(apply);
-            
+
             ok.addActionListener(this);
             apply.addActionListener(this);
-            
+
             setSize(400, 400);
             validate();
-            
+
         }
-        
+
         private void setCone() {
             cone.setBottomRadius(Float.valueOf(bottomRadius.getText()));
             cone.setHeight(Float.valueOf(height.getText()));
             cone.calculateCone();
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             editShape(cone);
@@ -201,23 +201,23 @@ public class ShapeProperty extends javax.swing.JDialog {
             }
         }
     }
-    
+
     final class CylinderPanel extends JPanel implements ActionListener {
-        
+
         Cylinder cylinder;
         JTextField radius;
         JTextField height;
         JButton ok;
         JButton apply;
-        
+
         public CylinderPanel(Cylinder c) {
             this.cylinder = c;
-            
+
             radius = new JTextField(String.valueOf(cylinder.getRadius()));
             height = new JTextField(String.valueOf(cylinder.getHeight()));
             ok = new JButton("OK");
             apply = new JButton("Aplicar");
-            
+
             setLayout(new GridLayout(3, 2));
             add(new JLabel("Raio"));
             add(radius);
@@ -225,20 +225,20 @@ public class ShapeProperty extends javax.swing.JDialog {
             add(height);
             add(ok);
             add(apply);
-            
+
             ok.addActionListener(this);
             apply.addActionListener(this);
-            
+
             setSize(400, 400);
             validate();
         }
-        
+
         private void setCylinder() {
             cylinder.setRadius(Float.valueOf(radius.getText()));
             cylinder.setHeight(Float.valueOf(height.getText()));
             cylinder.calculateCylinder();
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             editShape(cylinder);
@@ -248,40 +248,40 @@ public class ShapeProperty extends javax.swing.JDialog {
             }
         }
     }
-    
+
     final class SpherePanel extends JPanel implements ActionListener {
-        
+
         Sphere sphere;
         JTextField radius;
         JTextField height;
         JButton ok;
         JButton apply;
-        
+
         public SpherePanel(Sphere s) {
             this.sphere = s;
-            
+
             radius = new JTextField(String.valueOf(sphere.getRadius()));
             ok = new JButton("OK");
             apply = new JButton("Aplicar");
-            
+
             setLayout(new GridLayout(2, 2));
             add(new JLabel("Raio"));
             add(radius);
             add(ok);
             add(apply);
-            
+
             ok.addActionListener(this);
             apply.addActionListener(this);
-            
+
             setSize(400, 400);
             validate();
         }
-        
+
         private void setSphere() {
             sphere.setRadius(Float.valueOf(radius.getText()));
             sphere.calculateSphere();
         }
-        
+
         @Override
         public void actionPerformed(ActionEvent e) {
             editShape(sphere);
@@ -293,8 +293,8 @@ public class ShapeProperty extends javax.swing.JDialog {
     }
 
     /**
-     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this
-     * method is always regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
+     * content of this method is always regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

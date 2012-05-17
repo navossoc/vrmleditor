@@ -51,6 +51,10 @@ public abstract class Shape {
         Gdx.gl10.glPopMatrix();
     }
 
+    public static void reset() {
+        ID_COUNTER = 1;
+    }
+
     public Color getColor() {
         return color;
     }

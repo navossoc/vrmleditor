@@ -105,7 +105,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuEditRotate">
               <Properties>
-                <Property name="mnemonic" type="int" value="114"/>
+                <Property name="mnemonic" type="int" value="103"/>
                 <Property name="text" type="java.lang.String" value="Girar"/>
               </Properties>
               <AuxValues>

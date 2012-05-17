@@ -10,8 +10,7 @@ public class MenuEdit {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("edit -> undo");
-            EditorMain.instance.history.popUndo();
+            EditorMain.instance.getHistory().undo();
         }
     }
 
@@ -19,8 +18,7 @@ public class MenuEdit {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("edit -> redo");
-            EditorMain.instance.history.popRedo();
+            EditorMain.instance.getHistory().redo();
         }
     }
 

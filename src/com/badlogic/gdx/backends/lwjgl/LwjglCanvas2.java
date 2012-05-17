@@ -5,8 +5,7 @@ import java.awt.EventQueue;
 import org.lwjgl.opengl.Display;
 
 /**
- * Class that extends LwjglCanvas to fix a problem with audio.dispose() not
- * being called on stop method
+ * Class that extends LwjglCanvas to fix a problem with audio.dispose() not being called on stop method
  */
 public class LwjglCanvas2 extends LwjglCanvas {
 
