@@ -125,22 +125,22 @@ public abstract class Shape {
     }
 
     public String printVrml() {
-        return String.format(Locale.US, "# %s"
-                + "Transform {\n"
-                + "\ttranslation %.2f %.2f %.2f\n"
-                + "\tscale %.2f %.2f %.2f\n"
-                + "\trotation %.2f %.2f %.2f %.2f\n"
-                + "\tchildren Shape {\n"
-                + "\t\tgeometry %s {\n"
+        return String.format(Locale.US, "# %s\r\n"
+                + "Transform {\r\n"
+                + "\ttranslation %.2f %.2f %.2f\r\n"
+                + "\tscale %.2f %.2f %.2f\r\n"
+                + "\trotation %.2f %.2f %.2f %.2f\r\n"
+                + "\tchildren Shape {\r\n"
+                + "\t\tgeometry %s {\r\n"
                 + "%%s"
-                + "\t\t}\n"
-                + "\t\tappearance Appearance {\n"
-                + "\t\t\tmaterial Material {\n"
-                + "\t\t\t\tdiffuseColor %.2f %.2f %.2f\n"
-                + "\t\t\t\ttransparency %.2f\n"
-                + "\t\t\t}\n"
-                + "\t\t}\n"
-                + "\t}\n}",
+                + "\t\t}\r\n"
+                + "\t\tappearance Appearance {\r\n"
+                + "\t\t\tmaterial Material {\r\n"
+                + "\t\t\t\tdiffuseColor %.2f %.2f %.2f\r\n"
+                + "\t\t\t\ttransparency %.2f\r\n"
+                + "\t\t\t}\r\n"
+                + "\t\t}\r\n"
+                + "\t}\r\n}",
                 this.toString(),
                 translation.x, translation.y, translation.z,
                 scale.x, scale.y, scale.z,

@@ -57,7 +57,7 @@ public class Editor extends javax.swing.JFrame {
         }
 
         Shape shape = (Shape) jListShapes.getSelectedValue();
-        if (JOptionPane.showConfirmDialog(this,
+        if (JOptionPane.showConfirmDialog(Editor.singleton,
                 "Deseja remover o objeto?",
                 shape.toString(),
                 JOptionPane.YES_NO_OPTION,

@@ -85,8 +85,8 @@ public class Cone extends Shape {
     public String printVrml() {
         String temp = super.printVrml();
         String cone = String.format(Locale.US,
-                "\t\t\tbottomRadius %.2f\n"
-                + "\t\t\theight %.2f\n",
+                "\t\t\tbottomRadius %.2f\r\n"
+                + "\t\t\theight %.2f\r\n",
                 bottomRadius, height);
         return String.format(temp, cone);
     }

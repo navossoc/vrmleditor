@@ -1,42 +1,38 @@
 package gui;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import shape.Shape;
 
-/**
- *
- * @author Guilherme
- */
 public class ExportVrml {
 
-    private final String file;
+    private final String filename;
     private final DefaultListModel listModel;
 
     public ExportVrml(String file, DefaultListModel listModel) {
-        this.file = file;
+        this.filename = file;
         this.listModel = listModel;
     }
 
-    public void save() {
+    public boolean save() {
         try {
-            FileWriter fileWriter = new FileWriter(file);
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.append("#VRML V2.0 utf8\n");
+            FileOutputStream fileOutputStream = new FileOutputStream(filename);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"));
+            outputStreamWriter.write("#VRML V2.0 utf8\r\n");
+            outputStreamWriter.write("# Centro Universitário Fundação Santo André\r\n");
             Enumeration e = listModel.elements();
             while (e.hasMoreElements()) {
                 Shape s = (Shape) e.nextElement();
-                bufferedWriter.append(s.printVrml() + "\n");
+                outputStreamWriter.write(s.printVrml() + "\r\n");
             }
-
-            bufferedWriter.close();
-            fileWriter.close();
+            outputStreamWriter.close();
+            fileOutputStream.close();
+            return true;
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao exportar o arquivo VRML", "Erro", JOptionPane.ERROR_MESSAGE);
+            return false;
         }
     }
 }
