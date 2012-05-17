@@ -1,6 +1,6 @@
 package gui.menu;
 
-import gui.EditorMain;
+import gui.Editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,7 +10,7 @@ public class MenuEdit {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.getHistory().undo();
+            Editor.singleton.getHistory().undo();
         }
     }
 
@@ -18,7 +18,7 @@ public class MenuEdit {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            EditorMain.instance.getHistory().redo();
+            Editor.singleton.getHistory().redo();
         }
     }
 
@@ -26,7 +26,7 @@ public class MenuEdit {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("edit -> delete");
+            Editor.singleton.deleteShape();
         }
     }
 
