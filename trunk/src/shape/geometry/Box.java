@@ -90,7 +90,7 @@ public class Box extends Shape {
     public String printVrml() {
         String temp = super.printVrml();
         String box = String.format(Locale.US,
-                "\t\t\tsize %.2f %.2f %.2f\n",
+                "\t\t\tsize %.2f %.2f %.2f\r\n",
                 width, height, depth);
         return String.format(temp, box);
     }

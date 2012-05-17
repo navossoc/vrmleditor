@@ -110,8 +110,8 @@ public class Cylinder extends Shape {
     public String printVrml() {
         String temp = super.printVrml();
         String cylinder = String.format(Locale.US,
-                "\t\t\theight %.2f\n"
-                + "\t\t\tradius %.2f\n",
+                "\t\t\theight %.2f\r\n"
+                + "\t\t\tradius %.2f\r\n",
                 height, radius);
         return String.format(temp, cylinder);
     }

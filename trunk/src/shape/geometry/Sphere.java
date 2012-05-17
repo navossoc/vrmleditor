@@ -75,7 +75,7 @@ public class Sphere extends Shape {
     public String printVrml() {
         String temp = super.printVrml();
         String sphere = String.format(Locale.US,
-                "\t\t\tradius %.2f\n",
+                "\t\t\tradius %.2f\r\n",
                 radius);
         return String.format(temp, sphere);
     }
