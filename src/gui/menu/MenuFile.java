@@ -1,10 +1,12 @@
 package gui.menu;
 
 import gui.Editor;
-import gui.ExportVrml;
+import gui.export.ExportVrml;
+import gui.export.ExportXml;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -43,7 +45,24 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("file -> open");
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo XML", "xml"));
+            if (fileChooser.showOpenDialog(Editor.singleton) == JFileChooser.APPROVE_OPTION) {
+                String file = fileChooser.getSelectedFile().getAbsolutePath();
+                if (!file.endsWith(".xml")) {
+                    file += ".xml";
+                }
+                List<Shape> shapes = new ExportXml(file, null).open();
+                if (shapes != null) {
+                    Editor.singleton.getHistory().setFileDirty(false);
+                    for (Shape s : shapes) {
+                        Editor.singleton.getListModel().addElement(s.copy());
+                    }
+                    shapes.clear();
+                } else {
+                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao abrir o arquivo XML", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 
@@ -51,9 +70,20 @@ public class MenuFile {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("file -> save");
-            // TODO: chamar somente se salvar c/ sucesso
-            Editor.singleton.getHistory().setFileDirty(false);
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo XML", "xml"));
+            if (fileChooser.showSaveDialog(Editor.singleton) == JFileChooser.APPROVE_OPTION) {
+                String file = fileChooser.getSelectedFile().getAbsolutePath();
+                if (!file.endsWith(".xml")) {
+                    file += ".xml";
+                }
+                if (new ExportXml(file, Editor.singleton.getListModel()).save()) {
+                    Editor.singleton.getHistory().setFileDirty(false);
+                    JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo XML", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 

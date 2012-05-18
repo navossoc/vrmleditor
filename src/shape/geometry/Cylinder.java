@@ -117,6 +117,16 @@ public class Cylinder extends Shape {
     }
 
     @Override
+    public String printXml() {
+        String temp = super.printXml();
+        String cylinder = String.format(Locale.US,
+                "\t\t<height>%.2f</height>\r\n"
+                + "\t\t<radius>%.2f</radius>\r\n",
+                height, radius);
+        return String.format(temp, cylinder);
+    }
+
+    @Override
     public String toString() {
         return "Cilindro " + ID;
     }

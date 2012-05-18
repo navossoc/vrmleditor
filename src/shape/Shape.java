@@ -150,6 +150,43 @@ public abstract class Shape {
                 1 - color.a);
     }
 
+    public String printXml() {
+        String type = this.getClass().getSimpleName().toLowerCase();
+        return String.format(Locale.US, "\t<!-- %s -->\r\n"
+                + "\t<%s>\r\n"
+                + "%%s"
+                + "\t\t<color>\r\n"
+                + "\t\t\t<r>%.2f</r>\r\n"
+                + "\t\t\t<g>%.2f</g>\r\n"
+                + "\t\t\t<b>%.2f</b>\r\n"
+                + "\t\t\t<a>%.2f</a>\r\n"
+                + "\t\t</color>\r\n"
+                + "\t\t<scale>\r\n"
+                + "\t\t\t<x>%.2f</x>\r\n"
+                + "\t\t\t<y>%.2f</y>\r\n"
+                + "\t\t\t<z>%.2f</z>\r\n"
+                + "\t\t</scale>\r\n"
+                + "\t\t<rotation>\r\n"
+                + "\t\t\t<w>%.2f</w>\r\n"
+                + "\t\t\t<x>%.2f</x>\r\n"
+                + "\t\t\t<y>%.2f</y>\r\n"
+                + "\t\t\t<z>%.2f</z>\r\n"
+                + "\t\t</rotation>\r\n"
+                + "\t\t<translation>\r\n"
+                + "\t\t\t<x>%.2f</x>\r\n"
+                + "\t\t\t<y>%.2f</y>\r\n"
+                + "\t\t\t<z>%.2f</z>\r\n"
+                + "\t\t</translation>\r\n"
+                + "\t</%s>",
+                this.toString(),
+                type,
+                color.r, color.g, color.b, color.a,
+                scale.x, scale.y, scale.z,
+                rotation.w, rotation.x, rotation.y, rotation.z,
+                translation.x, translation.y, translation.z,
+                type);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
