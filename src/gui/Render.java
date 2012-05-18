@@ -35,23 +35,26 @@ public class Render implements ApplicationListener {
         cameraFront.far = Short.MAX_VALUE;
         //cameraFront.rotate(0, 0, 0, 0);
         cameraFront.position.set(0, 0, 500);
+        cameraFront.zoom = 1.0f / 100;
 
         // 2 - Camera Side (z/y)
         cameraSide = new OrthographicCamera(width, height);
         cameraSide.far = Short.MAX_VALUE;
         cameraSide.rotate(90, 0, -1, 0);
         cameraSide.position.set(-500, 0, 0);
+        cameraSide.zoom = 1.0f / 100;
 
         // 3 - Camera Top (x/z)
         cameraTop = new OrthographicCamera(width, height);
         cameraTop.far = Short.MAX_VALUE;
         cameraTop.rotate(90, 1, 0, 0);
         cameraTop.position.set(0, -500, 0);
+        cameraTop.zoom = 1.0f / 100;
 
         // 4 - Camera 3D (Free)
         camera3D = new PerspectiveCamera(45, width, height);
         camera3D.far = Short.MAX_VALUE;
-        camera3D.position.set(300, 600, 500);
+        camera3D.position.set(3, 6, 5);
         camera3D.lookAt(0, 0, 0);
     }
 

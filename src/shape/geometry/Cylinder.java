@@ -21,7 +21,7 @@ public class Cylinder extends Shape {
     }
 
     public final void calculateCylinder() {
-        short slices = (short) (6 * Math.cbrt(radius));
+        short slices = (short) (4 * Math.cbrt(radius) + 8);
 
         mesh = new Mesh(true, (slices + 1) * 2, slices * 12, VertexAttribute.Position());
 

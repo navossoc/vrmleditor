@@ -21,7 +21,7 @@ public class Cone extends Shape {
     }
 
     public final void calculateCone() {
-        short slices = (short) (6 * Math.cbrt(bottomRadius));
+        short slices = (short) (4 * Math.cbrt(bottomRadius) + 8);
 
         mesh = new Mesh(true, slices + 2, slices * 6, VertexAttribute.Position());
 
