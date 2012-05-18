@@ -21,7 +21,7 @@ public class MenuInsert {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            addShape(new Box(300, 300, 300));
+            addShape(new Box(1.0f, 1.0f, 1.0f));
         }
     }
 
@@ -29,7 +29,7 @@ public class MenuInsert {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            addShape(new Cone(150, 300));
+            addShape(new Cone(0.5f, 1.0f));
         }
     }
 
@@ -37,7 +37,7 @@ public class MenuInsert {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            addShape(new Cylinder(150, 300));
+            addShape(new Cylinder(0.5f, 1.0f));
         }
     }
 
@@ -45,7 +45,7 @@ public class MenuInsert {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            addShape(new Sphere(150));
+            addShape(new Sphere(0.5f));
         }
     }
 }

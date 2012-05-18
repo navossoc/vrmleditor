@@ -19,7 +19,7 @@ public class Sphere extends Shape {
     }
 
     public final void calculateSphere() {
-        int space = 18;
+        int space = 20;
 
         int VertexCount = ((180 / space) * (360 / space) * 4);
         float[] v = new float[VertexCount * 3];
