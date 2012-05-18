@@ -81,6 +81,15 @@ public class Sphere extends Shape {
     }
 
     @Override
+    public String printXml() {
+        String temp = super.printXml();
+        String sphere = String.format(Locale.US,
+                "\t\t<radius>%.2f</radius>\r\n",
+                radius);
+        return String.format(temp, sphere);
+    }
+
+    @Override
     public String toString() {
         return "Esfera " + ID;
     }

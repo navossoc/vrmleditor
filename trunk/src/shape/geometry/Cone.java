@@ -92,6 +92,16 @@ public class Cone extends Shape {
     }
 
     @Override
+    public String printXml() {
+        String temp = super.printXml();
+        String cone = String.format(Locale.US,
+                "\t\t<bottomRadius>%.2f</bottomRadius>\r\n"
+                + "\t\t<height>%.2f</height>\r\n",
+                bottomRadius, height);
+        return String.format(temp, cone);
+    }
+
+    @Override
     public String toString() {
         return "Cone " + ID;
     }
