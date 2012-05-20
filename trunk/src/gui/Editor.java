@@ -1,7 +1,6 @@
 package gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
-import com.badlogic.gdx.backends.lwjgl.LwjglCanvas2;
 import gui.menu.MenuEdit;
 import gui.menu.MenuFile;
 import gui.menu.MenuInsert;
@@ -31,7 +30,7 @@ public class Editor extends javax.swing.JFrame {
      */
     public Editor() {
         listModel = new DefaultListModel();
-        canvas = new LwjglCanvas2(new Render(listModel), false);
+        canvas = new LwjglCanvas(new Render(listModel), false);
         history = new History();
 
         initComponents();
