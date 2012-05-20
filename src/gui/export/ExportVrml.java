@@ -9,15 +9,7 @@ import shape.Shape;
 
 public class ExportVrml {
 
-    private final String filename;
-    private final DefaultListModel listModel;
-
-    public ExportVrml(String file, DefaultListModel listModel) {
-        this.filename = file;
-        this.listModel = listModel;
-    }
-
-    public boolean save() {
+    public static boolean save(String filename, DefaultListModel listModel) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"));

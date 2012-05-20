@@ -1,5 +1,8 @@
 package gui.export;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Quaternion;
+import com.badlogic.gdx.math.Vector3;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
@@ -21,15 +24,7 @@ import shape.geometry.Sphere;
 
 public class ExportXml {
 
-    private final String filename;
-    private final DefaultListModel listModel;
-
-    public ExportXml(String file, DefaultListModel listModel) {
-        this.filename = file;
-        this.listModel = listModel;
-    }
-
-    public List<Shape> open() {
+    public static List<Shape> open(String filename) {
         try {
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -93,32 +88,46 @@ public class ExportXml {
                             }
                         }
 
-                        if (pName.equals("scale")) {
+                        if (pName.equals("color")) {
+                            Color color = shape.getColor();
                             NodeList list = itemProperty.getChildNodes();
                             String value = list.item(1).getFirstChild().getNodeValue();
-                            shape.getScale().x = Float.valueOf(value);
+                            color.r = Float.valueOf(value);
                             value = list.item(3).getFirstChild().getNodeValue();
-                            shape.getScale().y = Float.valueOf(value);
+                            color.g = Float.valueOf(value);
                             value = list.item(5).getFirstChild().getNodeValue();
-                            shape.getScale().z = Float.valueOf(value);
-                        } else if (pName.equals("translation")) {
-                            NodeList list = itemProperty.getChildNodes();
-                            String value = list.item(1).getFirstChild().getNodeValue();
-                            shape.getTranslation().x = Float.valueOf(value);
-                            value = list.item(3).getFirstChild().getNodeValue();
-                            shape.getTranslation().y = Float.valueOf(value);
-                            value = list.item(5).getFirstChild().getNodeValue();
-                            shape.getTranslation().z = Float.valueOf(value);
-                        } else if (pName.equals("rotation")) {
-                            NodeList list = itemProperty.getChildNodes();
-                            String value = list.item(1).getFirstChild().getNodeValue();
-                            shape.getRotation().w = Float.valueOf(value);
-                            value = list.item(3).getFirstChild().getNodeValue();
-                            shape.getRotation().x = Float.valueOf(value);
-                            value = list.item(5).getFirstChild().getNodeValue();
-                            shape.getRotation().y = Float.valueOf(value);
+                            color.b = Float.valueOf(value);
                             value = list.item(7).getFirstChild().getNodeValue();
-                            shape.getRotation().z = Float.valueOf(value);
+                            color.a = Float.valueOf(value);
+                        } else if (pName.equals("scale")) {
+                            Vector3 scale = shape.getScale();
+                            NodeList list = itemProperty.getChildNodes();
+                            String value = list.item(1).getFirstChild().getNodeValue();
+                            scale.x = Float.valueOf(value);
+                            value = list.item(3).getFirstChild().getNodeValue();
+                            scale.y = Float.valueOf(value);
+                            value = list.item(5).getFirstChild().getNodeValue();
+                            scale.z = Float.valueOf(value);
+                        } else if (pName.equals("translation")) {
+                            Vector3 translation = shape.getTranslation();
+                            NodeList list = itemProperty.getChildNodes();
+                            String value = list.item(1).getFirstChild().getNodeValue();
+                            translation.x = Float.valueOf(value);
+                            value = list.item(3).getFirstChild().getNodeValue();
+                            translation.y = Float.valueOf(value);
+                            value = list.item(5).getFirstChild().getNodeValue();
+                            translation.z = Float.valueOf(value);
+                        } else if (pName.equals("rotation")) {
+                            Quaternion rotation = shape.getRotation();
+                            NodeList list = itemProperty.getChildNodes();
+                            String value = list.item(1).getFirstChild().getNodeValue();
+                            rotation.w = Float.valueOf(value);
+                            value = list.item(3).getFirstChild().getNodeValue();
+                            rotation.x = Float.valueOf(value);
+                            value = list.item(5).getFirstChild().getNodeValue();
+                            rotation.y = Float.valueOf(value);
+                            value = list.item(7).getFirstChild().getNodeValue();
+                            rotation.z = Float.valueOf(value);
                         }
                     }
                     shapes.add(shape);
@@ -130,7 +139,7 @@ public class ExportXml {
         }
     }
 
-    public boolean save() {
+    public static boolean save(String filename, DefaultListModel listModel) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"));
