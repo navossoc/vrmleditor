@@ -52,7 +52,7 @@ public class MenuFile {
                 if (!file.endsWith(".xml")) {
                     file += ".xml";
                 }
-                List<Shape> shapes = new ExportXml(file, null).open();
+                List<Shape> shapes = ExportXml.open(file);
                 if (shapes != null) {
                     Editor.singleton.getHistory().setFileDirty(false);
                     for (Shape s : shapes) {
@@ -60,7 +60,7 @@ public class MenuFile {
                     }
                     shapes.clear();
                 } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao abrir o arquivo XML", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao abrir o arquivo XML", "Abrir", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -77,11 +77,11 @@ public class MenuFile {
                 if (!file.endsWith(".xml")) {
                     file += ".xml";
                 }
-                if (new ExportXml(file, Editor.singleton.getListModel()).save()) {
+                if (ExportXml.save(file, Editor.singleton.getListModel())) {
                     Editor.singleton.getHistory().setFileDirty(false);
-                    JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo XML", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo XML", "Salvar", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -98,10 +98,10 @@ public class MenuFile {
                 if (!file.endsWith(".wrl")) {
                     file += ".wrl";
                 }
-                if (new ExportVrml(file, Editor.singleton.getListModel()).save()) {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                if (ExportVrml.save(file, Editor.singleton.getListModel())) {
+                    JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Exportar", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo VRML", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo VRML", "Exportar", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
