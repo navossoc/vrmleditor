@@ -14,6 +14,12 @@ import shape.Shape;
 
 public class MenuFile {
 
+    private static void newFile() {
+        Editor.singleton.getHistory().clear();
+        Editor.singleton.getListModel().clear();
+        Shape.reset();
+    }
+
     public static class ItemNew implements ActionListener {
 
         @Override
@@ -26,18 +32,17 @@ public class MenuFile {
                 switch (option) {
                     case JOptionPane.YES_OPTION: {
                         new MenuFile.ItemSave().actionPerformed(null);
+                        break;
                     }
-                    case JOptionPane.NO_OPTION: {
-                        Editor.singleton.getHistory().clear();
-                        Editor.singleton.getListModel().clear();
-                        Shape.reset();
+                    //case JOptionPane.NO_OPTION:
+                    case JOptionPane.CANCEL_OPTION: {
+                        return;
                     }
                 }
-            } else {
-                Editor.singleton.getHistory().clear();
-                Editor.singleton.getListModel().clear();
-                Shape.reset();
             }
+
+            // create a new file
+            newFile();
         }
     }
 
@@ -52,9 +57,13 @@ public class MenuFile {
                 if (!file.endsWith(".bin")) {
                     file += ".bin";
                 }
+
+                // erase all shapes
+                newFile();
+
+                // insert shapes from file
                 List<Shape> shapes = FormatBin.open(file);
                 if (shapes != null) {
-                    Editor.singleton.getHistory().setFileDirty(false);
                     for (Shape s : shapes) {
                         Editor.singleton.getListModel().addElement(s);
                     }

@@ -18,6 +18,7 @@ public class History {
     }
 
     public void clear() {
+        fileDirty = false;
         undoStack.clear();
         redoStack.clear();
     }
