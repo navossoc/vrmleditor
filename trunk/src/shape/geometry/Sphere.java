@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.MathUtils;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 import shape.Shape;
 
@@ -81,12 +83,9 @@ public class Sphere extends Shape {
     }
 
     @Override
-    public String printXml() {
-        String temp = super.printXml();
-        String sphere = String.format(Locale.US,
-                "\t\t<radius>%.2f</radius>\r\n",
-                radius);
-        return String.format(temp, sphere);
+    public void writeBinary(DataOutputStream dataOutputStream) throws IOException {
+        super.writeBinary(dataOutputStream);
+        dataOutputStream.writeFloat(radius);
     }
 
     @Override
