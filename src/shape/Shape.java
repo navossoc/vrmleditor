@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 public abstract class Shape {
@@ -150,41 +152,34 @@ public abstract class Shape {
                 1 - color.a);
     }
 
-    public String printXml() {
-        String type = this.getClass().getSimpleName().toLowerCase();
-        return String.format(Locale.US, "\t<!-- %s -->\r\n"
-                + "\t<%s>\r\n"
-                + "%%s"
-                + "\t\t<color>\r\n"
-                + "\t\t\t<r>%.2f</r>\r\n"
-                + "\t\t\t<g>%.2f</g>\r\n"
-                + "\t\t\t<b>%.2f</b>\r\n"
-                + "\t\t\t<a>%.2f</a>\r\n"
-                + "\t\t</color>\r\n"
-                + "\t\t<scale>\r\n"
-                + "\t\t\t<x>%.2f</x>\r\n"
-                + "\t\t\t<y>%.2f</y>\r\n"
-                + "\t\t\t<z>%.2f</z>\r\n"
-                + "\t\t</scale>\r\n"
-                + "\t\t<rotation>\r\n"
-                + "\t\t\t<w>%.2f</w>\r\n"
-                + "\t\t\t<x>%.2f</x>\r\n"
-                + "\t\t\t<y>%.2f</y>\r\n"
-                + "\t\t\t<z>%.2f</z>\r\n"
-                + "\t\t</rotation>\r\n"
-                + "\t\t<translation>\r\n"
-                + "\t\t\t<x>%.2f</x>\r\n"
-                + "\t\t\t<y>%.2f</y>\r\n"
-                + "\t\t\t<z>%.2f</z>\r\n"
-                + "\t\t</translation>\r\n"
-                + "\t</%s>",
-                this.toString(),
-                type,
-                color.r, color.g, color.b, color.a,
-                scale.x, scale.y, scale.z,
-                rotation.w, rotation.x, rotation.y, rotation.z,
-                translation.x, translation.y, translation.z,
-                type);
+    public void writeBinary(DataOutputStream dataOutputStream) throws IOException {
+        // shape
+        byte[] clazz = getClass().getSimpleName().getBytes();
+        byte[] name = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
+        System.arraycopy(clazz, 0, name, 0, clazz.length);
+        dataOutputStream.write(name);
+
+        // color
+        dataOutputStream.writeFloat(color.r);
+        dataOutputStream.writeFloat(color.g);
+        dataOutputStream.writeFloat(color.b);
+        dataOutputStream.writeFloat(color.a);
+
+        // scale
+        dataOutputStream.writeFloat(scale.x);
+        dataOutputStream.writeFloat(scale.y);
+        dataOutputStream.writeFloat(scale.z);
+
+        // rotation
+        dataOutputStream.writeFloat(rotation.w);
+        dataOutputStream.writeFloat(rotation.x);
+        dataOutputStream.writeFloat(rotation.y);
+        dataOutputStream.writeFloat(rotation.z);
+
+        // translation
+        dataOutputStream.writeFloat(translation.x);
+        dataOutputStream.writeFloat(translation.y);
+        dataOutputStream.writeFloat(translation.z);
     }
 
     @Override

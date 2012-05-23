@@ -2,7 +2,7 @@ package gui.menu;
 
 import gui.Editor;
 import gui.export.ExportVrml;
-import gui.export.ExportXml;
+import gui.format.FormatBin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -46,21 +46,21 @@ public class MenuFile {
         @Override
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo XML", "xml"));
+            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
             if (fileChooser.showOpenDialog(Editor.singleton) == JFileChooser.APPROVE_OPTION) {
                 String file = fileChooser.getSelectedFile().getAbsolutePath();
-                if (!file.endsWith(".xml")) {
-                    file += ".xml";
+                if (!file.endsWith(".bin")) {
+                    file += ".bin";
                 }
-                List<Shape> shapes = ExportXml.open(file);
+                List<Shape> shapes = FormatBin.open(file);
                 if (shapes != null) {
                     Editor.singleton.getHistory().setFileDirty(false);
                     for (Shape s : shapes) {
-                        Editor.singleton.getListModel().addElement(s.copy());
+                        Editor.singleton.getListModel().addElement(s);
                     }
                     shapes.clear();
                 } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao abrir o arquivo XML", "Abrir", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao abrir o arquivo BIN", "Abrir", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -71,17 +71,18 @@ public class MenuFile {
         @Override
         public void actionPerformed(ActionEvent e) {
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo XML", "xml"));
+            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
             if (fileChooser.showSaveDialog(Editor.singleton) == JFileChooser.APPROVE_OPTION) {
                 String file = fileChooser.getSelectedFile().getAbsolutePath();
-                if (!file.endsWith(".xml")) {
-                    file += ".xml";
+                if (!file.endsWith(".bin")) {
+                    file += ".bin";
                 }
-                if (ExportXml.save(file, Editor.singleton.getListModel())) {
+                //if (ExportXml.save(file, Editor.singleton.getListModel())) {
+                if (FormatBin.save(file, Editor.singleton.getListModel())) {
                     Editor.singleton.getHistory().setFileDirty(false);
                     JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo XML", "Salvar", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo BIN", "Salvar", JOptionPane.ERROR_MESSAGE);
                 }
             }
         }

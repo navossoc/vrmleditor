@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.MathUtils;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 import shape.Shape;
 
@@ -92,13 +94,10 @@ public class Cone extends Shape {
     }
 
     @Override
-    public String printXml() {
-        String temp = super.printXml();
-        String cone = String.format(Locale.US,
-                "\t\t<bottomRadius>%.2f</bottomRadius>\r\n"
-                + "\t\t<height>%.2f</height>\r\n",
-                bottomRadius, height);
-        return String.format(temp, cone);
+    public void writeBinary(DataOutputStream dataOutputStream) throws IOException {
+        super.writeBinary(dataOutputStream);
+        dataOutputStream.writeFloat(bottomRadius);
+        dataOutputStream.writeFloat(height);
     }
 
     @Override

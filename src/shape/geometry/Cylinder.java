@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.MathUtils;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 import shape.Shape;
 
@@ -117,13 +119,10 @@ public class Cylinder extends Shape {
     }
 
     @Override
-    public String printXml() {
-        String temp = super.printXml();
-        String cylinder = String.format(Locale.US,
-                "\t\t<height>%.2f</height>\r\n"
-                + "\t\t<radius>%.2f</radius>\r\n",
-                height, radius);
-        return String.format(temp, cylinder);
+    public void writeBinary(DataOutputStream dataOutputStream) throws IOException {
+        super.writeBinary(dataOutputStream);
+        dataOutputStream.writeFloat(radius);
+        dataOutputStream.writeFloat(height);
     }
 
     @Override
