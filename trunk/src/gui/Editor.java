@@ -270,6 +270,7 @@ public class Editor extends javax.swing.JFrame {
         jMenuEdit.add(jMenuEditTranslate);
         jMenuEdit.add(jSeparator3);
 
+        jMenuEditWireframe.setSelected(true);
         jMenuEditWireframe.setText("Wireframe");
         jMenuEditWireframe.addActionListener(new MenuEdit.ItemWireframe());
         jMenuEdit.add(jMenuEditWireframe);
