@@ -121,6 +121,16 @@
                 <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditTranslate.addActionListener(new MenuEdit.ItemTranslate());"/>
               </AuxValues>
             </MenuItem>
+            <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
+            </MenuItem>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jMenuEditWireframe">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Wireframe"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jMenuEditWireframe.addActionListener(new MenuEdit.ItemWireframe());"/>
+              </AuxValues>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuInsert">
