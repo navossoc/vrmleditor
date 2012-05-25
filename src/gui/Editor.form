@@ -125,6 +125,7 @@
             </MenuItem>
             <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jMenuEditWireframe">
               <Properties>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Wireframe"/>
               </Properties>
               <AuxValues>
