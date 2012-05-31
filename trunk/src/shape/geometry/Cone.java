@@ -22,7 +22,7 @@ public class Cone extends Shape {
         calculateCone();
     }
 
-    public final void calculateCone() {
+    private void calculateCone() {
         short slices = (short) (4 * Math.cbrt(bottomRadius) + 8);
 
         mesh = new Mesh(true, slices + 2, slices * 6, VertexAttribute.Position());
@@ -73,6 +73,7 @@ public class Cone extends Shape {
 
     public void setBottomRadius(float bottomRadius) {
         this.bottomRadius = bottomRadius;
+        calculateCone();
     }
 
     public float getHeight() {
@@ -81,6 +82,7 @@ public class Cone extends Shape {
 
     public void setHeight(float height) {
         this.height = height;
+        calculateCone();
     }
 
     @Override

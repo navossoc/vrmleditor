@@ -20,7 +20,7 @@ public class Sphere extends Shape {
         calculateSphere();
     }
 
-    public final void calculateSphere() {
+    private void calculateSphere() {
         int space = 20;
 
         int VertexCount = ((180 / space) * (360 / space) * 4);
@@ -31,6 +31,8 @@ public class Sphere extends Shape {
 
         int i = 0;
 
+        // swiftless@gmail.com
+        // http://www.swiftless.com/tutorials/opengl/sphere.html
         for (b = 0; b <= 180 - space; b += space) {
 
             for (a = 0; a <= 360 - space; a += space) {
@@ -71,6 +73,7 @@ public class Sphere extends Shape {
 
     public void setRadius(float radius) {
         this.radius = radius;
+        calculateSphere();
     }
 
     @Override

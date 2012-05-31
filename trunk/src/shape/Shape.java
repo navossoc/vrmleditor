@@ -3,7 +3,6 @@ package shape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import java.io.DataOutputStream;
@@ -24,10 +23,7 @@ public abstract class Shape {
     public Shape() {
         ID = ID_COUNTER++;
 
-        color = new Color(//0, 0, 0, 1
-                MathUtils.random(0, 1),
-                MathUtils.random(0, 1),
-                MathUtils.random(0, 1), 1);
+        color = new Color(0, 0, 0, 1);
         scale = new Vector3(1, 1, 1);
         rotation = new Quaternion(0, 0, 0, 0);
         translation = new Vector3(0, 0, 0);
@@ -70,8 +66,37 @@ public abstract class Shape {
         this.color.set(color);
     }
 
+    public void setColorR(float red) {
+        this.color.r = red;
+    }
+
+    public void setColorG(float green) {
+        this.color.g = green;
+    }
+
+    public void setColorB(float blue) {
+        this.color.b = blue;
+    }
+
+    public void setColorA(float alpha) {
+        this.color.a = alpha;
+    }
+
+    public void setColorRGB(java.awt.Color color) {
+        float r = color.getRed() / 255f;
+        float g = color.getGreen() / 255f;
+        float b = color.getBlue() / 255f;
+        this.color.r = r;
+        this.color.g = g;
+        this.color.b = b;
+    }
+
     public void setColorAWT(java.awt.Color color) {
-        this.color.set(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+        float r = color.getRed() / 255f;
+        float g = color.getGreen() / 255f;
+        float b = color.getBlue() / 255f;
+        float a = color.getAlpha() / 255f;
+        this.color.set(r, g, b, a);
     }
 
     public int getID() {
@@ -94,6 +119,18 @@ public abstract class Shape {
         this.scale.set(scale);
     }
 
+    public void setScaleX(float x) {
+        this.scale.x = x;
+    }
+
+    public void setScaleY(float y) {
+        this.scale.y = y;
+    }
+
+    public void setScaleZ(float z) {
+        this.scale.z = z;
+    }
+
     public Quaternion getRotation() {
         return rotation;
     }
@@ -114,6 +151,22 @@ public abstract class Shape {
         this.rotation.set(rotation);
     }
 
+    public void setRotationW(float w) {
+        this.rotation.w = w;
+    }
+
+    public void setRotationX(float x) {
+        this.rotation.x = x;
+    }
+
+    public void setRotationY(float y) {
+        this.rotation.y = y;
+    }
+
+    public void setRotationZ(float z) {
+        this.rotation.z = z;
+    }
+
     public Vector3 getTranslation() {
         return translation;
     }
@@ -124,6 +177,18 @@ public abstract class Shape {
 
     public void setTranslation(Vector3 translation) {
         this.translation.set(translation);
+    }
+
+    public void setTranslationX(float x) {
+        this.translation.x = x;
+    }
+
+    public void setTranslationY(float y) {
+        this.translation.y = y;
+    }
+
+    public void setTranslationZ(float z) {
+        this.translation.z = z;
     }
 
     public String printVrml() {

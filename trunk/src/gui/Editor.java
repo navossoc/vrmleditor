@@ -1,6 +1,7 @@
 package gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
+import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import gui.menu.MenuEdit;
 import gui.menu.MenuFile;
 import gui.menu.MenuInsert;
@@ -37,6 +38,10 @@ public class Editor extends javax.swing.JFrame {
 
         initComponents();
         jPanelRender.add(canvas.getCanvas());
+        propertySheetPanel.setMode(PropertySheetPanel.VIEW_AS_CATEGORIES);
+        propertySheetPanel.setToolBarVisible(false);
+        propertySheetPanel.setDescriptionVisible(true);
+
         //setExtendedState(MAXIMIZED_BOTH);
     }
 
@@ -136,9 +141,11 @@ public class Editor extends javax.swing.JFrame {
         jButtonCylinder = new javax.swing.JButton();
         jButtonCone = new javax.swing.JButton();
         jButtonSphere = new javax.swing.JButton();
+        jPanelRender = new javax.swing.JPanel();
+        jTabbedPane = new javax.swing.JTabbedPane();
         jScrollPaneList = new javax.swing.JScrollPane();
         jListShapes = new javax.swing.JList();
-        jPanelRender = new javax.swing.JPanel();
+        propertySheetPanel = new com.l2fprod.common.propertysheet.PropertySheetPanel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuFileNew = new javax.swing.JMenuItem();
@@ -187,6 +194,13 @@ public class Editor extends javax.swing.JFrame {
         jButtonSphere.setToolTipText("Esfera");
         jButtonSphere.addActionListener(new MenuInsert.ItemSphere());
 
+        jPanelRender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelRender.setLayout(new java.awt.GridLayout(1, 0));
+
+        jTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+
+        jScrollPaneList.setBorder(null);
+
         jListShapes.setModel(listModel);
         jListShapes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListShapes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -201,8 +215,10 @@ public class Editor extends javax.swing.JFrame {
         });
         jScrollPaneList.setViewportView(jListShapes);
 
-        jPanelRender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanelRender.setLayout(new java.awt.GridLayout(1, 0));
+        jTabbedPane.addTab("Objetos", jScrollPaneList);
+
+        propertySheetPanel.setBorder(null);
+        jTabbedPane.addTab("Propriedades", propertySheetPanel);
 
         jMenuFile.setMnemonic('a');
         jMenuFile.setText("Arquivo");
@@ -315,14 +331,13 @@ public class Editor extends javax.swing.JFrame {
                         .addComponent(jButtonCone, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonSphere, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPaneList, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jButtonBox, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButtonCylinder, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonBox, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonCylinder, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanelRender, javax.swing.GroupLayout.DEFAULT_SIZE, 616, Short.MAX_VALUE)
+                .addComponent(jPanelRender, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -342,7 +357,7 @@ public class Editor extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButtonSphere, javax.swing.GroupLayout.DEFAULT_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPaneList, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)))
+                        .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -360,7 +375,8 @@ public class Editor extends javax.swing.JFrame {
             if (evt.getClickCount() == 2) {
                 Shape shape = (Shape) jListShapes.getSelectedValue();
                 if (shape != null) {
-                    new Properties(shape).setVisible(true);
+                    Properties.addProperties(propertySheetPanel, shape);
+                    jTabbedPane.setSelectedIndex(1);
                 }
             }
         }
@@ -436,5 +452,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JTabbedPane jTabbedPane;
+    private com.l2fprod.common.propertysheet.PropertySheetPanel propertySheetPanel;
     // End of variables declaration//GEN-END:variables
 }
