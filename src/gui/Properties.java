@@ -1,311 +1,317 @@
 package gui;
 
-import history.HistoryInfo;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import com.l2fprod.common.propertysheet.DefaultProperty;
+import com.l2fprod.common.propertysheet.Property;
+import com.l2fprod.common.propertysheet.PropertySheetPanel;
+import com.l2fprod.common.propertysheet.PropertySheetTable;
+import java.awt.Color;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import shape.Shape;
 import shape.geometry.Box;
 import shape.geometry.Cone;
 import shape.geometry.Cylinder;
 import shape.geometry.Sphere;
 
-public class Properties extends javax.swing.JDialog {
+public class Properties {
 
-    /**
-     * Creates new form Properties
-     */
-    public Properties(Shape shape) {
-        initComponents();
-        setLocationRelativeTo(null);
-        setModal(true);
+    public static void addProperties(PropertySheetPanel panel, Shape shape) {
+        // clear all properties and listeners
+        panel.setTable(new PropertySheetTable());
 
-        setTitle(shape.toString());
+        // settings
+        panel.setMode(PropertySheetPanel.VIEW_AS_CATEGORIES);
+        panel.setToolBarVisible(false);
+        panel.setDescriptionVisible(true);
 
+        // properties
+        addCommonProperties(panel, shape);
+        panel.addPropertySheetChangeListener(new PropertyListener(shape));
         if (shape instanceof Box) {
-            setContent(new BoxPanel((Box) shape));
+            addBoxProperties(panel, (Box) shape);
         } else if (shape instanceof Cone) {
-            setContent(new ConePanel((Cone) shape));
+            addConeProperties(panel, (Cone) shape);
         } else if (shape instanceof Cylinder) {
-            setContent(new CylinderPanel((Cylinder) shape));
+            addCylinderProperties(panel, (Cylinder) shape);
         } else if (shape instanceof Sphere) {
-            setContent(new SpherePanel((Sphere) shape));
+            addSphereProperties(panel, (Sphere) shape);
         }
     }
 
-    private void setContent(JPanel panel) {
-        setContentPane(panel);
-        setSize(400, 400);
-        validate();
+    private static void addCommonProperties(PropertySheetPanel panel, Shape shape) {
+        // Id
+        DefaultProperty id = new DefaultProperty();
+        id.setCategory("Geral");
+        id.setDisplayName("ID");
+        id.setEditable(false);
+        id.setName("id");
+        id.setType(Long.class);
+        id.setValue(shape.getID());
+        panel.addProperty(id);
+
+        // Name
+        DefaultProperty name = new DefaultProperty();
+        name.setCategory("Geral");
+        name.setDisplayName("Nome");
+        name.setEditable(false);
+        name.setName("name");
+        name.setType(String.class);
+        name.setValue(shape.toString());
+        panel.addProperty(name);
+
+        // Color
+        DefaultProperty color = new DefaultProperty();
+        color.setCategory("Cor");
+        color.setDisplayName("Paleta");
+        color.setName("color");
+        color.setType(Color.class);
+        color.setValue(shape.getColorAWT());
+        panel.addProperty(color);
+
+        // Transparency
+        DefaultProperty transparency = new DefaultProperty();
+        transparency.setCategory("Cor");
+        transparency.setDisplayName("Transparência");
+        transparency.setName("transparency");
+        transparency.setType(Float.class);
+        transparency.setValue(shape.getColor().a);
+        panel.addProperty(transparency);
+
+        // Scale
+        DefaultProperty scaleX = new DefaultProperty();
+        scaleX.setCategory("Escala");
+        scaleX.setDisplayName("X");
+        scaleX.setName("scaleX");
+        scaleX.setType(Float.class);
+        scaleX.setValue(shape.getScale().x);
+        panel.addProperty(scaleX);
+        DefaultProperty scaleY = new DefaultProperty();
+        scaleY.setCategory("Escala");
+        scaleY.setDisplayName("Y");
+        scaleY.setName("scaleY");
+        scaleY.setType(Float.class);
+        scaleY.setValue(shape.getScale().y);
+        panel.addProperty(scaleY);
+        DefaultProperty scaleZ = new DefaultProperty();
+        scaleZ.setCategory("Escala");
+        scaleZ.setDisplayName("Z");
+        scaleZ.setName("scaleZ");
+        scaleZ.setType(Float.class);
+        scaleZ.setValue(shape.getScale().z);
+        panel.addProperty(scaleZ);
+
+        // Rotation
+        DefaultProperty rotationW = new DefaultProperty();
+        rotationW.setCategory("Rotação");
+        rotationW.setDisplayName("W");
+        rotationW.setName("rotationW");
+        rotationW.setType(Float.class);
+        rotationW.setValue(shape.getRotation().w);
+        panel.addProperty(rotationW);
+        DefaultProperty rotationX = new DefaultProperty();
+        rotationX.setCategory("Rotação");
+        rotationX.setDisplayName("X");
+        rotationX.setName("rotationX");
+        rotationX.setType(Float.class);
+        rotationX.setValue(shape.getRotation().x);
+        panel.addProperty(rotationX);
+        DefaultProperty rotationY = new DefaultProperty();
+        rotationY.setCategory("Rotação");
+        rotationY.setDisplayName("Y");
+        rotationY.setName("rotationY");
+        rotationY.setType(Float.class);
+        rotationY.setValue(shape.getRotation().y);
+        panel.addProperty(rotationY);
+        DefaultProperty rotationZ = new DefaultProperty();
+        rotationZ.setCategory("Rotação");
+        rotationZ.setDisplayName("Z");
+        rotationZ.setName("rotationZ");
+        rotationZ.setType(Float.class);
+        rotationZ.setValue(shape.getRotation().z);
+        panel.addProperty(rotationZ);
+
+        // Translation
+        DefaultProperty translationX = new DefaultProperty();
+        translationX.setCategory("Translação");
+        translationX.setDisplayName("X");
+        translationX.setName("translationX");
+        translationX.setType(Float.class);
+        translationX.setValue(shape.getTranslation().x);
+        panel.addProperty(translationX);
+        DefaultProperty translationY = new DefaultProperty();
+        translationY.setCategory("Translação");
+        translationY.setDisplayName("Y");
+        translationY.setName("translationY");
+        translationY.setType(Float.class);
+        translationY.setValue(shape.getTranslation().y);
+        panel.addProperty(translationY);
+        DefaultProperty translationZ = new DefaultProperty();
+        translationZ.setCategory("Translação");
+        translationZ.setDisplayName("Z");
+        translationZ.setName("translationZ");
+        translationZ.setType(Float.class);
+        translationZ.setValue(shape.getTranslation().z);
+        panel.addProperty(translationZ);
     }
 
-    private static void editShape(Shape shape) {
-        Editor.singleton.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.EDIT));
+    private static void addBoxProperties(PropertySheetPanel panel, Box shape) {
+        // Width
+        DefaultProperty width = new DefaultProperty();
+        width.setCategory("Caixa");
+        width.setDisplayName("Largura");
+        width.setName("width");
+        width.setType(Float.class);
+        width.setValue(shape.getWidth());
+        panel.addProperty(width);
+        // Height
+        DefaultProperty height = new DefaultProperty();
+        height.setCategory("Caixa");
+        height.setDisplayName("Altura");
+        height.setName("height");
+        height.setType(Float.class);
+        height.setValue(shape.getHeight());
+        panel.addProperty(height);
+        // Depth
+        DefaultProperty depth = new DefaultProperty();
+        depth.setCategory("Caixa");
+        depth.setDisplayName("Profundidade");
+        depth.setName("depth");
+        depth.setType(Float.class);
+        depth.setValue(shape.getDepth());
+        panel.addProperty(depth);
     }
 
-    final class BoxPanel extends JPanel implements ActionListener {
+    private static void addConeProperties(PropertySheetPanel panel, Cone shape) {
+        // Bottom Radius
+        DefaultProperty radius = new DefaultProperty();
+        radius.setCategory("Cone");
+        radius.setDisplayName("Raio");
+        radius.setName("radius");
+        radius.setType(Float.class);
+        radius.setValue(shape.getBottomRadius());
+        panel.addProperty(radius);
+        // Height
+        DefaultProperty height = new DefaultProperty();
+        height.setCategory("Cone");
+        height.setDisplayName("Altura");
+        height.setName("height");
+        height.setType(Float.class);
+        height.setValue(shape.getHeight());
+        panel.addProperty(height);
+    }
 
-        Box box;
-        JTextField width;
-        JTextField height;
-        JTextField depth;
-        JTextField scalex, scaley, scalez;
-        JTextField rotationw, rotationx, rotationy, rotationz;
-        JTextField translationx, translationy, translationz;
-        JButton ok;
-        JButton apply;
+    private static void addCylinderProperties(PropertySheetPanel panel, Cylinder shape) {
+        // Radius
+        DefaultProperty radius = new DefaultProperty();
+        radius.setCategory("Cilindro");
+        radius.setDisplayName("Raio");
+        radius.setName("radius");
+        radius.setType(Float.class);
+        radius.setValue(shape.getRadius());
+        panel.addProperty(radius);
+        // Height
+        DefaultProperty height = new DefaultProperty();
+        height.setCategory("Cilindro");
+        height.setDisplayName("Altura");
+        height.setName("height");
+        height.setType(Float.class);
+        height.setValue(shape.getHeight());
+        panel.addProperty(height);
+    }
 
-        public BoxPanel(Box b) {
-            this.box = b;
+    private static void addSphereProperties(PropertySheetPanel panel, Sphere shape) {
+        // Radius
+        DefaultProperty radius = new DefaultProperty();
+        radius.setCategory("Esfera");
+        radius.setDisplayName("Raio");
+        radius.setName("radius");
+        radius.setType(Float.class);
+        radius.setValue(shape.getRadius());
+        panel.addProperty(radius);
+    }
+}
 
-            width = new JTextField(String.valueOf(b.getWidth()));
-            height = new JTextField(String.valueOf(b.getHeight()));
-            depth = new JTextField(String.valueOf(b.getDepth()));
-            ok = new JButton("OK");
-            apply = new JButton("Aplicar");
+class PropertyListener implements PropertyChangeListener {
 
-            setLayout(new GridLayout(14, 2));
-            add(new JLabel("Largura"));
-            add(width);
-            add(new JLabel("Altura"));
-            add(height);
-            add(new JLabel("Profundidade"));
-            add(depth);
+    private Shape shape;
 
-            scalex = new JTextField(String.valueOf(b.getScale().x));
-            scaley = new JTextField(String.valueOf(b.getScale().y));
-            scalez = new JTextField(String.valueOf(b.getScale().z));
-            add(new JLabel("Escala - X"));
-            add(scalex);
-            add(new JLabel("Escala - Y"));
-            add(scaley);
-            add(new JLabel("Escala - Z"));
-            add(scalez);
+    public PropertyListener(Shape shape) {
+        this.shape = shape;
+    }
 
-            rotationw = new JTextField(String.valueOf(b.getRotation().w));
-            rotationx = new JTextField(String.valueOf(b.getRotation().x));
-            rotationy = new JTextField(String.valueOf(b.getRotation().y));
-            rotationz = new JTextField(String.valueOf(b.getRotation().z));
-            add(new JLabel("Rotação - W"));
-            add(rotationw);
-            add(new JLabel("Rotação - X"));
-            add(rotationx);
-            add(new JLabel("Rotação - Y"));
-            add(rotationy);
-            add(new JLabel("Rotação - Z"));
-            add(rotationz);
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Object obj = evt.getSource();
 
-            translationx = new JTextField(String.valueOf(b.getTranslation().x));
-            translationy = new JTextField(String.valueOf(b.getTranslation().y));
-            translationz = new JTextField(String.valueOf(b.getTranslation().z));
-            add(new JLabel("Translação - X"));
-            add(translationx);
-            add(new JLabel("Translação - Y"));
-            add(translationy);
-            add(new JLabel("Translação - Z"));
-            add(translationz);
+        if (obj instanceof Property) {
+            Property property = (Property) obj;
+            String name = property.getName();
 
-            add(ok);
-            add(apply);
+            // color
+            if (name.equals("color")) {
+                Color color = (Color) property.getValue();
+                shape.setColorRGB(color);
+            } else {
+                float value = (Float) property.getValue();
 
-            ok.addActionListener(this);
-            apply.addActionListener(this);
+                // transparency
+                if (name.equals("transparency")) {
+                    shape.setColorA(value);
+                } // scale
+                else if (name.equals("scaleX")) {
+                    shape.setScaleX(value);
+                } else if (name.equals("scaleY")) {
+                    shape.setScaleY(value);
+                } else if (name.equals("scaleZ")) {
+                    shape.setScaleZ(value);
+                } // rotation
+                else if (name.equals("rotationW")) {
+                    shape.setRotationW(value);
+                } else if (name.equals("rotationX")) {
+                    shape.setRotationX(value);
+                } else if (name.equals("rotationY")) {
+                    shape.setRotationY(value);
+                } else if (name.equals("rotationZ")) {
+                    shape.setRotationZ(value);
+                } // translation
+                else if (name.equals("translationX")) {
+                    shape.setTranslationX(value);
+                } else if (name.equals("translationY")) {
+                    shape.setTranslationY(value);
+                } else if (name.equals("translationZ")) {
+                    shape.setTranslationZ(value);
+                }
 
-            setSize(400, 400);
-            validate();
-        }
-
-        private void setBox() {
-            box.setWidth(Float.valueOf(width.getText()));
-            box.setHeight(Float.valueOf(height.getText()));
-            box.setDepth(Float.valueOf(depth.getText()));
-            //
-            float w, x, y, z;
-            x = Float.valueOf(scalex.getText());
-            y = Float.valueOf(scaley.getText());
-            z = Float.valueOf(scalez.getText());
-            box.setScale(x, y, z);
-
-            w = Float.valueOf(rotationw.getText());
-            x = Float.valueOf(rotationx.getText());
-            y = Float.valueOf(rotationy.getText());
-            z = Float.valueOf(rotationz.getText());
-            box.setRotation(x, y, z, w);
-
-            x = Float.valueOf(translationx.getText());
-            y = Float.valueOf(translationy.getText());
-            z = Float.valueOf(translationz.getText());
-            box.setTranslation(x, y, z);
-            //
-            box.calculateBox();
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            editShape(box);
-            setBox();
-            if (e.getSource() == ok) {
-                dispose();
+                if (shape instanceof Box) {
+                    Box box = (Box) shape;
+                    if (name.equals("width")) {
+                        box.setWidth(value);
+                    } else if (name.equals("height")) {
+                        box.setHeight(value);
+                    } else if (name.equals("depth")) {
+                        box.setDepth(value);
+                    }
+                } else if (shape instanceof Cone) {
+                    Cone cone = (Cone) shape;
+                    if (name.equals("radius")) {
+                        cone.setBottomRadius(value);
+                    } else if (name.equals("height")) {
+                        cone.setHeight(value);
+                    }
+                } else if (shape instanceof Cylinder) {
+                    Cylinder cylinder = (Cylinder) shape;
+                    if (name.equals("radius")) {
+                        cylinder.setRadius(value);
+                    } else if (name.equals("height")) {
+                        cylinder.setHeight(value);
+                    }
+                } else if (shape instanceof Sphere) {
+                    Sphere sphere = (Sphere) shape;
+                    if (name.equals("radius")) {
+                        sphere.setRadius(value);
+                    }
+                }
             }
         }
     }
-
-    final class ConePanel extends JPanel implements ActionListener {
-
-        Cone cone;
-        JTextField bottomRadius;
-        JTextField height;
-        JButton ok;
-        JButton apply;
-
-        public ConePanel(Cone c) {
-            this.cone = c;
-
-            bottomRadius = new JTextField(String.valueOf(cone.getBottomRadius()));
-            height = new JTextField(String.valueOf(cone.getHeight()));
-            ok = new JButton("OK");
-            apply = new JButton("Aplicar");
-
-            setLayout(new GridLayout(3, 2));
-            add(new JLabel("Raio da base"));
-            add(bottomRadius);
-            add(new JLabel("Altura"));
-            add(height);
-            add(ok);
-            add(apply);
-
-            ok.addActionListener(this);
-            apply.addActionListener(this);
-
-            setSize(400, 400);
-            validate();
-
-        }
-
-        private void setCone() {
-            cone.setBottomRadius(Float.valueOf(bottomRadius.getText()));
-            cone.setHeight(Float.valueOf(height.getText()));
-            cone.calculateCone();
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            editShape(cone);
-            setCone();
-            if (e.getSource() == ok) {
-                dispose();
-            }
-        }
-    }
-
-    final class CylinderPanel extends JPanel implements ActionListener {
-
-        Cylinder cylinder;
-        JTextField radius;
-        JTextField height;
-        JButton ok;
-        JButton apply;
-
-        public CylinderPanel(Cylinder c) {
-            this.cylinder = c;
-
-            radius = new JTextField(String.valueOf(cylinder.getRadius()));
-            height = new JTextField(String.valueOf(cylinder.getHeight()));
-            ok = new JButton("OK");
-            apply = new JButton("Aplicar");
-
-            setLayout(new GridLayout(3, 2));
-            add(new JLabel("Raio"));
-            add(radius);
-            add(new JLabel("Altura"));
-            add(height);
-            add(ok);
-            add(apply);
-
-            ok.addActionListener(this);
-            apply.addActionListener(this);
-
-            setSize(400, 400);
-            validate();
-        }
-
-        private void setCylinder() {
-            cylinder.setRadius(Float.valueOf(radius.getText()));
-            cylinder.setHeight(Float.valueOf(height.getText()));
-            cylinder.calculateCylinder();
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            editShape(cylinder);
-            setCylinder();
-            if (e.getSource() == ok) {
-                dispose();
-            }
-        }
-    }
-
-    final class SpherePanel extends JPanel implements ActionListener {
-
-        Sphere sphere;
-        JTextField radius;
-        JTextField height;
-        JButton ok;
-        JButton apply;
-
-        public SpherePanel(Sphere s) {
-            this.sphere = s;
-
-            radius = new JTextField(String.valueOf(sphere.getRadius()));
-            ok = new JButton("OK");
-            apply = new JButton("Aplicar");
-
-            setLayout(new GridLayout(2, 2));
-            add(new JLabel("Raio"));
-            add(radius);
-            add(ok);
-            add(apply);
-
-            ok.addActionListener(this);
-            apply.addActionListener(this);
-
-            setSize(400, 400);
-            validate();
-        }
-
-        private void setSphere() {
-            sphere.setRadius(Float.valueOf(radius.getText()));
-            sphere.calculateSphere();
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            editShape(sphere);
-            setSphere();
-            if (e.getSource() == ok) {
-                dispose();
-            }
-        }
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The
-     * content of this method is always regenerated by the Form Editor.
-     */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
-        getContentPane().setLayout(new java.awt.GridLayout(4, 2));
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
 }

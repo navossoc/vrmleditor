@@ -23,7 +23,7 @@ public class Box extends Shape {
         calculateBox();
     }
 
-    public final void calculateBox() {
+    private void calculateBox() {
         mesh = new Mesh(true, 8, 36, VertexAttribute.Position());
 
         float[] vertices = {
@@ -70,6 +70,7 @@ public class Box extends Shape {
 
     public void setWidth(float width) {
         this.width = width;
+        calculateBox();
     }
 
     public float getHeight() {
@@ -78,6 +79,7 @@ public class Box extends Shape {
 
     public void setHeight(float height) {
         this.height = height;
+        calculateBox();
     }
 
     public float getDepth() {
@@ -86,6 +88,7 @@ public class Box extends Shape {
 
     public void setDepth(float depth) {
         this.depth = depth;
+        calculateBox();
     }
 
     @Override
