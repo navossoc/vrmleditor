@@ -1,7 +1,6 @@
 package gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
-import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import gui.menu.MenuEdit;
 import gui.menu.MenuFile;
 import gui.menu.MenuInsert;
@@ -26,6 +25,7 @@ public class Editor extends javax.swing.JFrame {
     private History history;
     private Render renderer;
     public static Editor singleton;
+    private Properties properties;
 
     /**
      * Creates new form Editor
@@ -38,9 +38,8 @@ public class Editor extends javax.swing.JFrame {
 
         initComponents();
         jPanelRender.add(canvas.getCanvas());
-        propertySheetPanel.setMode(PropertySheetPanel.VIEW_AS_CATEGORIES);
-        propertySheetPanel.setToolBarVisible(false);
-        propertySheetPanel.setDescriptionVisible(true);
+        properties = new Properties(propertySheetPanel);
+        properties.clear();
 
         //setExtendedState(MAXIMIZED_BOTH);
     }
@@ -375,7 +374,7 @@ public class Editor extends javax.swing.JFrame {
             if (evt.getClickCount() == 2) {
                 Shape shape = (Shape) jListShapes.getSelectedValue();
                 if (shape != null) {
-                    Properties.addProperties(propertySheetPanel, shape);
+                    properties.addProperties(shape);
                     jTabbedPane.setSelectedIndex(1);
                 }
             }

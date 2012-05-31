@@ -15,30 +15,41 @@ import shape.geometry.Sphere;
 
 public class Properties {
 
-    public static void addProperties(PropertySheetPanel panel, Shape shape) {
+    private PropertySheetPanel panel;
+
+    public Properties(PropertySheetPanel panel) {
+        this.panel = panel;
+    }
+
+    public void addProperties(Shape shape) {
+        clear();
+
+        // properties
+        addCommonProperties(shape);
+        panel.addPropertySheetChangeListener(new PropertyListener(shape));
+        if (shape instanceof Box) {
+            addBoxProperties((Box) shape);
+        } else if (shape instanceof Cone) {
+            addConeProperties((Cone) shape);
+        } else if (shape instanceof Cylinder) {
+            addCylinderProperties((Cylinder) shape);
+        } else if (shape instanceof Sphere) {
+            addSphereProperties((Sphere) shape);
+        }
+    }
+
+    public void clear() {
         // clear all properties and listeners
         panel.setTable(new PropertySheetTable());
+        //panel.getEditorRegistry().registerEditor(Float.class, FloatPropertyEditor2.class);
 
         // settings
         panel.setMode(PropertySheetPanel.VIEW_AS_CATEGORIES);
         panel.setToolBarVisible(false);
-        panel.setDescriptionVisible(true);
-
-        // properties
-        addCommonProperties(panel, shape);
-        panel.addPropertySheetChangeListener(new PropertyListener(shape));
-        if (shape instanceof Box) {
-            addBoxProperties(panel, (Box) shape);
-        } else if (shape instanceof Cone) {
-            addConeProperties(panel, (Cone) shape);
-        } else if (shape instanceof Cylinder) {
-            addCylinderProperties(panel, (Cylinder) shape);
-        } else if (shape instanceof Sphere) {
-            addSphereProperties(panel, (Sphere) shape);
-        }
+        panel.setDescriptionVisible(false);
     }
 
-    private static void addCommonProperties(PropertySheetPanel panel, Shape shape) {
+    private void addCommonProperties(Shape shape) {
         // Id
         DefaultProperty id = new DefaultProperty();
         id.setCategory("Geral");
@@ -154,7 +165,7 @@ public class Properties {
         panel.addProperty(translationZ);
     }
 
-    private static void addBoxProperties(PropertySheetPanel panel, Box shape) {
+    private void addBoxProperties(Box shape) {
         // Width
         DefaultProperty width = new DefaultProperty();
         width.setCategory("Caixa");
@@ -181,7 +192,7 @@ public class Properties {
         panel.addProperty(depth);
     }
 
-    private static void addConeProperties(PropertySheetPanel panel, Cone shape) {
+    private void addConeProperties(Cone shape) {
         // Bottom Radius
         DefaultProperty radius = new DefaultProperty();
         radius.setCategory("Cone");
@@ -200,7 +211,7 @@ public class Properties {
         panel.addProperty(height);
     }
 
-    private static void addCylinderProperties(PropertySheetPanel panel, Cylinder shape) {
+    private void addCylinderProperties(Cylinder shape) {
         // Radius
         DefaultProperty radius = new DefaultProperty();
         radius.setCategory("Cilindro");
@@ -219,7 +230,7 @@ public class Properties {
         panel.addProperty(height);
     }
 
-    private static void addSphereProperties(PropertySheetPanel panel, Sphere shape) {
+    private void addSphereProperties(Sphere shape) {
         // Radius
         DefaultProperty radius = new DefaultProperty();
         radius.setCategory("Esfera");
@@ -282,6 +293,7 @@ class PropertyListener implements PropertyChangeListener {
                     shape.setTranslationZ(value);
                 }
 
+                // box
                 if (shape instanceof Box) {
                     Box box = (Box) shape;
                     if (name.equals("width")) {
@@ -291,6 +303,7 @@ class PropertyListener implements PropertyChangeListener {
                     } else if (name.equals("depth")) {
                         box.setDepth(value);
                     }
+                    // cone
                 } else if (shape instanceof Cone) {
                     Cone cone = (Cone) shape;
                     if (name.equals("radius")) {
@@ -298,6 +311,7 @@ class PropertyListener implements PropertyChangeListener {
                     } else if (name.equals("height")) {
                         cone.setHeight(value);
                     }
+                    // cylinder
                 } else if (shape instanceof Cylinder) {
                     Cylinder cylinder = (Cylinder) shape;
                     if (name.equals("radius")) {
@@ -305,6 +319,7 @@ class PropertyListener implements PropertyChangeListener {
                     } else if (name.equals("height")) {
                         cylinder.setHeight(value);
                     }
+                    // sphere
                 } else if (shape instanceof Sphere) {
                     Sphere sphere = (Sphere) shape;
                     if (name.equals("radius")) {
