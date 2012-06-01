@@ -222,11 +222,16 @@ public class Editor extends javax.swing.JFrame {
         jPanelRender.setLayout(new java.awt.GridLayout(1, 0));
 
         jTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
+        jTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPaneStateChanged(evt);
+            }
+        });
 
         jListShapes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListShapes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jListShapesMousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListShapesMouseClicked(evt);
             }
         });
         jListShapes.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -358,24 +363,6 @@ public class Editor extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            removeShape();
-        }
-    }//GEN-LAST:event_jListShapesKeyPressed
-
-    private void jListShapesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListShapesMousePressed
-        if (evt.getButton() == MouseEvent.BUTTON1) {
-            if (evt.getClickCount() == 2) {
-                Shape shape = (Shape) jListShapes.getSelectedValue();
-                if (shape != null) {
-                    properties.addProperties(shape);
-                    jTabbedPane.setSelectedIndex(1);
-                }
-            }
-        }
-    }//GEN-LAST:event_jListShapesMousePressed
-
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         exitEditor();
     }//GEN-LAST:event_formWindowClosed
@@ -398,6 +385,41 @@ public class Editor extends javax.swing.JFrame {
     private void jButtonSphereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSphereActionPerformed
         insertShape(new Sphere(0.5f));
     }//GEN-LAST:event_jButtonSphereActionPerformed
+
+    /*
+     * List
+     */
+    private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
+            removeShape();
+        }
+    }//GEN-LAST:event_jListShapesKeyPressed
+
+    private void jListShapesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListShapesMouseClicked
+        if (evt.getButton() == MouseEvent.BUTTON1) {
+            if (evt.getClickCount() == 2) {
+                if (!jListShapes.isSelectionEmpty()) {
+                    jTabbedPane.setSelectedIndex(1);
+                }
+            }
+        }
+    }//GEN-LAST:event_jListShapesMouseClicked
+
+    /*
+     * Tabs
+     */
+    private void jTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneStateChanged
+        // properties tab
+        if (jTabbedPane.getSelectedIndex() == 1) {
+            // selected shape on list
+            Shape shape = (Shape) jListShapes.getSelectedValue();
+            if (shape != null) {
+                properties.addProperties(shape);
+            } else {
+                properties.clear();
+            }
+        }
+    }//GEN-LAST:event_jTabbedPaneStateChanged
 
     /**
      * @param args the command line arguments
