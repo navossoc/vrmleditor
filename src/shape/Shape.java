@@ -40,7 +40,9 @@ public abstract class Shape {
         // scale
         Gdx.gl10.glScalef(scale.x, scale.y, scale.z);
         // rotate
-        Gdx.gl10.glRotatef(rotation.w, rotation.x, rotation.y, rotation.z);
+        if (rotation.x != 0 || rotation.y != 0 || rotation.z != 0) {
+            Gdx.gl10.glRotatef(rotation.w, rotation.x, rotation.y, rotation.z);
+        }
         // translate
         Gdx.gl10.glTranslatef(translation.x, translation.y, translation.z);
 
