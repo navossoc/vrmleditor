@@ -4,6 +4,7 @@ import com.l2fprod.common.propertysheet.DefaultProperty;
 import com.l2fprod.common.propertysheet.Property;
 import com.l2fprod.common.propertysheet.PropertySheetPanel;
 import com.l2fprod.common.propertysheet.PropertySheetTable;
+import history.HistoryInfo;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -41,7 +42,6 @@ public class Properties {
     public void clear() {
         // clear all properties and listeners
         panel.setTable(new PropertySheetTable());
-        //panel.getEditorRegistry().registerEditor(Float.class, FloatPropertyEditor2.class);
 
         // settings
         panel.setMode(PropertySheetPanel.VIEW_AS_CATEGORIES);
@@ -258,6 +258,9 @@ class PropertyListener implements PropertyChangeListener {
             Property property = (Property) obj;
             String name = property.getName();
 
+            // keep tracking of modifications
+            Editor.singleton.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.EDIT));
+
             // color
             if (name.equals("color")) {
                 Color color = (Color) property.getValue();
@@ -267,7 +270,13 @@ class PropertyListener implements PropertyChangeListener {
 
                 // transparency
                 if (name.equals("transparency")) {
+                    if (value < 0) {
+                        value = 0;
+                    } else if (value > 1) {
+                        value = 1;
+                    }
                     shape.setColorA(value);
+                    property.setValue(value);
                 } // scale
                 else if (name.equals("scaleX")) {
                     shape.setScaleX(value);
