@@ -91,11 +91,13 @@ public class NumberPropertyEditor extends AbstractPropertyEditor {
 
     @Override
     public void setValue(Object value) {
+        JFormattedTextField text = (JFormattedTextField) editor;
         if (value instanceof Number) {
-            ((JFormattedTextField) editor).setText(value.toString());
+            text.setText(String.format("%.2f", value));
         } else {
-            ((JFormattedTextField) editor).setValue(getDefaultValue());
+            text.setValue(getDefaultValue());
         }
+        text.selectAll();
         lastGoodValue = value;
     }
 

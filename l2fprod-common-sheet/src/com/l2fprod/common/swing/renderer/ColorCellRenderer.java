@@ -53,8 +53,7 @@ public class ColorCellRenderer extends DefaultCellRenderer {
         }
 
         Color color = (Color) value;
-        return "R:" + color.getRed() + " G:" + color.getGreen() + " B:"
-                + color.getBlue() + " - " + toHex(color);
+        return toHex(color);
     }
 
     @Override

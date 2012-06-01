@@ -18,7 +18,10 @@
 package com.l2fprod.common.propertysheet;
 
 import java.awt.Component;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyEditor;
@@ -53,44 +56,11 @@ public class CellEditorAdapter
         }
     }
 
-    /**
-     * Select all text when focus gained, deselect when focus lost.
-     */
-    class SelectOnFocus implements FocusListener {
-
-        @Override
-        public void focusGained(final FocusEvent e) {
-            if (!(e.getSource() instanceof JTextField)) {
-                return;
-            }
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    ((JTextField) e.getSource()).selectAll();
-                }
-            });
-        }
-
-        @Override
-        public void focusLost(final FocusEvent e) {
-            if (!(e.getSource() instanceof JTextField)) {
-                return;
-            }
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    ((JTextField) e.getSource()).select(0, 0);
-                }
-            });
-        }
-    }
-
     public CellEditorAdapter(PropertyEditor editor) {
         this.editor = editor;
         Component component = editor.getCustomEditor();
         if (component instanceof JTextField) {
             JTextField field = (JTextField) component;
-            field.addFocusListener(new SelectOnFocus());
             field.addActionListener(new CommitEditing());
             field.registerKeyboardAction(
                     new CancelEditing(),

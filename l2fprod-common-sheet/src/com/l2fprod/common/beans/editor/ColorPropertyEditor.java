@@ -49,14 +49,6 @@ public class ColorPropertyEditor extends AbstractPropertyEditor {
                 selectColor();
             }
         });
-        ((JPanel) editor).add(button = ComponentFactory.Helper.getFactory().createMiniButton());
-        button.setText("X");
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                selectNull();
-            }
-        });
         ((JPanel) editor).setOpaque(false);
     }
 
