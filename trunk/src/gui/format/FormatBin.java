@@ -3,7 +3,10 @@ package gui.format;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -18,14 +21,14 @@ public class FormatBin {
 
     public static List<Shape> open(String filename) {
 
-        List<Shape> shapes = new ArrayList<Shape>();
-
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
 
-            long objects = dataInputStream.readLong();
-            for (long i = 0; i < objects; i++) {
+            int objects = dataInputStream.readInt();
+
+            List<Shape> shapes = new ArrayList<Shape>(objects);
+            for (int i = 0; i < objects; i++) {
 
                 // type
                 byte[] type = new byte[8];
@@ -106,7 +109,7 @@ public class FormatBin {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
 
-            dataOutputStream.writeLong(listModel.getSize());
+            dataOutputStream.writeInt(listModel.getSize());
 
             Enumeration e = listModel.elements();
             while (e.hasMoreElements()) {
