@@ -69,7 +69,7 @@ public class History {
                 break;
             }
             case DELETE: {
-                Editor.singleton.removeShape(info.shape);
+                Editor.singleton.delShape(info.shape);
                 break;
             }
         }
@@ -84,7 +84,7 @@ public class History {
         HistoryInfo info = undoStack.pop();
         switch (info.type) {
             case ADD: {
-                Editor.singleton.removeShape(info.shape);
+                Editor.singleton.delShape(info.shape);
                 break;
             }
             case EDIT: {

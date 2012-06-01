@@ -23,44 +23,11 @@ public class MenuEdit {
         }
     }
 
-    public static class ItemDelete implements ActionListener {
+    public static class ItemRemove implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Editor.singleton.deleteShape();
-        }
-    }
-
-    public static class ItemScale implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("edit -> scale");
-        }
-    }
-
-    public static class ItemRotate implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("edit -> rotate");
-        }
-    }
-
-    public static class ItemTranslate implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println("edit -> translate");
-        }
-    }
-
-    public static class ItemWireframe implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Render render = Editor.singleton.getRenderer();
-            render.setWireframe(!render.isWireframe());
+            Editor.singleton.removeShape();
         }
     }
 }
