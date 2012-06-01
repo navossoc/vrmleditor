@@ -1,9 +1,6 @@
 package gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
-import gui.menu.MenuEdit;
-import gui.menu.MenuFile;
-import gui.menu.MenuInsert;
 import history.History;
 import history.HistoryInfo;
 import java.awt.event.KeyEvent;
@@ -12,7 +9,12 @@ import java.util.Enumeration;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
+import javax.swing.ListModel;
 import shape.Shape;
+import shape.geometry.Box;
+import shape.geometry.Cone;
+import shape.geometry.Cylinder;
+import shape.geometry.Sphere;
 
 /**
  *
@@ -20,83 +22,30 @@ import shape.Shape;
  */
 public class Editor extends javax.swing.JFrame {
 
-    private LwjglCanvas canvas;
-    private DefaultListModel listModel;
-    private History history;
-    private Render renderer;
     public static Editor singleton;
+    private LwjglCanvas canvas;
+    private History history;
     private Properties properties;
+    private Render renderer;
 
     /**
      * Creates new form Editor
      */
     public Editor() {
-        listModel = new DefaultListModel();
-        renderer = new Render(listModel);
-        canvas = new LwjglCanvas(renderer, false);
-        history = new History();
-
         initComponents();
-        jPanelRender.add(canvas.getCanvas());
+    }
+
+    private void initEditor() {
+        renderer = new Render(getListModel());
+        canvas = new LwjglCanvas(renderer, false);
+
+        Menu.registerActionListeners();
+
+        history = new History();
         properties = new Properties(propertySheetPanel);
         properties.clear();
 
-        //setExtendedState(MAXIMIZED_BOTH);
-    }
-
-    /**
-     * Add a Shape to render
-     *
-     * @param shape
-     */
-    public void addShape(Shape shape) {
-        listModel.addElement(shape);
-    }
-
-    /**
-     * Delete a Shape from JList
-     */
-    public void deleteShape() {
-        if (jListShapes.isSelectionEmpty()) {
-            return;
-        }
-
-        Shape shape = (Shape) jListShapes.getSelectedValue();
-        if (JOptionPane.showConfirmDialog(Editor.singleton,
-                "Deseja remover o objeto?",
-                shape.toString(),
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-            history.insertUndo(new HistoryInfo(shape, HistoryInfo.Type.DELETE));
-            removeShape(shape);
-        }
-    }
-
-    /**
-     * Edit a Shape from JList
-     *
-     * @param shape
-     * @return
-     */
-    public Shape editShape(Shape shape) {
-        Enumeration e = listModel.elements();
-        while (e.hasMoreElements()) {
-            Shape list = (Shape) e.nextElement();
-            if (list.equals(shape)) {
-                int index = listModel.indexOf(list);
-                return (Shape) listModel.set(index, shape);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Remove a Shape
-     *
-     * @param shape
-     */
-    public void removeShape(Shape shape) {
-        listModel.removeElement(shape);
+        jPanelRender.add(canvas.getCanvas());
     }
 
     /**
@@ -113,6 +62,71 @@ public class Editor extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Add a Shape to JList
+     *
+     * @param shape
+     */
+    public void addShape(Shape shape) {
+        getListModel().addElement(shape);
+    }
+
+    /**
+     * Remove a Shape from JList
+     *
+     * @param shape
+     */
+    public void delShape(Shape shape) {
+        getListModel().removeElement(shape);
+    }
+
+    /**
+     * Edit a Shape from JList
+     *
+     * @param shape
+     * @return
+     */
+    public Shape editShape(Shape shape) {
+        Enumeration e = getListModel().elements();
+        while (e.hasMoreElements()) {
+            Shape list = (Shape) e.nextElement();
+            if (list.equals(shape)) {
+                int index = getListModel().indexOf(list);
+                return (Shape) getListModel().set(index, shape);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Insert a Shape, also tracks the history of changes
+     *
+     * @param shape
+     */
+    private void insertShape(Shape shape) {
+        history.insertUndo(new HistoryInfo(shape, HistoryInfo.Type.ADD));
+        addShape(shape);
+    }
+
+    /**
+     * Remove a Shape, also tracks the history of changes
+     */
+    public void removeShape() {
+        if (jListShapes.isSelectionEmpty()) {
+            return;
+        }
+
+        Shape shape = (Shape) jListShapes.getSelectedValue();
+        if (JOptionPane.showConfirmDialog(Editor.singleton,
+                "Deseja remover o objeto?",
+                shape.toString(),
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+            history.insertUndo(new HistoryInfo(shape, HistoryInfo.Type.DELETE));
+            delShape(shape);
+        }
+    }
+
     /*
      * Getters
      */
@@ -121,7 +135,8 @@ public class Editor extends javax.swing.JFrame {
     }
 
     public DefaultListModel getListModel() {
-        return listModel;
+        ListModel list = jListShapes.getModel();
+        return (DefaultListModel) list;
     }
 
     public Render getRenderer() {
@@ -143,7 +158,7 @@ public class Editor extends javax.swing.JFrame {
         jPanelRender = new javax.swing.JPanel();
         jTabbedPane = new javax.swing.JTabbedPane();
         jScrollPaneList = new javax.swing.JScrollPane();
-        jListShapes = new javax.swing.JList();
+        jListShapes = new javax.swing.JList(new DefaultListModel());
         propertySheetPanel = new com.l2fprod.common.propertysheet.PropertySheetPanel();
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
@@ -151,23 +166,17 @@ public class Editor extends javax.swing.JFrame {
         jMenuFileOpen = new javax.swing.JMenuItem();
         jMenuFileSave = new javax.swing.JMenuItem();
         jMenuFileExport = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jSeparatorFile = new javax.swing.JPopupMenu.Separator();
         jMenuFileExit = new javax.swing.JMenuItem();
         jMenuEdit = new javax.swing.JMenu();
         jMenuEditUndo = new javax.swing.JMenuItem();
         jMenuEditRedo = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuEditDelete = new javax.swing.JMenuItem();
-        jMenuEditScale = new javax.swing.JMenuItem();
-        jMenuEditRotate = new javax.swing.JMenuItem();
-        jMenuEditTranslate = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuEditWireframe = new javax.swing.JCheckBoxMenuItem();
-        jMenuInsert = new javax.swing.JMenu();
-        jMenuInsertBox = new javax.swing.JMenuItem();
-        jMenuInsertCylinder = new javax.swing.JMenuItem();
-        jMenuInsertCone = new javax.swing.JMenuItem();
-        jMenuInsertSphere = new javax.swing.JMenuItem();
+        jSeparatorEdit = new javax.swing.JPopupMenu.Separator();
+        jMenuEditRemove = new javax.swing.JMenuItem();
+        jMenuView = new javax.swing.JMenu();
+        jMenuViewWireframe = new javax.swing.JCheckBoxMenuItem();
+        jMenuHelp = new javax.swing.JMenu();
+        jMenuHelpAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("VRML Editor");
@@ -179,28 +188,41 @@ public class Editor extends javax.swing.JFrame {
 
         jButtonBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/box-64.png"))); // NOI18N
         jButtonBox.setToolTipText("Caixa");
-        jButtonBox.addActionListener(new MenuInsert.ItemBox());
+        jButtonBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBoxActionPerformed(evt);
+            }
+        });
 
         jButtonCylinder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cylinder-64.png"))); // NOI18N
         jButtonCylinder.setToolTipText("Cilindro");
-        jButtonCylinder.addActionListener(new MenuInsert.ItemCylinder());
+        jButtonCylinder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCylinderActionPerformed(evt);
+            }
+        });
 
         jButtonCone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cone-64.png"))); // NOI18N
         jButtonCone.setToolTipText("Cilindro");
-        jButtonCone.addActionListener(new MenuInsert.ItemCone());
+        jButtonCone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonConeActionPerformed(evt);
+            }
+        });
 
         jButtonSphere.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/sphere-64.png"))); // NOI18N
         jButtonSphere.setToolTipText("Esfera");
-        jButtonSphere.addActionListener(new MenuInsert.ItemSphere());
+        jButtonSphere.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSphereActionPerformed(evt);
+            }
+        });
 
         jPanelRender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanelRender.setLayout(new java.awt.GridLayout(1, 0));
 
         jTabbedPane.setTabPlacement(javax.swing.JTabbedPane.BOTTOM);
 
-        jScrollPaneList.setBorder(null);
-
-        jListShapes.setModel(listModel);
         jListShapes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListShapes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -222,30 +244,30 @@ public class Editor extends javax.swing.JFrame {
         jMenuFile.setMnemonic('a');
         jMenuFile.setText("Arquivo");
 
+        jMenuFileNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         jMenuFileNew.setMnemonic('n');
         jMenuFileNew.setText("Novo");
-        jMenuFileNew.addActionListener(new MenuFile.ItemNew());
         jMenuFile.add(jMenuFileNew);
 
+        jMenuFileOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         jMenuFileOpen.setMnemonic('a');
         jMenuFileOpen.setText("Abrir");
-        jMenuFileOpen.addActionListener(new MenuFile.ItemOpen());
         jMenuFile.add(jMenuFileOpen);
 
+        jMenuFileSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         jMenuFileSave.setMnemonic('s');
         jMenuFileSave.setText("Salvar");
-        jMenuFileSave.addActionListener(new MenuFile.ItemSave());
         jMenuFile.add(jMenuFileSave);
 
+        jMenuFileExport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
         jMenuFileExport.setMnemonic('e');
         jMenuFileExport.setText("Exportar");
-        jMenuFileExport.addActionListener(new MenuFile.ItemExport());
         jMenuFile.add(jMenuFileExport);
-        jMenuFile.add(jSeparator1);
+        jMenuFile.add(jSeparatorFile);
 
+        jMenuFileExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         jMenuFileExit.setMnemonic('i');
         jMenuFileExit.setText("Sair");
-        jMenuFileExit.addActionListener(new MenuFile.ItemExit());
         jMenuFile.add(jMenuFileExit);
 
         jMenuBar.add(jMenuFile);
@@ -253,69 +275,42 @@ public class Editor extends javax.swing.JFrame {
         jMenuEdit.setMnemonic('e');
         jMenuEdit.setText("Editar");
 
+        jMenuEditUndo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         jMenuEditUndo.setMnemonic('d');
         jMenuEditUndo.setText("Desfazer");
-        jMenuEditUndo.addActionListener(new MenuEdit.ItemUndo());
         jMenuEdit.add(jMenuEditUndo);
 
+        jMenuEditRedo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         jMenuEditRedo.setMnemonic('r');
         jMenuEditRedo.setText("Refazer");
-        jMenuEditRedo.addActionListener(new MenuEdit.ItemRedo());
         jMenuEdit.add(jMenuEditRedo);
-        jMenuEdit.add(jSeparator2);
+        jMenuEdit.add(jSeparatorEdit);
 
-        jMenuEditDelete.setMnemonic('x');
-        jMenuEditDelete.setText("Excluir");
-        jMenuEditDelete.addActionListener(new MenuEdit.ItemDelete());
-        jMenuEdit.add(jMenuEditDelete);
-
-        jMenuEditScale.setMnemonic('e');
-        jMenuEditScale.setText("Escala");
-        jMenuEditScale.addActionListener(new MenuEdit.ItemScale());
-        jMenuEdit.add(jMenuEditScale);
-
-        jMenuEditRotate.setMnemonic('g');
-        jMenuEditRotate.setText("Girar");
-        jMenuEditRotate.addActionListener(new MenuEdit.ItemRotate());
-        jMenuEdit.add(jMenuEditRotate);
-
-        jMenuEditTranslate.setMnemonic('m');
-        jMenuEditTranslate.setText("Mover");
-        jMenuEditTranslate.addActionListener(new MenuEdit.ItemTranslate());
-        jMenuEdit.add(jMenuEditTranslate);
-        jMenuEdit.add(jSeparator3);
-
-        jMenuEditWireframe.setSelected(true);
-        jMenuEditWireframe.setText("Wireframe");
-        jMenuEditWireframe.addActionListener(new MenuEdit.ItemWireframe());
-        jMenuEdit.add(jMenuEditWireframe);
+        jMenuEditRemove.setMnemonic('x');
+        jMenuEditRemove.setText("Excluir");
+        jMenuEdit.add(jMenuEditRemove);
 
         jMenuBar.add(jMenuEdit);
 
-        jMenuInsert.setMnemonic('i');
-        jMenuInsert.setText("Inserir");
+        jMenuView.setMnemonic('x');
+        jMenuView.setText("Exibir");
 
-        jMenuInsertBox.setMnemonic('a');
-        jMenuInsertBox.setText("Caixa");
-        jMenuInsertBox.addActionListener(new MenuInsert.ItemBox());
-        jMenuInsert.add(jMenuInsertBox);
+        jMenuViewWireframe.setMnemonic('w');
+        jMenuViewWireframe.setSelected(true);
+        jMenuViewWireframe.setText("Wireframe");
+        jMenuView.add(jMenuViewWireframe);
 
-        jMenuInsertCylinder.setMnemonic('i');
-        jMenuInsertCylinder.setText("Cilindro");
-        jMenuInsertCylinder.addActionListener(new MenuInsert.ItemCylinder());
-        jMenuInsert.add(jMenuInsertCylinder);
+        jMenuBar.add(jMenuView);
 
-        jMenuInsertCone.setMnemonic('o');
-        jMenuInsertCone.setText("Cone");
-        jMenuInsertCone.addActionListener(new MenuInsert.ItemCone());
-        jMenuInsert.add(jMenuInsertCone);
+        jMenuHelp.setMnemonic('u');
+        jMenuHelp.setText("Ajuda");
 
-        jMenuInsertSphere.setMnemonic('e');
-        jMenuInsertSphere.setText("Esfera");
-        jMenuInsertSphere.addActionListener(new MenuInsert.ItemSphere());
-        jMenuInsert.add(jMenuInsertSphere);
+        jMenuHelpAbout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuHelpAbout.setMnemonic('b');
+        jMenuHelpAbout.setText("Sobre");
+        jMenuHelp.add(jMenuHelpAbout);
 
-        jMenuBar.add(jMenuInsert);
+        jMenuBar.add(jMenuHelp);
 
         setJMenuBar(jMenuBar);
 
@@ -365,7 +360,7 @@ public class Editor extends javax.swing.JFrame {
 
     private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            deleteShape();
+            removeShape();
         }
     }//GEN-LAST:event_jListShapesKeyPressed
 
@@ -384,6 +379,25 @@ public class Editor extends javax.swing.JFrame {
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         exitEditor();
     }//GEN-LAST:event_formWindowClosed
+
+    /*
+     * Buttons
+     */
+    private void jButtonBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBoxActionPerformed
+        insertShape(new Box(1.0f, 1.0f, 1.0f));
+    }//GEN-LAST:event_jButtonBoxActionPerformed
+
+    private void jButtonCylinderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCylinderActionPerformed
+        insertShape(new Cone(0.5f, 1.0f));
+    }//GEN-LAST:event_jButtonCylinderActionPerformed
+
+    private void jButtonConeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConeActionPerformed
+        insertShape(new Cylinder(0.5f, 1.0f));
+    }//GEN-LAST:event_jButtonConeActionPerformed
+
+    private void jButtonSphereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSphereActionPerformed
+        insertShape(new Sphere(0.5f));
+    }//GEN-LAST:event_jButtonSphereActionPerformed
 
     /**
      * @param args the command line arguments
@@ -416,6 +430,7 @@ public class Editor extends javax.swing.JFrame {
                 // fix the problem with the menu items appearing behind drawing canvas
                 JPopupMenu.setDefaultLightWeightPopupEnabled(false);
                 singleton = new Editor();
+                singleton.initEditor();
                 singleton.setVisible(true);
             }
         });
@@ -428,29 +443,23 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JList jListShapes;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuEdit;
-    private javax.swing.JMenuItem jMenuEditDelete;
-    private javax.swing.JMenuItem jMenuEditRedo;
-    private javax.swing.JMenuItem jMenuEditRotate;
-    private javax.swing.JMenuItem jMenuEditScale;
-    private javax.swing.JMenuItem jMenuEditTranslate;
-    private javax.swing.JMenuItem jMenuEditUndo;
-    private javax.swing.JCheckBoxMenuItem jMenuEditWireframe;
+    protected javax.swing.JMenuItem jMenuEditRedo;
+    protected javax.swing.JMenuItem jMenuEditRemove;
+    protected javax.swing.JMenuItem jMenuEditUndo;
     private javax.swing.JMenu jMenuFile;
-    private javax.swing.JMenuItem jMenuFileExit;
-    private javax.swing.JMenuItem jMenuFileExport;
-    private javax.swing.JMenuItem jMenuFileNew;
-    private javax.swing.JMenuItem jMenuFileOpen;
-    private javax.swing.JMenuItem jMenuFileSave;
-    private javax.swing.JMenu jMenuInsert;
-    private javax.swing.JMenuItem jMenuInsertBox;
-    private javax.swing.JMenuItem jMenuInsertCone;
-    private javax.swing.JMenuItem jMenuInsertCylinder;
-    private javax.swing.JMenuItem jMenuInsertSphere;
+    protected javax.swing.JMenuItem jMenuFileExit;
+    protected javax.swing.JMenuItem jMenuFileExport;
+    protected javax.swing.JMenuItem jMenuFileNew;
+    protected javax.swing.JMenuItem jMenuFileOpen;
+    protected javax.swing.JMenuItem jMenuFileSave;
+    private javax.swing.JMenu jMenuHelp;
+    protected javax.swing.JMenuItem jMenuHelpAbout;
+    private javax.swing.JMenu jMenuView;
+    protected javax.swing.JCheckBoxMenuItem jMenuViewWireframe;
     private javax.swing.JPanel jPanelRender;
     private javax.swing.JScrollPane jScrollPaneList;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparatorEdit;
+    private javax.swing.JPopupMenu.Separator jSeparatorFile;
     private javax.swing.JTabbedPane jTabbedPane;
     private com.l2fprod.common.propertysheet.PropertySheetPanel propertySheetPanel;
     // End of variables declaration//GEN-END:variables
