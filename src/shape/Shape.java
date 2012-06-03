@@ -3,6 +3,7 @@ package shape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
 import java.io.DataOutputStream;
@@ -198,7 +199,7 @@ public abstract class Shape {
                 + "Transform {\r\n"
                 + "\ttranslation %.2f %.2f %.2f\r\n"
                 + "\tscale %.2f %.2f %.2f\r\n"
-                + "\trotation %.2f %.2f %.2f %.2f\r\n"
+                + "\trotation %.2f %.2f %.2f %.3f\r\n"
                 + "\tchildren Shape {\r\n"
                 + "\t\tgeometry %s {\r\n"
                 + "%%s"
@@ -213,10 +214,11 @@ public abstract class Shape {
                 this.toString(),
                 translation.x, translation.y, translation.z,
                 scale.x, scale.y, scale.z,
-                rotation.x, rotation.y, rotation.z, rotation.w,
+                rotation.x, rotation.y, rotation.z,
+                (rotation.w * MathUtils.degreesToRadians),
                 this.getClass().getSimpleName(),
                 color.r, color.g, color.b,
-                1 - color.a);
+                (1.0f - color.a));
     }
 
     public void writeBinary(DataOutputStream dataOutputStream) throws IOException {
