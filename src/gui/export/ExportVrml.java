@@ -15,6 +15,7 @@ public class ExportVrml {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream, Charset.forName("UTF-8"));
             outputStreamWriter.write("#VRML V2.0 utf8\r\n");
             outputStreamWriter.write("# Centro Universitário Fundação Santo André\r\n");
+            outputStreamWriter.write(viewPoint());
             Enumeration e = listModel.elements();
             while (e.hasMoreElements()) {
                 Shape s = (Shape) e.nextElement();
@@ -26,5 +27,33 @@ public class ExportVrml {
         } catch (Exception ex) {
             return false;
         }
+    }
+
+    // TODO: should we calculate position?
+    private static String viewPoint() {
+        return "# Cameras\r\n"
+                + "Viewpoint {\r\n"
+                + "\tdescription \"Frontal (x/y)\"\r\n"
+                + "\tfieldOfView 0.01\r\n"
+                + "\torientation 1.00 0.00 0.00 0.000\r\n"
+                + "\tposition 0.00 0.00 500.00\r\n"
+                + "},\r\n"
+                + "Viewpoint {\r\n"
+                + "\tdescription \"Lateral (z/y)\"\r\n"
+                + "\tfieldOfView 0.01\r\n"
+                + "\torientation 0.00 -1.00 0.00 1.571\r\n"
+                + "\tposition -500.00 0.00 0.00\r\n"
+                + "},\r\n"
+                + "Viewpoint {\r\n"
+                + "\tdescription \"Topo (x/z)\"\r\n"
+                + "\tfieldOfView 0.01\r\n"
+                + "\torientation 1.00 0.00 0.00 1.571\r\n"
+                + "\tposition 0.00 -500.00 0.00\r\n"
+                + "},\r\n"
+                + "Viewpoint {\r\n"
+                + "\tdescription \"3D\"\r\n"
+                + "\torientation -0.815 0.534 0.226 0.957\r\n"
+                + "\tposition 3.00 6.00 5.00\r\n"
+                + "}\r\n";
     }
 }
