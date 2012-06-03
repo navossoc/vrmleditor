@@ -375,11 +375,11 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBoxActionPerformed
 
     private void jButtonCylinderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCylinderActionPerformed
-        insertShape(new Cone(0.5f, 1.0f));
+        insertShape(new Cylinder(0.5f, 1.0f));
     }//GEN-LAST:event_jButtonCylinderActionPerformed
 
     private void jButtonConeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConeActionPerformed
-        insertShape(new Cylinder(0.5f, 1.0f));
+        insertShape(new Cone(0.5f, 1.0f));
     }//GEN-LAST:event_jButtonConeActionPerformed
 
     private void jButtonSphereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSphereActionPerformed
