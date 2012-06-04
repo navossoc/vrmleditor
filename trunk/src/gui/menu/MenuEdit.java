@@ -1,7 +1,6 @@
 package gui.menu;
 
 import gui.Editor;
-import gui.Render;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -23,7 +22,7 @@ public class MenuEdit {
         }
     }
 
-    public static class ItemRemove implements ActionListener {
+    public static class ItemDelete implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {

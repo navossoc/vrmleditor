@@ -26,7 +26,7 @@ public class Menu {
         // Edit
         editor.jMenuEditUndo.addActionListener(new MenuEdit.ItemUndo());
         editor.jMenuEditRedo.addActionListener(new MenuEdit.ItemRedo());
-        editor.jMenuEditRemove.addActionListener(new MenuEdit.ItemRemove());
+        editor.jMenuEditRemove.addActionListener(new MenuEdit.ItemDelete());
 
         // View
         editor.jMenuViewWireframe.addActionListener(new MenuView.ItemWireframe());

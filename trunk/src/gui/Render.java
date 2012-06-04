@@ -114,14 +114,15 @@ public class Render implements ApplicationListener {
     private void drawShapes() {
         // draw axis
         Axis.draw();
-        // draw all shapes
 
+        // wireframe mode
         if (isWireframe()) {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_LINE);
         } else {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_FILL);
         }
 
+        // draw all shapes
         Enumeration e = shapes.elements();
         Shape shape;
         while (e.hasMoreElements()) {
