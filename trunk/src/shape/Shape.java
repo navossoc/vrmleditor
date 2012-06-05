@@ -223,10 +223,10 @@ public abstract class Shape {
 
     public void writeBinary(DataOutputStream dataOutputStream) throws IOException {
         // shape
-        byte[] clazz = getClass().getSimpleName().getBytes();
-        byte[] name = new byte[]{0, 0, 0, 0, 0, 0, 0, 0};
-        System.arraycopy(clazz, 0, name, 0, clazz.length);
-        dataOutputStream.write(name);
+        String clazz = getClass().getSimpleName();
+        dataOutputStream.writeShort(clazz.length());
+        dataOutputStream.writeBytes(clazz);
+        dataOutputStream.write(0);  // null padding
 
         // color
         dataOutputStream.writeFloat(color.r);

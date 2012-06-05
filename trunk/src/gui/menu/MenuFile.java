@@ -6,6 +6,7 @@ import gui.format.FormatBin;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -62,8 +63,8 @@ public class MenuFile {
                 newFile();
 
                 // insert shapes from file
-                List<Shape> shapes = FormatBin.open(file);
-                if (shapes != null) {
+                List<Shape> shapes = new ArrayList<Shape>();
+                if (FormatBin.open(file, shapes)) {
                     for (Shape s : shapes) {
                         Editor.singleton.getListModel().addElement(s);
                     }
