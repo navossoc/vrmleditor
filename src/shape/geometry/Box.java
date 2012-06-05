@@ -47,9 +47,9 @@ public class Box extends Shape {
             0, 1, 2, 0, 2, 3, // front
             1, 2, 5, 2, 5, 6, // right
             0, 1, 5, 0, 4, 5, // top
-            4, 5, 7, 5, 6, 7, // back
-            2, 3, 7, 2, 6, 7, // bottom
-            0, 3, 7, 0, 4, 7, // left
+            4, 5, 6, 4, 6, 7, // back
+            2, 3, 6, 3, 6, 7, // bottom
+            0, 3, 4, 3, 4, 7, // left
         };
 
         mesh.setVertices(vertices);
