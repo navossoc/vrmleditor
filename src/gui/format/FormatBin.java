@@ -7,7 +7,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -19,20 +18,27 @@ import shape.geometry.Sphere;
 
 public class FormatBin {
 
-    public static List<Shape> open(String filename) {
+    public static boolean open(String filename, List<Shape> shapes) {
 
         try {
             FileInputStream fileInputStream = new FileInputStream(filename);
             DataInputStream dataInputStream = new DataInputStream(fileInputStream);
 
+            // header
+            byte[] header = new byte[4];
+            dataInputStream.read(header, 0, 4);
+            if (header.toString().equals("VRML")) {
+                throw new Exception("Invalid File Format!");
+            }
+            // number of objects
             int objects = dataInputStream.readInt();
 
-            List<Shape> shapes = new ArrayList<Shape>(objects);
             for (int i = 0; i < objects; i++) {
 
                 // type
-                byte[] type = new byte[8];
-                dataInputStream.read(type, 0, 8);
+                int len = dataInputStream.readShort() + 1;
+                byte[] type = new byte[len];
+                dataInputStream.read(type, 0, len);
                 String clazz = new String(type).trim();
 
                 // color
@@ -96,10 +102,10 @@ public class FormatBin {
             dataInputStream.close();
             fileInputStream.close();
 
-            return shapes;
+            return true;
 
         } catch (Exception ex) {
-            return null;
+            return false;
         }
 
     }
@@ -109,12 +115,14 @@ public class FormatBin {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
 
+            // header
+            dataOutputStream.writeBytes("VRML");
             dataOutputStream.writeInt(listModel.getSize());
 
             Enumeration e = listModel.elements();
             while (e.hasMoreElements()) {
-                Shape s = (Shape) e.nextElement();
-                s.writeBinary(dataOutputStream);
+                Shape shape = (Shape) e.nextElement();
+                shape.writeBinary(dataOutputStream);
             }
 
             dataOutputStream.close();
