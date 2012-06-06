@@ -38,14 +38,16 @@ public abstract class Shape {
 
         Gdx.gl10.glPushMatrix();
 
-        // scale
-        Gdx.gl10.glScalef(scale.x, scale.y, scale.z);
+        // translate
+        Gdx.gl10.glTranslatef(translation.x, translation.y, translation.z);
+
         // rotate
         if (rotation.x != 0 || rotation.y != 0 || rotation.z != 0) {
             Gdx.gl10.glRotatef(rotation.w, rotation.x, rotation.y, rotation.z);
         }
-        // translate
-        Gdx.gl10.glTranslatef(translation.x, translation.y, translation.z);
+
+        // scale
+        Gdx.gl10.glScalef(scale.x, scale.y, scale.z);
 
         // render
         mesh.render(primitiveType);
