@@ -14,16 +14,17 @@ import shape.Shape;
 
 public class Render implements ApplicationListener {
 
-    private DefaultListModel shapes;
-    private OrthographicCamera cameraFront;
-    private OrthographicCamera cameraSide;
-    private OrthographicCamera cameraTop;
-    private PerspectiveCamera camera3D;
+    private DefaultListModel listShapes;
+    //private TreeMultimap<Float, Shape> treeShapes;
+    private OrthographicCamera camera1;
+    private OrthographicCamera camera2;
+    private OrthographicCamera camera3;
+    private PerspectiveCamera camera4;
     private int width, height;
     private boolean wireframe;
 
     public Render(DefaultListModel shapes) {
-        this.shapes = shapes;
+        this.listShapes = shapes;
     }
 
     @Override
@@ -32,31 +33,31 @@ public class Render implements ApplicationListener {
         height = Gdx.graphics.getHeight();
 
         // 1 - Camera Front (x/y)
-        cameraFront = new OrthographicCamera(width, height);
-        cameraFront.far = Short.MAX_VALUE;
+        camera1 = new OrthographicCamera(width, height);
+        camera1.far = Short.MAX_VALUE;
         //cameraFront.rotate(0, 0, 0, 0);
-        cameraFront.position.set(0, 0, 500);
-        cameraFront.zoom = 1.0f / 100;
+        camera1.position.set(0, 0, 500);
+        camera1.zoom = 1.0f / 100;
 
-        // 2 - Camera Side (z/y)
-        cameraSide = new OrthographicCamera(width, height);
-        cameraSide.far = Short.MAX_VALUE;
-        cameraSide.rotate(90, 0, -1, 0);
-        cameraSide.position.set(-500, 0, 0);
-        cameraSide.zoom = 1.0f / 100;
+        // 2 - Camera Left (z/y)
+        camera2 = new OrthographicCamera(width, height);
+        camera2.far = Short.MAX_VALUE;
+        camera2.rotate(90, 0, -1, 0);
+        camera2.position.set(-500, 0, 0);
+        camera2.zoom = 1.0f / 100;
 
-        // 3 - Camera Top (x/z)
-        cameraTop = new OrthographicCamera(width, height);
-        cameraTop.far = Short.MAX_VALUE;
-        cameraTop.rotate(90, 1, 0, 0);
-        cameraTop.position.set(0, -500, 0);
-        cameraTop.zoom = 1.0f / 100;
+        // 3 - Camera Bottom (x/z)
+        camera3 = new OrthographicCamera(width, height);
+        camera3.far = Short.MAX_VALUE;
+        camera3.rotate(90, 1, 0, 0);
+        camera3.position.set(0, -500, 0);
+        camera3.zoom = 1.0f / 100;
 
         // 4 - Camera 3D (Free)
-        camera3D = new PerspectiveCamera(45, width, height);
-        camera3D.far = Short.MAX_VALUE;
-        camera3D.position.set(3, 6, 5);
-        camera3D.lookAt(0, 0, 0);
+        camera4 = new PerspectiveCamera(45, width, height);
+        camera4.far = Short.MAX_VALUE;
+        camera4.position.set(3, 6, 5);
+        camera4.lookAt(0, 0, 0);
 
         //wireframe
         setWireframe(true);
@@ -66,14 +67,14 @@ public class Render implements ApplicationListener {
     public void resize(int width, int height) {
         this.width = width;
         this.height = height;
-        this.cameraFront.viewportWidth = width;
-        this.cameraFront.viewportHeight = height;
-        this.cameraSide.viewportWidth = width;
-        this.cameraSide.viewportHeight = height;
-        this.cameraTop.viewportWidth = width;
-        this.cameraTop.viewportHeight = height;
-        this.camera3D.viewportWidth = width;
-        this.camera3D.viewportHeight = height;
+        this.camera1.viewportWidth = width;
+        this.camera1.viewportHeight = height;
+        this.camera2.viewportWidth = width;
+        this.camera2.viewportHeight = height;
+        this.camera3.viewportWidth = width;
+        this.camera3.viewportHeight = height;
+        this.camera4.viewportWidth = width;
+        this.camera4.viewportHeight = height;
     }
 
     @Override
@@ -82,19 +83,19 @@ public class Render implements ApplicationListener {
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
         // 1 - Camera Front (x/y)
-        adjustCamera(cameraFront, 0, height);
+        adjustCamera(camera1, 0, height);
         drawShapes();
 
         // 2 - Camera Side (z/y)
-        adjustCamera(cameraSide, width, height);
+        adjustCamera(camera2, width, height);
         drawShapes();
 
         // 3 - Camera Top (x/z)
-        adjustCamera(cameraTop, 0, 0);
+        adjustCamera(camera3, 0, 0);
         drawShapes();
 
         // 4 - Camera 3D (free)
-        adjustCamera(camera3D, width, 0);
+        adjustCamera(camera4, width, 0);
         drawShapes();
 
         // All - Draw borders
@@ -123,7 +124,7 @@ public class Render implements ApplicationListener {
         }
 
         // draw all shapes
-        Enumeration e = shapes.elements();
+        Enumeration e = listShapes.elements();
         Shape shape;
         while (e.hasMoreElements()) {
             shape = (Shape) e.nextElement();
