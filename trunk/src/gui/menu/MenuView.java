@@ -1,7 +1,6 @@
 package gui.menu;
 
-import gui.Editor;
-import gui.Render;
+import gui.Settings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -11,8 +10,7 @@ public class MenuView {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Render render = Editor.singleton.getRenderer();
-            render.setWireframe(!render.isWireframe());
+            Settings.setWireframe(!Settings.isWireframe());
         }
     }
 }

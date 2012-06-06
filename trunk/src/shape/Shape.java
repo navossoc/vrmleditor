@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
+import gui.Settings;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -290,6 +291,6 @@ public abstract class Shape implements Comparable<Shape> {
 
     @Override
     public String toString() {
-        return "Shape " + ID;
+        return Settings.getMessage("shapeShape") + " " + ID;
     }
 }

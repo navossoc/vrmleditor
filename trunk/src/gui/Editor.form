@@ -239,7 +239,9 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resources/icons/box-64.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Caixa"/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="languages/pt_BR.properties" key="shapeBox" replaceFormat="Settings.getMessage(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBoxActionPerformed"/>
@@ -250,7 +252,9 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resources/icons/cylinder-64.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Cilindro"/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="languages/pt_BR.properties" key="shapeCylinder" replaceFormat="Settings.getMessage(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCylinderActionPerformed"/>
@@ -261,7 +265,9 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resources/icons/cone-64.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Cilindro"/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="languages/pt_BR.properties" key="shapeCone" replaceFormat="Settings.getMessage(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonConeActionPerformed"/>
@@ -272,7 +278,9 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/resources/icons/sphere-64.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Esfera"/>
+        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
+          <ResourceString bundle="languages/pt_BR.properties" key="shapeSphere" replaceFormat="Settings.getMessage(&quot;{key}&quot;)"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSphereActionPerformed"/>

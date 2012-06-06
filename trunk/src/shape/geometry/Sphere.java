@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.MathUtils;
+import gui.Settings;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -93,6 +94,6 @@ public class Sphere extends Shape {
 
     @Override
     public String toString() {
-        return "Esfera " + ID;
+        return Settings.getMessage("shapeSphere") + " " + ID;
     }
 }

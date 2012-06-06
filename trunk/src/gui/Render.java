@@ -21,7 +21,6 @@ public class Render implements ApplicationListener {
     private OrthographicCamera camera3;
     private PerspectiveCamera camera4;
     private int width, height;
-    private boolean wireframe;
 
     public Render(DefaultListModel shapes) {
         this.listShapes = shapes;
@@ -58,9 +57,6 @@ public class Render implements ApplicationListener {
         camera4.far = Short.MAX_VALUE;
         camera4.position.set(3, 6, 5);
         camera4.lookAt(0, 0, 0);
-
-        //wireframe
-        setWireframe(true);
     }
 
     @Override
@@ -117,7 +113,7 @@ public class Render implements ApplicationListener {
         Axis.draw();
 
         // wireframe mode
-        if (isWireframe()) {
+        if (Settings.isWireframe()) {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_LINE);
         } else {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_FILL);
@@ -130,14 +126,6 @@ public class Render implements ApplicationListener {
             shape = (Shape) e.nextElement();
             shape.draw();
         }
-    }
-
-    public boolean isWireframe() {
-        return wireframe;
-    }
-
-    public void setWireframe(boolean wireframe) {
-        this.wireframe = wireframe;
     }
 
     @Override
