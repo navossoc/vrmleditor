@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
-public abstract class Shape {
+public abstract class Shape implements Comparable<Shape> {
 
     public static int ID_COUNTER = 1;
     protected int ID;
@@ -251,6 +251,19 @@ public abstract class Shape {
         dataOutputStream.writeFloat(translation.x);
         dataOutputStream.writeFloat(translation.y);
         dataOutputStream.writeFloat(translation.z);
+    }
+
+    @Override
+    public int compareTo(Shape shape) {
+        if (ID == shape.ID) {
+            return 0;
+        } else {
+            if (ID < shape.ID) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
     }
 
     @Override
