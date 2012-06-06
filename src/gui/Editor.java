@@ -187,7 +187,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/box-64.png"))); // NOI18N
-        jButtonBox.setToolTipText("Caixa");
+        jButtonBox.setToolTipText(Settings.getMessage("shapeBox")); // NOI18N
         jButtonBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBoxActionPerformed(evt);
@@ -195,7 +195,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonCylinder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cylinder-64.png"))); // NOI18N
-        jButtonCylinder.setToolTipText("Cilindro");
+        jButtonCylinder.setToolTipText(Settings.getMessage("shapeCylinder")); // NOI18N
         jButtonCylinder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCylinderActionPerformed(evt);
@@ -203,7 +203,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonCone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cone-64.png"))); // NOI18N
-        jButtonCone.setToolTipText("Cilindro");
+        jButtonCone.setToolTipText(Settings.getMessage("shapeCone")); // NOI18N
         jButtonCone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonConeActionPerformed(evt);
@@ -211,7 +211,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonSphere.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/sphere-64.png"))); // NOI18N
-        jButtonSphere.setToolTipText("Esfera");
+        jButtonSphere.setToolTipText(Settings.getMessage("shapeSphere")); // NOI18N
         jButtonSphere.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSphereActionPerformed(evt);

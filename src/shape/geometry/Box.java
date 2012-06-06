@@ -3,6 +3,7 @@ package shape.geometry;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
+import gui.Settings;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
@@ -110,6 +111,6 @@ public class Box extends Shape {
 
     @Override
     public String toString() {
-        return "Caixa " + ID;
+        return Settings.getMessage("shapeBox") + " " + ID;
     }
 }
