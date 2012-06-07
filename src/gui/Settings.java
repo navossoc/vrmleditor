@@ -10,15 +10,12 @@ public class Settings {
     private static final Properties properties;
     private static ResourceBundle resource;
     // custom
-    private static String camera1;
-    private static String camera2;
-    private static String camera3;
-    private static String camera4;
+    private static String[] cameras;
     private static String language;
     private static boolean wireframe;
 
     /**
-     * Load application settings
+     Load application settings
      */
     static {
         properties = new Properties();
@@ -28,18 +25,19 @@ public class Settings {
             // fallback to default settings
         }
         // Read common settings
+        cameras = new String[4];
         initSettings();
     }
 
     public static void initSettings() {
         // camera1
-        camera1 = properties.getProperty("camera1", "front");
+        cameras[0] = properties.getProperty("camera1", "front");
         // camera2
-        camera2 = properties.getProperty("camera2", "left");
+        cameras[1] = properties.getProperty("camera2", "left");
         // camera3
-        camera3 = properties.getProperty("camera3", "bottom");
+        cameras[2] = properties.getProperty("camera3", "bottom");
         // camera4
-        camera4 = properties.getProperty("camera4", "free");
+        cameras[3] = properties.getProperty("camera4", "free");
         // language
         language = properties.getProperty("language", "pt_BR");
         resource = ResourceBundle.getBundle("languages/" + language);
@@ -53,6 +51,10 @@ public class Settings {
 
     public static String getMessage(String key) {
         return resource.getString(key);
+    }
+
+    public static String getCamera(int index) {
+        return cameras[index];
     }
 
     public static boolean isWireframe() {
