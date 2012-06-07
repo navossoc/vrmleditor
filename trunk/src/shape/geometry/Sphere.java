@@ -102,6 +102,6 @@ public class Sphere extends Shape {
 
     @Override
     public String toString() {
-        return Settings.getMessage("shapeSphere") + " " + ID;
+        return Settings.getMessage("Shape.Sphere") + " " + ID;
     }
 }

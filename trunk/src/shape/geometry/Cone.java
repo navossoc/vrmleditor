@@ -105,6 +105,6 @@ public class Cone extends Shape {
 
     @Override
     public String toString() {
-        return Settings.getMessage("shapeCone") + " " + ID;
+        return Settings.getMessage("Shape.Cone") + " " + ID;
     }
 }

@@ -130,6 +130,6 @@ public class Cylinder extends Shape {
 
     @Override
     public String toString() {
-        return Settings.getMessage("shapeCylinder") + " " + ID;
+        return Settings.getMessage("Shape.Cylinder") + " " + ID;
     }
 }

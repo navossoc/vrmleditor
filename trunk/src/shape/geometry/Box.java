@@ -111,6 +111,6 @@ public class Box extends Shape {
 
     @Override
     public String toString() {
-        return Settings.getMessage("shapeBox") + " " + ID;
+        return Settings.getMessage("Shape.Box") + " " + ID;
     }
 }
