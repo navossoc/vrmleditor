@@ -69,6 +69,8 @@ public class Editor extends javax.swing.JFrame {
      */
     public void addShape(Shape shape) {
         getListModel().addElement(shape);
+        jListShapes.setSelectedValue(shape, true);
+        jTabbedPane.setSelectedIndex(0);
     }
 
     /**

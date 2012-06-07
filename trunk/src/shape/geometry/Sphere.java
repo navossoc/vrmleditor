@@ -3,7 +3,10 @@ package shape.geometry;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import gui.Settings;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -66,6 +69,11 @@ public class Sphere extends Shape {
         Sphere temp = new Sphere(radius);
         super.set(temp);
         return temp;
+    }
+
+    @Override
+    public boolean intersect(Ray ray, Vector3 intersectionVector) {
+        return Intersector.intersectRaySphere(ray, translation, radius, intersectionVector);
     }
 
     public float getRadius() {
