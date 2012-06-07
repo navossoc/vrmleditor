@@ -230,6 +230,8 @@ public class Editor extends javax.swing.JFrame {
             }
         });
 
+        jScrollPaneList.setBorder(null);
+
         jListShapes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListShapes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
