@@ -310,6 +310,6 @@ public abstract class Shape implements Comparable<Shape> {
 
     @Override
     public String toString() {
-        return Settings.getMessage("shapeShape") + " " + ID;
+        return Settings.getMessage("Shape.Shape") + " " + ID;
     }
 }

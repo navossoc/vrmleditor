@@ -189,7 +189,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonBox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/box-64.png"))); // NOI18N
-        jButtonBox.setToolTipText(Settings.getMessage("shapeBox")); // NOI18N
+        jButtonBox.setToolTipText(Settings.getMessage("Shape.Box")); // NOI18N
         jButtonBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBoxActionPerformed(evt);
@@ -197,7 +197,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonCylinder.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cylinder-64.png"))); // NOI18N
-        jButtonCylinder.setToolTipText(Settings.getMessage("shapeCylinder")); // NOI18N
+        jButtonCylinder.setToolTipText(Settings.getMessage("Shape.Cylinder")); // NOI18N
         jButtonCylinder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCylinderActionPerformed(evt);
@@ -205,7 +205,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonCone.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/cone-64.png"))); // NOI18N
-        jButtonCone.setToolTipText(Settings.getMessage("shapeCone")); // NOI18N
+        jButtonCone.setToolTipText(Settings.getMessage("Shape.Cone")); // NOI18N
         jButtonCone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonConeActionPerformed(evt);
@@ -213,7 +213,7 @@ public class Editor extends javax.swing.JFrame {
         });
 
         jButtonSphere.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/sphere-64.png"))); // NOI18N
-        jButtonSphere.setToolTipText(Settings.getMessage("shapeSphere")); // NOI18N
+        jButtonSphere.setToolTipText(Settings.getMessage("Shape.Sphere")); // NOI18N
         jButtonSphere.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSphereActionPerformed(evt);

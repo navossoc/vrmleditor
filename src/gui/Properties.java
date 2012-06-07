@@ -52,8 +52,8 @@ public class Properties {
     private void addCommonProperties(Shape shape) {
         // Id
         DefaultProperty id = new DefaultProperty();
-        id.setCategory("Geral");
-        id.setDisplayName("ID");
+        id.setCategory(Settings.getMessage("Properties.General"));
+        id.setDisplayName(Settings.getMessage("Properties.General.Id"));
         id.setEditable(false);
         id.setName("id");
         id.setType(Long.class);
@@ -62,8 +62,8 @@ public class Properties {
 
         // Name
         DefaultProperty name = new DefaultProperty();
-        name.setCategory("Geral");
-        name.setDisplayName("Nome");
+        name.setCategory(Settings.getMessage("Properties.General"));
+        name.setDisplayName(Settings.getMessage("Properties.General.Name"));
         name.setEditable(false);
         name.setName("name");
         name.setType(String.class);
@@ -72,8 +72,8 @@ public class Properties {
 
         // Color
         DefaultProperty color = new DefaultProperty();
-        color.setCategory("Cor");
-        color.setDisplayName("Paleta");
+        color.setCategory(Settings.getMessage("Properties.Color"));
+        color.setDisplayName(Settings.getMessage("Properties.Color.Color"));
         color.setName("color");
         color.setType(Color.class);
         color.setValue(shape.getColorAWT());
@@ -81,8 +81,8 @@ public class Properties {
 
         // Transparency
         DefaultProperty transparency = new DefaultProperty();
-        transparency.setCategory("Cor");
-        transparency.setDisplayName("Transparência");
+        transparency.setCategory(Settings.getMessage("Properties.Color"));
+        transparency.setDisplayName(Settings.getMessage("Properties.Color.Transparency"));
         transparency.setName("transparency");
         transparency.setType(Float.class);
         transparency.setValue(shape.getColor().a);
@@ -90,22 +90,22 @@ public class Properties {
 
         // Scale
         DefaultProperty scaleX = new DefaultProperty();
-        scaleX.setCategory("Escala");
-        scaleX.setDisplayName("X");
+        scaleX.setCategory(Settings.getMessage("Properties.Scale"));
+        scaleX.setDisplayName(Settings.getMessage("Properties.Scale.X"));
         scaleX.setName("scaleX");
         scaleX.setType(Float.class);
         scaleX.setValue(shape.getScale().x);
         panel.addProperty(scaleX);
         DefaultProperty scaleY = new DefaultProperty();
-        scaleY.setCategory("Escala");
-        scaleY.setDisplayName("Y");
+        scaleY.setCategory(Settings.getMessage("Properties.Scale"));
+        scaleY.setDisplayName(Settings.getMessage("Properties.Scale.Y"));
         scaleY.setName("scaleY");
         scaleY.setType(Float.class);
         scaleY.setValue(shape.getScale().y);
         panel.addProperty(scaleY);
         DefaultProperty scaleZ = new DefaultProperty();
-        scaleZ.setCategory("Escala");
-        scaleZ.setDisplayName("Z");
+        scaleZ.setCategory(Settings.getMessage("Properties.Scale"));
+        scaleZ.setDisplayName(Settings.getMessage("Properties.Scale.Z"));
         scaleZ.setName("scaleZ");
         scaleZ.setType(Float.class);
         scaleZ.setValue(shape.getScale().z);
@@ -113,29 +113,29 @@ public class Properties {
 
         // Rotation
         DefaultProperty rotationW = new DefaultProperty();
-        rotationW.setCategory("Rotação");
-        rotationW.setDisplayName("W");
+        rotationW.setCategory(Settings.getMessage("Properties.Rotation"));
+        rotationW.setDisplayName(Settings.getMessage("Properties.Rotation.W"));
         rotationW.setName("rotationW");
         rotationW.setType(Float.class);
         rotationW.setValue(shape.getRotation().w);
         panel.addProperty(rotationW);
         DefaultProperty rotationX = new DefaultProperty();
-        rotationX.setCategory("Rotação");
-        rotationX.setDisplayName("X");
+        rotationX.setCategory(Settings.getMessage("Properties.Rotation"));
+        rotationX.setDisplayName(Settings.getMessage("Properties.Rotation.X"));
         rotationX.setName("rotationX");
         rotationX.setType(Float.class);
         rotationX.setValue(shape.getRotation().x);
         panel.addProperty(rotationX);
         DefaultProperty rotationY = new DefaultProperty();
-        rotationY.setCategory("Rotação");
-        rotationY.setDisplayName("Y");
+        rotationY.setCategory(Settings.getMessage("Properties.Rotation"));
+        rotationY.setDisplayName(Settings.getMessage("Properties.Rotation.Y"));
         rotationY.setName("rotationY");
         rotationY.setType(Float.class);
         rotationY.setValue(shape.getRotation().y);
         panel.addProperty(rotationY);
         DefaultProperty rotationZ = new DefaultProperty();
-        rotationZ.setCategory("Rotação");
-        rotationZ.setDisplayName("Z");
+        rotationZ.setCategory(Settings.getMessage("Properties.Rotation"));
+        rotationZ.setDisplayName(Settings.getMessage("Properties.Rotation.Z"));
         rotationZ.setName("rotationZ");
         rotationZ.setType(Float.class);
         rotationZ.setValue(shape.getRotation().z);
@@ -143,22 +143,22 @@ public class Properties {
 
         // Translation
         DefaultProperty translationX = new DefaultProperty();
-        translationX.setCategory("Translação");
-        translationX.setDisplayName("X");
+        translationX.setCategory(Settings.getMessage("Properties.Translation"));
+        translationX.setDisplayName(Settings.getMessage("Properties.Translation.X"));
         translationX.setName("translationX");
         translationX.setType(Float.class);
         translationX.setValue(shape.getTranslation().x);
         panel.addProperty(translationX);
         DefaultProperty translationY = new DefaultProperty();
-        translationY.setCategory("Translação");
-        translationY.setDisplayName("Y");
+        translationY.setCategory(Settings.getMessage("Properties.Translation"));
+        translationY.setDisplayName(Settings.getMessage("Properties.Translation.Y"));
         translationY.setName("translationY");
         translationY.setType(Float.class);
         translationY.setValue(shape.getTranslation().y);
         panel.addProperty(translationY);
         DefaultProperty translationZ = new DefaultProperty();
-        translationZ.setCategory("Translação");
-        translationZ.setDisplayName("Z");
+        translationZ.setCategory(Settings.getMessage("Properties.Translation"));
+        translationZ.setDisplayName(Settings.getMessage("Properties.Translation.Z"));
         translationZ.setName("translationZ");
         translationZ.setType(Float.class);
         translationZ.setValue(shape.getTranslation().z);
@@ -168,24 +168,24 @@ public class Properties {
     private void addBoxProperties(Box shape) {
         // Width
         DefaultProperty width = new DefaultProperty();
-        width.setCategory("Caixa");
-        width.setDisplayName("Largura");
+        width.setCategory(Settings.getMessage("Properties.Box"));
+        width.setDisplayName(Settings.getMessage("Properties.Box.Width"));
         width.setName("width");
         width.setType(Float.class);
         width.setValue(shape.getWidth());
         panel.addProperty(width);
         // Height
         DefaultProperty height = new DefaultProperty();
-        height.setCategory("Caixa");
-        height.setDisplayName("Altura");
+        height.setCategory(Settings.getMessage("Properties.Box"));
+        height.setDisplayName(Settings.getMessage("Properties.Box.Height"));
         height.setName("height");
         height.setType(Float.class);
         height.setValue(shape.getHeight());
         panel.addProperty(height);
         // Depth
         DefaultProperty depth = new DefaultProperty();
-        depth.setCategory("Caixa");
-        depth.setDisplayName("Profundidade");
+        depth.setCategory(Settings.getMessage("Properties.Box"));
+        depth.setDisplayName(Settings.getMessage("Properties.Box.Depth"));
         depth.setName("depth");
         depth.setType(Float.class);
         depth.setValue(shape.getDepth());
@@ -195,16 +195,16 @@ public class Properties {
     private void addConeProperties(Cone shape) {
         // Bottom Radius
         DefaultProperty radius = new DefaultProperty();
-        radius.setCategory("Cone");
-        radius.setDisplayName("Raio");
+        radius.setCategory(Settings.getMessage("Properties.Cone"));
+        radius.setDisplayName(Settings.getMessage("Properties.Cone.Radius"));
         radius.setName("radius");
         radius.setType(Float.class);
         radius.setValue(shape.getBottomRadius());
         panel.addProperty(radius);
         // Height
         DefaultProperty height = new DefaultProperty();
-        height.setCategory("Cone");
-        height.setDisplayName("Altura");
+        height.setCategory(Settings.getMessage("Properties.Cone"));
+        height.setDisplayName(Settings.getMessage("Properties.Cone.Height"));
         height.setName("height");
         height.setType(Float.class);
         height.setValue(shape.getHeight());
@@ -214,16 +214,16 @@ public class Properties {
     private void addCylinderProperties(Cylinder shape) {
         // Radius
         DefaultProperty radius = new DefaultProperty();
-        radius.setCategory("Cilindro");
-        radius.setDisplayName("Raio");
+        radius.setCategory(Settings.getMessage("Properties.Cylinder"));
+        radius.setDisplayName(Settings.getMessage("Properties.Cylinder.Radius"));
         radius.setName("radius");
         radius.setType(Float.class);
         radius.setValue(shape.getRadius());
         panel.addProperty(radius);
         // Height
         DefaultProperty height = new DefaultProperty();
-        height.setCategory("Cilindro");
-        height.setDisplayName("Altura");
+        height.setCategory(Settings.getMessage("Properties.Cylinder"));
+        height.setDisplayName(Settings.getMessage("Properties.Cylinder.Height"));
         height.setName("height");
         height.setType(Float.class);
         height.setValue(shape.getHeight());
@@ -233,8 +233,8 @@ public class Properties {
     private void addSphereProperties(Sphere shape) {
         // Radius
         DefaultProperty radius = new DefaultProperty();
-        radius.setCategory("Esfera");
-        radius.setDisplayName("Raio");
+        radius.setCategory(Settings.getMessage("Properties.Sphere"));
+        radius.setDisplayName(Settings.getMessage("Properties.Sphere.Radius"));
         radius.setName("radius");
         radius.setType(Float.class);
         radius.setValue(shape.getRadius());
