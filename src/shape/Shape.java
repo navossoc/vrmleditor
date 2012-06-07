@@ -3,9 +3,8 @@ package shape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Quaternion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.*;
+import com.badlogic.gdx.math.collision.Ray;
 import gui.Settings;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,6 +20,7 @@ public abstract class Shape implements Comparable<Shape> {
     protected Vector3 scale;
     protected Quaternion rotation;
     protected Vector3 translation;
+    protected Matrix4 transformation;
 
     public Shape() {
         ID = ID_COUNTER++;
@@ -29,31 +29,50 @@ public abstract class Shape implements Comparable<Shape> {
         scale = new Vector3(1, 1, 1);
         rotation = new Quaternion(0, 0, 0, 0);
         translation = new Vector3(0, 0, 0);
+        transformation = new Matrix4();
     }
 
     public abstract Shape copy();
 
     public void draw() {
-        // set color
-        Gdx.gl10.glColor4f(color.r, color.g, color.b, color.a);
 
-        Gdx.gl10.glPushMatrix();
+        // identity
+        transformation.idt();
 
         // translate
-        Gdx.gl10.glTranslatef(translation.x, translation.y, translation.z);
+        transformation.translate(translation.x, translation.y, translation.z);
 
         // rotate
-        if (rotation.x != 0 || rotation.y != 0 || rotation.z != 0) {
-            Gdx.gl10.glRotatef(rotation.w, rotation.x, rotation.y, rotation.z);
-        }
+        transformation.rotate(rotation.x, rotation.y, rotation.z, rotation.w);
 
         // scale
-        Gdx.gl10.glScalef(scale.x, scale.y, scale.z);
+        transformation.scale(scale.x, scale.y, scale.z);
+
+        // set color
+        Gdx.gl10.glColor4f(color.r, color.g, color.b, color.a);
+        Gdx.gl10.glLoadMatrixf(transformation.val, 0);
 
         // render
         mesh.render(primitiveType);
+    }
 
-        Gdx.gl10.glPopMatrix();
+    public boolean intersect(Ray ray, Vector3 intersectionVector) {
+        float[] vertices = new float[mesh.getNumVertices() * 3];
+        short[] indices = new short[mesh.getNumIndices()];
+        mesh.getVertices(vertices);
+        mesh.getIndices(indices);
+
+        Vector3 temp = new Vector3();
+        for (int i = 0; i < vertices.length;) {
+            temp.x = vertices[i];
+            temp.y = vertices[i + 1];
+            temp.z = vertices[i + 2];
+            temp.mul(transformation);
+            vertices[i++] = temp.x;
+            vertices[i++] = temp.y;
+            vertices[i++] = temp.z;
+        }
+        return Intersector.intersectRayTriangles(ray, vertices, indices, mesh.getVertexSize() / (Float.SIZE / 8), intersectionVector);
     }
 
     public static void reset() {

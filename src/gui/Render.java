@@ -6,7 +6,12 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
+import com.google.common.collect.Ordering;
+import com.google.common.collect.TreeMultimap;
 import java.util.Enumeration;
+import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import shape.Axis;
 import shape.Border;
@@ -15,7 +20,7 @@ import shape.Shape;
 public class Render implements ApplicationListener {
 
     private DefaultListModel listShapes;
-    //private TreeMultimap<Float, Shape> treeShapes;
+    private TreeMultimap<Float, Shape> treeShapes;
     private OrthographicCamera camera1;
     private OrthographicCamera camera2;
     private OrthographicCamera camera3;
@@ -57,6 +62,9 @@ public class Render implements ApplicationListener {
         camera4.far = Short.MAX_VALUE;
         camera4.position.set(3, 6, 5);
         camera4.lookAt(0, 0, 0);
+
+        // temporary tree for alpha shapes
+        treeShapes = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
     }
 
     @Override
@@ -80,19 +88,19 @@ public class Render implements ApplicationListener {
 
         // 1 - Camera Front (x/y)
         adjustCamera(camera1, 0, height);
-        drawShapes();
+        drawShapes(camera1);
 
         // 2 - Camera Side (z/y)
         adjustCamera(camera2, width, height);
-        drawShapes();
+        drawShapes(camera2);
 
         // 3 - Camera Top (x/z)
         adjustCamera(camera3, 0, 0);
-        drawShapes();
+        drawShapes(camera3);
 
         // 4 - Camera 3D (free)
         adjustCamera(camera4, width, 0);
-        drawShapes();
+        drawShapes(camera4);
 
         // All - Draw borders
         Border.draw(width, height);
@@ -108,7 +116,7 @@ public class Render implements ApplicationListener {
         Gdx.gl10.glViewport(x / 2, y / 2, width / 2, height / 2);
     }
 
-    private void drawShapes() {
+    private void drawShapes(Camera camera) {
         // draw axis
         Axis.draw();
 
@@ -119,13 +127,49 @@ public class Render implements ApplicationListener {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_FILL);
         }
 
-        // draw all shapes
-        Enumeration e = listShapes.elements();
+        // enable blend
+        Gdx.gl10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl10.glEnable(GL10.GL_BLEND);
+
+        // enable depth test
+        Gdx.gl10.glEnable(GL10.GL_DEPTH_TEST);
+
+        // drawing
+        treeShapes.clear();
+
+        float distance;
         Shape shape;
+        Ray ray = new Ray(new Vector3(), new Vector3());
+        Vector3 intersection = new Vector3();
+
+        Enumeration e = listShapes.elements();
         while (e.hasMoreElements()) {
             shape = (Shape) e.nextElement();
+            // sort alpha shapes
+            if (shape.getColor().a < 1.0f) {
+                // calculate ray
+                ray.set(camera.position, shape.getTranslation().tmp().sub(camera.position).nor());
+                // try to intersect shape with ray
+                if (shape.intersect(ray, intersection)) {
+                    distance = camera.position.dst(intersection);
+                    treeShapes.put(distance, shape);
+                    continue;
+                }
+            }
+            // draw opaque shapes
             shape.draw();
         }
+
+        // draw alpha shapes
+        Iterator<Shape> iterator = treeShapes.values().iterator();
+        while (iterator.hasNext()) {
+            shape = iterator.next();
+            shape.draw();
+        }
+
+        // disable depth and blend
+        Gdx.gl10.glDisable(GL10.GL_DEPTH_TEST);
+        Gdx.gl10.glDisable(GL10.GL_BLEND);
     }
 
     @Override

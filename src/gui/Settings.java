@@ -25,7 +25,7 @@ public class Settings {
         try {
             properties.load(new FileInputStream("settings.properties"));
         } catch (IOException ex) {
-            //
+            // fallback to default settings
         }
         // Read common settings
         initSettings();
