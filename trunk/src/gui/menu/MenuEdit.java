@@ -1,5 +1,6 @@
 package gui.menu;
 
+import gui.Constants;
 import gui.Editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,10 +15,10 @@ public class MenuEdit {
     }
 
     public void addActionListeners() {
-        JMenu edit = editor.getJMenuBar().getMenu(1);
+        JMenu edit = editor.getJMenuBar().getMenu(Constants.MENU_EDIT);
 
         // Undo
-        edit.getItem(0).addActionListener(new ActionListener() {
+        edit.getItem(Constants.MENU_EDIT_UNDO).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -26,7 +27,7 @@ public class MenuEdit {
         });
 
         // Redo
-        edit.getItem(1).addActionListener(new ActionListener() {
+        edit.getItem(Constants.MENU_EDIT_REDO).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -35,7 +36,7 @@ public class MenuEdit {
         });
 
         // Delete
-        edit.getItem(3).addActionListener(new ActionListener() {
+        edit.getItem(Constants.MENU_EDIT_DELETE).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {

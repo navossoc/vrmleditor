@@ -1,5 +1,6 @@
 package gui.menu;
 
+import gui.Constants;
 import gui.Editor;
 import gui.Settings;
 import java.awt.event.ActionEvent;
@@ -15,16 +16,18 @@ public class MenuView {
     }
 
     public void addActionListeners() {
-        JMenu view = editor.getJMenuBar().getMenu(2);
+        JMenu view = editor.getJMenuBar().getMenu(Constants.MENU_VIEW);
 
         // Wireframe
-        view.getItem(0).addActionListener(new ActionListener() {
+        view.getItem(Constants.MENU_VIEW_WIREFRAME).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 actionWireframe();
             }
         });
+        view.getItem(Constants.MENU_VIEW_WIREFRAME).setSelected(Settings.isWireframe());
+
     }
 
     /**
