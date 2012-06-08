@@ -7,7 +7,6 @@ import gui.menu.MenuHelp;
 import gui.menu.MenuView;
 import history.History;
 import history.HistoryInfo;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import javax.swing.DefaultListModel;
@@ -240,9 +239,9 @@ public class Editor extends javax.swing.JFrame {
                 jListShapesMouseClicked(evt);
             }
         });
-        jListShapes.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jListShapesKeyPressed(evt);
+        jListShapes.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListShapesValueChanged(evt);
             }
         });
         jScrollPaneList.setViewportView(jListShapes);
@@ -299,8 +298,10 @@ public class Editor extends javax.swing.JFrame {
         jMenuEdit.add(jMenuEditRedo);
         jMenuEdit.add(jSeparatorEdit);
 
+        jMenuEditDelete.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
         jMenuEditDelete.setMnemonic('x');
         jMenuEditDelete.setText("Excluir");
+        jMenuEditDelete.setEnabled(false);
         jMenuEdit.add(jMenuEditDelete);
 
         jMenuBar.add(jMenuEdit);
@@ -397,12 +398,6 @@ public class Editor extends javax.swing.JFrame {
     /*
      * List
      */
-    private void jListShapesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jListShapesKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            removeShape();
-        }
-    }//GEN-LAST:event_jListShapesKeyPressed
-
     private void jListShapesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListShapesMouseClicked
         if (evt.getButton() == MouseEvent.BUTTON1) {
             if (evt.getClickCount() == 2) {
@@ -412,6 +407,10 @@ public class Editor extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jListShapesMouseClicked
+
+    private void jListShapesValueChanged(javax.swing.event.ListSelectionEvent evt) {
+        jMenuEditDelete.setEnabled(!jListShapes.isSelectionEmpty());
+    }
 
     /*
      * Tabs

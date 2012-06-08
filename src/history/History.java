@@ -101,6 +101,11 @@ public final class History {
      * Redo last action
      */
     public void redo() {
+        // protection
+        if (redoStack.empty()) {
+            return;
+        }
+
         HistoryInfo info = redoStack.pop();
         switch (info.type) {
             case ADD: {
@@ -129,6 +134,11 @@ public final class History {
      * Undo last action
      */
     public void undo() {
+        // protection
+        if (undoStack.empty()) {
+            return;
+        }
+
         HistoryInfo info = undoStack.pop();
         switch (info.type) {
             case ADD: {
