@@ -29,7 +29,6 @@ public class ExportVrml {
         }
     }
 
-    // TODO: should we calculate position?
     private static String viewPoint() {
         return "# Cameras\r\n"
                 + "Viewpoint {\r\n"

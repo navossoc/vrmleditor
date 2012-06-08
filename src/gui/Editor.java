@@ -22,7 +22,6 @@ import shape.geometry.Sphere;
 
 public class Editor extends javax.swing.JFrame {
 
-    public static Editor singleton;
     private LwjglCanvas canvas;
     private History history;
     private Properties properties;

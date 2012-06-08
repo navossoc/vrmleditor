@@ -15,6 +15,7 @@ public class Border {
         int height = Gdx.graphics.getHeight();
 
         mesh = new Mesh(true, 4, 4, VertexAttribute.Position(), VertexAttribute.Color());
+
         float[] vertices = new float[]{
             -width, 0, 0, Color.toFloatBits(0, 0, 0, 1),
             width, 0, 0, Color.toFloatBits(0, 0, 0, 1),
