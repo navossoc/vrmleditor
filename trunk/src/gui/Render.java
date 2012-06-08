@@ -56,19 +56,19 @@ public class Render implements ApplicationListener {
         Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
-        // 1 - Camera Front (x/y)
+        // Camera 1 - (Top/Left)
         adjustCamera(cameras[0], 0, height);
         drawShapes(cameras[0]);
 
-        // 2 - Camera Side (z/y)
+        // Camera 2 - (Top/Right)
         adjustCamera(cameras[1], width, height);
         drawShapes(cameras[1]);
 
-        // 3 - Camera Top (x/z)
+        // Camera 3 - (Bottom/Left)
         adjustCamera(cameras[2], 0, 0);
         drawShapes(cameras[2]);
 
-        // 4 - Camera 3D (free)
+        // Camera 4 - (Bottom/Right)
         adjustCamera(cameras[3], width, 0);
         drawShapes(cameras[3]);
 
@@ -77,7 +77,6 @@ public class Render implements ApplicationListener {
     }
 
     private void adjustCamera(Camera camera, int x, int y) {
-        // TODO: testar com a ordem do update invertida depois
         camera.update();
         Gdx.gl10.glMatrixMode(GL10.GL_PROJECTION);
         Gdx.gl10.glLoadMatrixf(camera.combined.val, 0);
