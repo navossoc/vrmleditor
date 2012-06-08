@@ -4,14 +4,16 @@ import gui.Editor;
 import java.util.Stack;
 import shape.Shape;
 
-public class History {
+public final class History {
 
     private final int MAX_UNDO = 15;
-    protected Stack<HistoryInfo> redoStack;
-    protected Stack<HistoryInfo> undoStack;
+    private final Editor editor;
+    private final Stack<HistoryInfo> redoStack;
+    private final Stack<HistoryInfo> undoStack;
     private boolean fileDirty;
 
-    public History() {
+    public History(Editor instance) {
+        editor = instance;
         fileDirty = false;
         redoStack = new Stack<HistoryInfo>();
         undoStack = new Stack<HistoryInfo>();
@@ -60,16 +62,16 @@ public class History {
         HistoryInfo info = redoStack.pop();
         switch (info.type) {
             case ADD: {
-                Editor.singleton.addShape(info.shape);
+                editor.addShape(info.shape);
                 break;
             }
             case EDIT: {
-                Shape shape = Editor.singleton.editShape(info.shape);
+                Shape shape = editor.editShape(info.shape);
                 info.shape = shape;
                 break;
             }
             case DELETE: {
-                Editor.singleton.delShape(info.shape);
+                editor.delShape(info.shape);
                 break;
             }
         }
@@ -84,16 +86,16 @@ public class History {
         HistoryInfo info = undoStack.pop();
         switch (info.type) {
             case ADD: {
-                Editor.singleton.delShape(info.shape);
+                editor.delShape(info.shape);
                 break;
             }
             case EDIT: {
-                Shape shape = Editor.singleton.editShape(info.shape);
+                Shape shape = editor.editShape(info.shape);
                 info.shape = shape;
                 break;
             }
             case DELETE: {
-                Editor.singleton.addShape(info.shape);
+                editor.addShape(info.shape);
                 break;
             }
         }

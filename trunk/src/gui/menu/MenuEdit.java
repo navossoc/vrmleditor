@@ -3,30 +3,65 @@ package gui.menu;
 import gui.Editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JMenu;
 
 public class MenuEdit {
 
-    public static class ItemUndo implements ActionListener {
+    private Editor editor;
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Editor.singleton.getHistory().undo();
-        }
+    public MenuEdit(Editor instance) {
+        this.editor = instance;
     }
 
-    public static class ItemRedo implements ActionListener {
+    public void addActionListeners() {
+        JMenu edit = editor.getJMenuBar().getMenu(1);
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Editor.singleton.getHistory().redo();
-        }
+        // Undo
+        edit.getItem(0).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionUndo();
+            }
+        });
+
+        // Redo
+        edit.getItem(1).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionRedo();
+            }
+        });
+
+        // Delete
+        edit.getItem(3).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionDelete();
+            }
+        });
     }
 
-    public static class ItemDelete implements ActionListener {
+    /**
+     * Undo last action
+     */
+    private void actionUndo() {
+        editor.getHistory().undo();
+    }
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Editor.singleton.removeShape();
-        }
+    /**
+     * Redo last action
+     */
+    private void actionRedo() {
+        editor.getHistory().redo();
+    }
+
+    /**
+     * Delete selected shape from list
+     */
+    private void actionDelete() {
+        editor.removeShape();
     }
 }

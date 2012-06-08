@@ -14,11 +14,13 @@ import shape.geometry.Cone;
 import shape.geometry.Cylinder;
 import shape.geometry.Sphere;
 
-public class Properties {
+public final class Properties {
 
-    private PropertySheetPanel panel;
+    private final Editor editor;
+    private final PropertySheetPanel panel;
 
-    public Properties(PropertySheetPanel panel) {
+    public Properties(Editor instance, PropertySheetPanel panel) {
+        this.editor = instance;
         this.panel = panel;
     }
 
@@ -27,7 +29,7 @@ public class Properties {
 
         // properties
         addCommonProperties(shape);
-        panel.addPropertySheetChangeListener(new PropertyListener(shape));
+        panel.addPropertySheetChangeListener(new PropertyListener(editor, shape));
         if (shape instanceof Box) {
             addBoxProperties((Box) shape);
         } else if (shape instanceof Cone) {
@@ -242,11 +244,13 @@ public class Properties {
     }
 }
 
-class PropertyListener implements PropertyChangeListener {
+final class PropertyListener implements PropertyChangeListener {
 
-    private Shape shape;
+    private final Editor editor;
+    private final Shape shape;
 
-    public PropertyListener(Shape shape) {
+    public PropertyListener(Editor instance, Shape shape) {
+        this.editor = instance;
         this.shape = shape;
     }
 
@@ -259,7 +263,7 @@ class PropertyListener implements PropertyChangeListener {
             String name = property.getName();
 
             // keep tracking of modifications
-            Editor.singleton.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.EDIT));
+            editor.getHistory().insertUndo(new HistoryInfo(shape, HistoryInfo.Type.EDIT));
 
             // color
             if (name.equals("color")) {

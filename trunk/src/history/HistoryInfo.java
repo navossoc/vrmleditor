@@ -2,7 +2,7 @@ package history;
 
 import shape.Shape;
 
-public class HistoryInfo {
+public final class HistoryInfo {
 
     protected Shape shape;
     protected Type type;
