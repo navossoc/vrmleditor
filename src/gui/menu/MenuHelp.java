@@ -1,6 +1,7 @@
 package gui.menu;
 
 import gui.About;
+import gui.Constants;
 import gui.Editor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,10 +17,10 @@ public class MenuHelp {
     }
 
     public void addActionListeners() {
-        JMenu help = editor.getJMenuBar().getMenu(3);
+        JMenu help = editor.getJMenuBar().getMenu(Constants.MENU_HELP);
 
         // About
-        help.getItem(0).addActionListener(new ActionListener() {
+        help.getItem(Constants.MENU_HELP_ABOUT).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {

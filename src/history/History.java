@@ -1,5 +1,6 @@
 package history;
 
+import gui.Constants;
 import gui.Editor;
 import java.util.Stack;
 import shape.Shape;
@@ -12,6 +13,11 @@ public final class History {
     private final Stack<HistoryInfo> undoStack;
     private boolean fileDirty;
 
+    /**
+     * Constructs a new history
+     *
+     * @param instance
+     */
     public History(Editor instance) {
         editor = instance;
         fileDirty = false;
@@ -19,46 +25,82 @@ public final class History {
         undoStack = new Stack<HistoryInfo>();
     }
 
+    /**
+     * Clear history state
+     */
     public void clear() {
         fileDirty = false;
         undoStack.clear();
         redoStack.clear();
+        menuUndo(false);
+        menuRedo(false);
     }
 
+    /**
+     * Insert action into redo stack
+     *
+     * @param history
+     */
     public void insertRedo(HistoryInfo history) {
         redoStack.push(history);
+        menuRedo(true);
         fileDirty = true;
     }
 
+    /**
+     * Insert action into undo stack
+     *
+     * @param history
+     */
     public void insertUndo(HistoryInfo history) {
+        insertUndo(history, true);
+    }
+
+    /**
+     * Insert action into undo stack
+     *
+     * @param history
+     * @param clearRedo if true, clear redo stack
+     */
+    public void insertUndo(HistoryInfo history, boolean clearRedo) {
+        // limit undo actions
         if (undoStack.size() >= MAX_UNDO) {
             undoStack.remove(0);
         }
+
+        // clear redo stack
+        if (clearRedo) {
+            redoStack.clear();
+            menuRedo(false);
+        }
+
         undoStack.push(history);
+        menuUndo(true);
         fileDirty = true;
     }
 
-    public boolean isEmptyRedo() {
-        return redoStack.empty();
-    }
-
-    public boolean isEmptyUndo() {
-        return undoStack.empty();
-    }
-
+    /**
+     * Check if the project had changes
+     *
+     * @return
+     */
     public boolean isFileDirty() {
         return fileDirty;
     }
 
+    /**
+     * Set the project has changed
+     *
+     * @param fileDirty
+     */
     public void setFileDirty(boolean fileDirty) {
         this.fileDirty = fileDirty;
     }
 
+    /**
+     * Redo last action
+     */
     public void redo() {
-        if (redoStack.empty()) {
-            return;
-        }
-
         HistoryInfo info = redoStack.pop();
         switch (info.type) {
             case ADD: {
@@ -75,14 +117,18 @@ public final class History {
                 break;
             }
         }
-        undoStack.push(info);
+        insertUndo(info, false);
+
+        // check if stack is empty
+        if (redoStack.empty()) {
+            menuRedo(false);
+        }
     }
 
+    /**
+     * Undo last action
+     */
     public void undo() {
-        if (undoStack.empty()) {
-            return;
-        }
-
         HistoryInfo info = undoStack.pop();
         switch (info.type) {
             case ADD: {
@@ -99,6 +145,29 @@ public final class History {
                 break;
             }
         }
-        redoStack.push(info);
+        insertRedo(info);
+
+        // check if stack is empty
+        if (undoStack.empty()) {
+            menuUndo(false);
+        }
+    }
+
+    /**
+     * Change redo menu state
+     *
+     * @param enable true enable, false disable
+     */
+    private void menuRedo(boolean enable) {
+        editor.getJMenuBar().getMenu(Constants.MENU_EDIT).getItem(Constants.MENU_EDIT_REDO).setEnabled(enable);
+    }
+
+    /**
+     * Change undo menu state
+     *
+     * @param enable true enable, false disable
+     */
+    private void menuUndo(boolean enable) {
+        editor.getJMenuBar().getMenu(Constants.MENU_EDIT).getItem(Constants.MENU_EDIT_UNDO).setEnabled(enable);
     }
 }

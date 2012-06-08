@@ -1,5 +1,6 @@
 package gui.menu;
 
+import gui.Constants;
 import gui.Editor;
 import gui.export.ExportVrml;
 import gui.format.FormatBin;
@@ -23,10 +24,10 @@ public class MenuFile {
     }
 
     public void addActionListeners() {
-        JMenu file = editor.getJMenuBar().getMenu(0);
+        JMenu file = editor.getJMenuBar().getMenu(Constants.MENU_FILE);
 
         // New
-        file.getItem(0).addActionListener(new ActionListener() {
+        file.getItem(Constants.MENU_FILE_NEW).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -35,7 +36,7 @@ public class MenuFile {
         });
 
         // Open
-        file.getItem(1).addActionListener(new ActionListener() {
+        file.getItem(Constants.MENU_FILE_OPEN).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -44,7 +45,7 @@ public class MenuFile {
         });
 
         // Save
-        file.getItem(2).addActionListener(new ActionListener() {
+        file.getItem(Constants.MENU_FILE_SAVE).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,7 +54,7 @@ public class MenuFile {
         });
 
         // Export
-        file.getItem(3).addActionListener(new ActionListener() {
+        file.getItem(Constants.MENU_FILE_EXPORT).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,9 +63,10 @@ public class MenuFile {
         });
 
         // Separator
+        //MenuConstants.MENU_FILE_SEPARATOR
 
         // Exit
-        file.getItem(5).addActionListener(new ActionListener() {
+        file.getItem(Constants.MENU_FILE_EXIT).addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {

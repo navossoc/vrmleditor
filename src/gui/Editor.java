@@ -289,11 +289,13 @@ public class Editor extends javax.swing.JFrame {
         jMenuEditUndo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
         jMenuEditUndo.setMnemonic('d');
         jMenuEditUndo.setText("Desfazer");
+        jMenuEditUndo.setEnabled(false);
         jMenuEdit.add(jMenuEditUndo);
 
         jMenuEditRedo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
         jMenuEditRedo.setMnemonic('r');
         jMenuEditRedo.setText("Refazer");
+        jMenuEditRedo.setEnabled(false);
         jMenuEdit.add(jMenuEditRedo);
         jMenuEdit.add(jSeparatorEdit);
 
