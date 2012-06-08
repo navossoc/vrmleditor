@@ -25,7 +25,7 @@ public class CameraUtil {
             // Cameras
             if (option.equalsIgnoreCase("front")) {
                 // Camera Front (x+/y)
-                //temp.rotate(0, 0, 0, 0);
+                //temp.rotate(0, 0, 1, 0);
                 temp.position.set(0, 0, 500);
             } else if (option.equalsIgnoreCase("back")) {
                 // Camera Back (x-/y)

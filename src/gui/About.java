@@ -1,11 +1,5 @@
-/*
- */
 package gui;
 
-/**
- *
- * @author Rafael
- */
 public class About extends javax.swing.JDialog {
 
     /**

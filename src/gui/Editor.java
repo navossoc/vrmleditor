@@ -20,10 +20,6 @@ import shape.geometry.Cone;
 import shape.geometry.Cylinder;
 import shape.geometry.Sphere;
 
-/**
- *
- * @author Rafael
- */
 public class Editor extends javax.swing.JFrame {
 
     public static Editor singleton;
