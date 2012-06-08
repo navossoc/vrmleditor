@@ -1,6 +1,10 @@
 package gui;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
+import gui.menu.MenuEdit;
+import gui.menu.MenuFile;
+import gui.menu.MenuHelp;
+import gui.menu.MenuView;
 import history.History;
 import history.HistoryInfo;
 import java.awt.event.KeyEvent;
@@ -33,19 +37,22 @@ public class Editor extends javax.swing.JFrame {
      */
     public Editor() {
         initComponents();
-    }
 
-    private void initEditor() {
+        // menu action listeners
+        new MenuFile(this).addActionListeners();
+        new MenuEdit(this).addActionListeners();
+        new MenuView(this).addActionListeners();
+        new MenuHelp(this).addActionListeners();
+
+        // render
         renderer = new Render(getListModel());
         canvas = new LwjglCanvas(renderer, false);
-
-        Menu.registerActionListeners();
-
-        history = new History();
-        properties = new Properties(propertySheetPanel);
-        properties.clear();
-
         jPanelRender.add(canvas.getCanvas());
+
+        // editor
+        history = new History(this);
+        properties = new Properties(this, propertySheetPanel);
+        properties.clear();
     }
 
     /**
@@ -119,7 +126,7 @@ public class Editor extends javax.swing.JFrame {
         }
 
         Shape shape = (Shape) jListShapes.getSelectedValue();
-        if (JOptionPane.showConfirmDialog(Editor.singleton,
+        if (JOptionPane.showConfirmDialog(this,
                 "Deseja remover o objeto?",
                 shape.toString(),
                 JOptionPane.YES_NO_OPTION,
@@ -132,16 +139,16 @@ public class Editor extends javax.swing.JFrame {
     /*
      * Getters
      */
-    public History getHistory() {
+    public final History getHistory() {
         return history;
     }
 
-    public DefaultListModel getListModel() {
+    public final DefaultListModel getListModel() {
         ListModel list = jListShapes.getModel();
         return (DefaultListModel) list;
     }
 
-    public Render getRenderer() {
+    public final Render getRenderer() {
         return renderer;
     }
 
@@ -174,7 +181,7 @@ public class Editor extends javax.swing.JFrame {
         jMenuEditUndo = new javax.swing.JMenuItem();
         jMenuEditRedo = new javax.swing.JMenuItem();
         jSeparatorEdit = new javax.swing.JPopupMenu.Separator();
-        jMenuEditRemove = new javax.swing.JMenuItem();
+        jMenuEditDelete = new javax.swing.JMenuItem();
         jMenuView = new javax.swing.JMenu();
         jMenuViewWireframe = new javax.swing.JCheckBoxMenuItem();
         jMenuHelp = new javax.swing.JMenu();
@@ -295,9 +302,9 @@ public class Editor extends javax.swing.JFrame {
         jMenuEdit.add(jMenuEditRedo);
         jMenuEdit.add(jSeparatorEdit);
 
-        jMenuEditRemove.setMnemonic('x');
-        jMenuEditRemove.setText("Excluir");
-        jMenuEdit.add(jMenuEditRemove);
+        jMenuEditDelete.setMnemonic('x');
+        jMenuEditDelete.setText("Excluir");
+        jMenuEdit.add(jMenuEditDelete);
 
         jMenuBar.add(jMenuEdit);
 
@@ -455,9 +462,7 @@ public class Editor extends javax.swing.JFrame {
             public void run() {
                 // fix the problem with the menu items appearing behind drawing canvas
                 JPopupMenu.setDefaultLightWeightPopupEnabled(false);
-                singleton = new Editor();
-                singleton.initEditor();
-                singleton.setVisible(true);
+                new Editor().setVisible(true);
             }
         });
     }
@@ -469,19 +474,19 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JList jListShapes;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuEdit;
-    protected javax.swing.JMenuItem jMenuEditRedo;
-    protected javax.swing.JMenuItem jMenuEditRemove;
-    protected javax.swing.JMenuItem jMenuEditUndo;
+    private javax.swing.JMenuItem jMenuEditDelete;
+    private javax.swing.JMenuItem jMenuEditRedo;
+    private javax.swing.JMenuItem jMenuEditUndo;
     private javax.swing.JMenu jMenuFile;
-    protected javax.swing.JMenuItem jMenuFileExit;
-    protected javax.swing.JMenuItem jMenuFileExport;
-    protected javax.swing.JMenuItem jMenuFileNew;
-    protected javax.swing.JMenuItem jMenuFileOpen;
-    protected javax.swing.JMenuItem jMenuFileSave;
+    private javax.swing.JMenuItem jMenuFileExit;
+    private javax.swing.JMenuItem jMenuFileExport;
+    private javax.swing.JMenuItem jMenuFileNew;
+    private javax.swing.JMenuItem jMenuFileOpen;
+    private javax.swing.JMenuItem jMenuFileSave;
     private javax.swing.JMenu jMenuHelp;
-    protected javax.swing.JMenuItem jMenuHelpAbout;
+    private javax.swing.JMenuItem jMenuHelpAbout;
     private javax.swing.JMenu jMenuView;
-    protected javax.swing.JCheckBoxMenuItem jMenuViewWireframe;
+    private javax.swing.JCheckBoxMenuItem jMenuViewWireframe;
     private javax.swing.JPanel jPanelRender;
     private javax.swing.JScrollPane jScrollPaneList;
     private javax.swing.JPopupMenu.Separator jSeparatorEdit;

@@ -9,127 +9,184 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import shape.Shape;
 
 public class MenuFile {
 
-    private static void newFile() {
-        Editor.singleton.getHistory().clear();
-        Editor.singleton.getListModel().clear();
+    private Editor editor;
+
+    public MenuFile(Editor instance) {
+        editor = instance;
+    }
+
+    public void addActionListeners() {
+        JMenu file = editor.getJMenuBar().getMenu(0);
+
+        // New
+        file.getItem(0).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionNew();
+            }
+        });
+
+        // Open
+        file.getItem(1).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionOpen();
+            }
+        });
+
+        // Save
+        file.getItem(2).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionSave();
+            }
+        });
+
+        // Export
+        file.getItem(3).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionExport();
+            }
+        });
+
+        // Separator
+
+        // Exit
+        file.getItem(5).addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actionExit();
+            }
+        });
+
+    }
+
+    /**
+     * Create a new empty project
+     */
+    private void actionNew() {
+        if (editor.getHistory().isFileDirty()) {
+            int option = JOptionPane.showConfirmDialog(editor,
+                    "Deseja salvar as alterações?", "Novo",
+                    JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            switch (option) {
+                case JOptionPane.YES_OPTION: {
+                    actionSave();
+                    break;
+                }
+                //case JOptionPane.NO_OPTION:
+                case JOptionPane.CANCEL_OPTION: {
+                    return;
+                }
+            }
+        }
+
+        // create a new file
+        fileNew();
+    }
+
+    /**
+     * Open a saved project file
+     */
+    private void actionOpen() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
+        if (fileChooser.showOpenDialog(editor) == JFileChooser.APPROVE_OPTION) {
+            String file = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!file.endsWith(".bin")) {
+                file += ".bin";
+            }
+
+            // erase all shapes
+            fileNew();
+
+            // insert shapes from file
+            List<Shape> shapes = new ArrayList<Shape>();
+            if (FormatBin.open(file, shapes)) {
+                for (Shape s : shapes) {
+                    editor.getListModel().addElement(s);
+                }
+                shapes.clear();
+            } else {
+                JOptionPane.showMessageDialog(editor, "Erro ao abrir o arquivo BIN", "Abrir", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Save the project file
+     */
+    private void actionSave() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
+        if (fileChooser.showSaveDialog(editor) == JFileChooser.APPROVE_OPTION) {
+            String file = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!file.endsWith(".bin")) {
+                file += ".bin";
+            }
+            if (FormatBin.save(file, editor.getListModel())) {
+                editor.getHistory().setFileDirty(false);
+                JOptionPane.showMessageDialog(editor, "Arquivo salvo com sucesso!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(editor, "Erro ao exportar o arquivo BIN", "Salvar", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Export project to VRML
+     */
+    private void actionExport() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo VRML", "wrl"));
+        if (fileChooser.showSaveDialog(editor) == JFileChooser.APPROVE_OPTION) {
+            String file = fileChooser.getSelectedFile().getAbsolutePath();
+            if (!file.endsWith(".wrl")) {
+                file += ".wrl";
+            }
+            if (ExportVrml.save(file, editor.getListModel())) {
+                JOptionPane.showMessageDialog(editor, "Arquivo salvo com sucesso!", "Exportar", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(editor, "Erro ao exportar o arquivo VRML", "Exportar", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    /**
+     * Exit application
+     */
+    private void actionExit() {
+        editor.dispose();
+        editor.exitEditor();
+    }
+
+    /*
+     * Helpers
+     */
+    protected void fileNew() {
+        editor.getHistory().clear();
+        editor.getListModel().clear();
         Shape.reset();
-    }
-
-    public static class ItemNew implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (Editor.singleton.getHistory().isFileDirty()) {
-                int option = JOptionPane.showConfirmDialog(Editor.singleton,
-                        "Deseja salvar as alterações?", "Novo",
-                        JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                switch (option) {
-                    case JOptionPane.YES_OPTION: {
-                        new MenuFile.ItemSave().actionPerformed(null);
-                        break;
-                    }
-                    //case JOptionPane.NO_OPTION:
-                    case JOptionPane.CANCEL_OPTION: {
-                        return;
-                    }
-                }
-            }
-
-            // create a new file
-            newFile();
-        }
-    }
-
-    public static class ItemOpen implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
-            if (fileChooser.showOpenDialog(Editor.singleton) == JFileChooser.APPROVE_OPTION) {
-                String file = fileChooser.getSelectedFile().getAbsolutePath();
-                if (!file.endsWith(".bin")) {
-                    file += ".bin";
-                }
-
-                // erase all shapes
-                newFile();
-
-                // insert shapes from file
-                List<Shape> shapes = new ArrayList<Shape>();
-                if (FormatBin.open(file, shapes)) {
-                    for (Shape s : shapes) {
-                        Editor.singleton.getListModel().addElement(s);
-                    }
-                    shapes.clear();
-                } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao abrir o arquivo BIN", "Abrir", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    }
-
-    public static class ItemSave implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
-            if (fileChooser.showSaveDialog(Editor.singleton) == JFileChooser.APPROVE_OPTION) {
-                String file = fileChooser.getSelectedFile().getAbsolutePath();
-                if (!file.endsWith(".bin")) {
-                    file += ".bin";
-                }
-                //if (ExportXml.save(file, Editor.singleton.getListModel())) {
-                if (FormatBin.save(file, Editor.singleton.getListModel())) {
-                    Editor.singleton.getHistory().setFileDirty(false);
-                    JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo BIN", "Salvar", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    }
-
-    public static class ItemExport implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo VRML", "wrl"));
-            if (fileChooser.showSaveDialog(Editor.singleton) == JFileChooser.APPROVE_OPTION) {
-                String file = fileChooser.getSelectedFile().getAbsolutePath();
-                if (!file.endsWith(".wrl")) {
-                    file += ".wrl";
-                }
-                if (ExportVrml.save(file, Editor.singleton.getListModel())) {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Arquivo salvo com sucesso!", "Exportar", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(Editor.singleton, "Erro ao exportar o arquivo VRML", "Exportar", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
-    }
-
-    public static class ItemExit implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            Editor.singleton.dispose();
-            Editor.singleton.exitEditor();
-        }
     }
 }
 
 /**
- * FileFilter for save file dialog
+ * FileFilter for file dialog
+ * http://www.java2s.com/Code/JavaAPI/javax.swing/JFileChoosersetFileFilterFileFilterfilter.htm
  */
 class ExtensionFileFilter extends FileFilter {
 
