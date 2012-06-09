@@ -60,6 +60,11 @@ public class Cone extends Shape {
         super.create();
     }
 
+    /**
+     * Return a copy of this cone
+     *
+     * @return
+     */
     @Override
     public Cone copy() {
         ID_COUNTER--;
@@ -68,19 +73,39 @@ public class Cone extends Shape {
         return temp;
     }
 
+    /**
+     * Get cone bottom radius
+     *
+     * @return
+     */
     public float getBottomRadius() {
         return bottomRadius;
     }
 
+    /**
+     * Set cone bottom radius
+     *
+     * @param bottomRadius
+     */
     public void setBottomRadius(float bottomRadius) {
         this.bottomRadius = bottomRadius;
         create();
     }
 
+    /**
+     * Get height
+     *
+     * @return
+     */
     public float getHeight() {
         return height;
     }
 
+    /**
+     * Set height
+     *
+     * @param height
+     */
     public void setHeight(float height) {
         this.height = height;
         create();

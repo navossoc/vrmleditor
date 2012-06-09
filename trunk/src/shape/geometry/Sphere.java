@@ -65,6 +65,11 @@ public class Sphere extends Shape {
         super.create();
     }
 
+    /**
+     * Return a copy of this sphere
+     *
+     * @return
+     */
     @Override
     public Sphere copy() {
         ID_COUNTER--;
@@ -78,10 +83,20 @@ public class Sphere extends Shape {
         return Intersector.intersectRaySphere(ray, translation, radius, intersectionVector);
     }
 
+    /**
+     * Get sphere radius
+     *
+     * @return
+     */
     public float getRadius() {
         return radius;
     }
 
+    /**
+     * Set sphere radius
+     *
+     * @param radius
+     */
     public void setRadius(float radius) {
         this.radius = radius;
         create();

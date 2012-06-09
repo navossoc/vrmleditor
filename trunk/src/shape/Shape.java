@@ -45,6 +45,11 @@ public abstract class Shape implements Comparable<Shape> {
         transformationDirty = true;
     }
 
+    /**
+     * Return a copy of this shape
+     *
+     * @return
+     */
     public abstract Shape copy();
 
     /**
@@ -112,6 +117,28 @@ public abstract class Shape implements Comparable<Shape> {
      */
     public static void reset() {
         ID_COUNTER = 1;
+    }
+
+    /**
+     * Set shape's common values
+     *
+     * @param shape
+     */
+    public void set(Shape shape) {
+        shape.ID = ID;
+        shape.color.set(color);
+        shape.scale.set(scale);
+        shape.rotation.set(rotation);
+        shape.translation.set(translation);
+        setDirty();
+    }
+
+    /**
+     * Set shape's as dirty
+     */
+    public void setDirty() {
+        transformationDirty = true;
+        verticesDirty = true;
     }
 
     /**
@@ -226,7 +253,7 @@ public abstract class Shape implements Comparable<Shape> {
     }
 
     /**
-     * Get this shape scale
+     * Get the scale
      *
      * @return
      */
@@ -235,7 +262,7 @@ public abstract class Shape implements Comparable<Shape> {
     }
 
     /**
-     * Set this shape scale
+     * Set the scale
      *
      * @param x scale for x-axis
      * @param y scale for y-axis
@@ -246,42 +273,53 @@ public abstract class Shape implements Comparable<Shape> {
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the scale
+     *
+     * @param scale
+     */
     public void setScale(Vector3 scale) {
         this.scale.set(scale);
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the scale only on x-axis
+     *
+     * @param x
+     */
     public void setScaleX(float x) {
         this.scale.x = x;
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the scale only on y-axis
+     *
+     * @param y
+     */
     public void setScaleY(float y) {
         this.scale.y = y;
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the scale only on z-axis
+     *
+     * @param z
+     */
     public void setScaleZ(float z) {
         this.scale.z = z;
         this.transformationDirty = true;
     }
 
     /**
-     * Returns the rotation
+     * Get the rotation
      *
      * @return
      */
     public Quaternion getRotation() {
         return rotation;
-    }
-
-    public void set(Shape shape) {
-        shape.ID = ID;
-        shape.color.set(color);
-        shape.scale.set(scale);
-        shape.rotation.set(rotation);
-        shape.translation.set(translation);
-        this.transformationDirty = true;
     }
 
     /**
@@ -297,33 +335,58 @@ public abstract class Shape implements Comparable<Shape> {
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the rotation
+     *
+     * @param rotation
+     */
     public void setRotation(Quaternion rotation) {
         this.rotation.set(rotation);
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the angle of rotation in degrees
+     *
+     * @param w
+     */
     public void setRotationW(float w) {
         this.rotation.w = w;
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the direction of rotation of the x-axis
+     *
+     * @param x
+     */
     public void setRotationX(float x) {
         this.rotation.x = x;
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the direction of rotation of the y-axis
+     *
+     * @param y
+     */
     public void setRotationY(float y) {
         this.rotation.y = y;
         this.transformationDirty = true;
     }
 
+    /**
+     * * Set the direction of rotation of the z-axis
+     *
+     * @param z
+     */
     public void setRotationZ(float z) {
         this.rotation.z = z;
         this.transformationDirty = true;
     }
 
     /**
-     * Returns the translation
+     * Get the translation
      *
      * @return
      */
@@ -343,29 +406,44 @@ public abstract class Shape implements Comparable<Shape> {
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the translation
+     *
+     * @param translation
+     */
     public void setTranslation(Vector3 translation) {
         this.translation.set(translation);
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the translation on x-axis
+     *
+     * @param x
+     */
     public void setTranslationX(float x) {
         this.translation.x = x;
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the translation on y-axis
+     *
+     * @param y
+     */
     public void setTranslationY(float y) {
         this.translation.y = y;
         this.transformationDirty = true;
     }
 
+    /**
+     * Set the translation on z-axis
+     *
+     * @param z
+     */
     public void setTranslationZ(float z) {
         this.translation.z = z;
         this.transformationDirty = true;
-    }
-
-    public void setDirty() {
-        transformationDirty = true;
-        verticesDirty = true;
     }
 
     /**

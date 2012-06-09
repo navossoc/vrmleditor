@@ -59,8 +59,8 @@ public class Render implements ApplicationListener {
 
     @Override
     public void render() {
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        Gdx.gl10.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
         // Camera 1 - (Top/Left)
         adjustCamera(cameras[0], 0, height);

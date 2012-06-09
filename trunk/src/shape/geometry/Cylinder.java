@@ -85,6 +85,11 @@ public class Cylinder extends Shape {
         super.create();
     }
 
+    /**
+     * Return a copy of this cylinder
+     *
+     * @return
+     */
     @Override
     public Cylinder copy() {
         ID_COUNTER--;
@@ -93,19 +98,39 @@ public class Cylinder extends Shape {
         return temp;
     }
 
+    /**
+     * Get cylinder height
+     *
+     * @return
+     */
     public float getHeight() {
         return height;
     }
 
+    /**
+     * Set cylinder height
+     *
+     * @param height
+     */
     public void setHeight(float height) {
         this.height = height;
         create();
     }
 
+    /**
+     * Get cylinder radius
+     *
+     * @return
+     */
     public float getRadius() {
         return radius;
     }
 
+    /**
+     * Set cylinder radius
+     *
+     * @param radius
+     */
     public void setRadius(float radius) {
         this.radius = radius;
         create();

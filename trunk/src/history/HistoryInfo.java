@@ -14,7 +14,7 @@ public final class HistoryInfo {
 
     public HistoryInfo(Shape shape, Type type) {
         this.shape = shape.copy();
-        this.shape.setDirty();
         this.type = type;
+        this.shape.setDirty();
     }
 }
