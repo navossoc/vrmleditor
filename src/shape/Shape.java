@@ -172,37 +172,61 @@ public abstract class Shape implements Comparable<Shape> {
     /**
      * Set only the color Red component
      *
-     * @param red
+     * @param red value in the range 0.0 - 1.0
      */
     public void setColorR(float red) {
-        this.color.r = red;
+        if (red < 0.0f) {
+            this.color.r = 0.0f;
+        } else if (red > 1.0f) {
+            this.color.r = 1.0f;
+        } else {
+            this.color.r = red;
+        }
     }
 
     /**
      * Set only the color Green component
      *
-     * @param green
+     * @param green value in the range 0.0 - 1.0
      */
     public void setColorG(float green) {
-        this.color.g = green;
+        if (green < 0.0f) {
+            this.color.g = 0.0f;
+        } else if (green > 1.0f) {
+            this.color.g = 1.0f;
+        } else {
+            this.color.g = green;
+        }
     }
 
     /**
      * Set only the color Blue component
      *
-     * @param green
+     * @param green value in the range 0.0 - 1.0
      */
     public void setColorB(float blue) {
-        this.color.b = blue;
+        if (blue < 0.0f) {
+            this.color.b = 0.0f;
+        } else if (blue > 1.0f) {
+            this.color.b = 1.0f;
+        } else {
+            this.color.b = blue;
+        }
     }
 
     /**
      * Set only the color Alpha component
      *
-     * @param green
+     * @param alpha value in the range 0.0 - 1.0
      */
     public void setColorA(float alpha) {
-        this.color.a = alpha;
+        if (alpha < 0.0f) {
+            this.color.a = 0.0f;
+        } else if (alpha > 1.0f) {
+            this.color.a = 1.0f;
+        } else {
+            this.color.a = alpha;
+        }
     }
 
     /**
@@ -361,7 +385,13 @@ public abstract class Shape implements Comparable<Shape> {
      * @param x
      */
     public void setRotationX(float x) {
-        this.rotation.x = x;
+        if (x <= -1.0f) {
+            this.rotation.x = -1.0f;
+        } else if (x >= 1.0f) {
+            this.rotation.x = 1.0f;
+        } else {
+            this.rotation.x = 0.0f;
+        }
         this.transformationDirty = true;
     }
 
@@ -371,7 +401,13 @@ public abstract class Shape implements Comparable<Shape> {
      * @param y
      */
     public void setRotationY(float y) {
-        this.rotation.y = y;
+        if (y <= -1.0f) {
+            this.rotation.y = -1.0f;
+        } else if (y >= 1.0f) {
+            this.rotation.y = 1.0f;
+        } else {
+            this.rotation.y = 0.0f;
+        }
         this.transformationDirty = true;
     }
 
@@ -381,7 +417,13 @@ public abstract class Shape implements Comparable<Shape> {
      * @param z
      */
     public void setRotationZ(float z) {
-        this.rotation.z = z;
+        if (z <= -1.0f) {
+            this.rotation.z = -1.0f;
+        } else if (z >= 1.0f) {
+            this.rotation.z = 1.0f;
+        } else {
+            this.rotation.z = 0.0f;
+        }
         this.transformationDirty = true;
     }
 

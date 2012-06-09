@@ -274,10 +274,10 @@ final class PropertyListener implements PropertyChangeListener {
 
                 // transparency
                 if (name.equals("transparency")) {
-                    if (value < 0) {
-                        value = 0;
-                    } else if (value > 1) {
-                        value = 1;
+                    if (value < 0.0f) {
+                        value = 0.0f;
+                    } else if (value > 1.0f) {
+                        value = 1.0f;
                     }
                     shape.setColorA(value);
                     property.setValue(value);
@@ -292,10 +292,31 @@ final class PropertyListener implements PropertyChangeListener {
                 else if (name.equals("rotationW")) {
                     shape.setRotationW(value);
                 } else if (name.equals("rotationX")) {
+                    if (value <= -1.0f) {
+                        value = -1.0f;
+                    } else if (value >= 1.0f) {
+                        value = 1.0f;
+                    } else {
+                        value = 0.0f;
+                    }
                     shape.setRotationX(value);
                 } else if (name.equals("rotationY")) {
+                    if (value <= -1.0f) {
+                        value = -1.0f;
+                    } else if (value >= 1.0f) {
+                        value = 1.0f;
+                    } else {
+                        value = 0.0f;
+                    }
                     shape.setRotationY(value);
                 } else if (name.equals("rotationZ")) {
+                    if (value <= -1.0f) {
+                        value = -1.0f;
+                    } else if (value >= 1.0f) {
+                        value = 1.0f;
+                    } else {
+                        value = 0.0f;
+                    }
                     shape.setRotationZ(value);
                 } // translation
                 else if (name.equals("translationX")) {
