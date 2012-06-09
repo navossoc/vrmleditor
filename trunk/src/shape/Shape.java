@@ -21,6 +21,12 @@ public abstract class Shape implements Comparable<Shape> {
     protected Quaternion rotation;
     protected Vector3 translation;
     protected Matrix4 transformation;
+    protected float[] vertices;
+    protected short[] indices;
+    protected float[] tempVertices;
+    protected boolean transformationDirty;
+    protected boolean verticesDirty;
+    protected static Vector3 tempVector = new Vector3();
 
     public Shape() {
         ID = ID_COUNTER++;
@@ -32,6 +38,13 @@ public abstract class Shape implements Comparable<Shape> {
         transformation = new Matrix4();
     }
 
+    protected void create() {
+        mesh.setVertices(vertices);
+        mesh.setIndices(indices);
+        verticesDirty = true;
+        transformationDirty = true;
+    }
+
     public abstract Shape copy();
 
     /**
@@ -39,17 +52,25 @@ public abstract class Shape implements Comparable<Shape> {
      */
     public void draw() {
 
-        // identity
-        transformation.idt();
+        // check if any of the transformation properties had changes
+        if (transformationDirty) {
+            // identity
+            transformation.idt();
 
-        // translate
-        transformation.translate(translation.x, translation.y, translation.z);
+            // translate
+            transformation.translate(translation.x, translation.y, translation.z);
 
-        // rotate
-        transformation.rotate(rotation.x, rotation.y, rotation.z, rotation.w);
+            // rotate
+            transformation.rotate(rotation.x, rotation.y, rotation.z, rotation.w);
 
-        // scale
-        transformation.scale(scale.x, scale.y, scale.z);
+            // scale
+            transformation.scale(scale.x, scale.y, scale.z);
+
+            transformationDirty = false;
+
+            // vertices for ray intersection must be updated
+            verticesDirty = true;
+        }
 
         // set color
         Gdx.gl10.glColor4f(color.r, color.g, color.b, color.a);
@@ -68,22 +89,22 @@ public abstract class Shape implements Comparable<Shape> {
      * @return true if the Ray intersect this shape
      */
     public boolean intersect(Ray ray, Vector3 intersectionVector) {
-        float[] vertices = new float[mesh.getNumVertices() * 3];
-        short[] indices = new short[mesh.getNumIndices()];
-        mesh.getVertices(vertices);
-        mesh.getIndices(indices);
+        if (verticesDirty) {
+            verticesDirty = false;
+            tempVertices = new float[vertices.length];
+            System.arraycopy(vertices, 0, tempVertices, 0, vertices.length);
 
-        Vector3 temp = new Vector3();
-        for (int i = 0; i < vertices.length;) {
-            temp.x = vertices[i];
-            temp.y = vertices[i + 1];
-            temp.z = vertices[i + 2];
-            temp.mul(transformation);
-            vertices[i++] = temp.x;
-            vertices[i++] = temp.y;
-            vertices[i++] = temp.z;
+            for (int i = 0; i < vertices.length;) {
+                tempVector.x = tempVertices[i];
+                tempVector.y = tempVertices[i + 1];
+                tempVector.z = tempVertices[i + 2];
+                tempVector.mul(transformation);
+                tempVertices[i++] = tempVector.x;
+                tempVertices[i++] = tempVector.y;
+                tempVertices[i++] = tempVector.z;
+            }
         }
-        return Intersector.intersectRayTriangles(ray, vertices, indices, mesh.getVertexSize() / (Float.SIZE / 8), intersectionVector);
+        return Intersector.intersectRayTriangles(ray, tempVertices, indices, mesh.getVertexSize() / (Float.SIZE / 8), intersectionVector);
     }
 
     /**
@@ -222,22 +243,27 @@ public abstract class Shape implements Comparable<Shape> {
      */
     public void setScale(float x, float y, float z) {
         this.scale.set(x, y, z);
+        this.transformationDirty = true;
     }
 
     public void setScale(Vector3 scale) {
         this.scale.set(scale);
+        this.transformationDirty = true;
     }
 
     public void setScaleX(float x) {
         this.scale.x = x;
+        this.transformationDirty = true;
     }
 
     public void setScaleY(float y) {
         this.scale.y = y;
+        this.transformationDirty = true;
     }
 
     public void setScaleZ(float z) {
         this.scale.z = z;
+        this.transformationDirty = true;
     }
 
     /**
@@ -247,6 +273,15 @@ public abstract class Shape implements Comparable<Shape> {
      */
     public Quaternion getRotation() {
         return rotation;
+    }
+
+    public void set(Shape shape) {
+        shape.ID = ID;
+        shape.color.set(color);
+        shape.scale.set(scale);
+        shape.rotation.set(rotation);
+        shape.translation.set(translation);
+        this.transformationDirty = true;
     }
 
     /**
@@ -259,26 +294,32 @@ public abstract class Shape implements Comparable<Shape> {
      */
     public void setRotation(float x, float y, float z, float angle) {
         this.rotation.set(x, y, z, angle);
+        this.transformationDirty = true;
     }
 
     public void setRotation(Quaternion rotation) {
         this.rotation.set(rotation);
+        this.transformationDirty = true;
     }
 
     public void setRotationW(float w) {
         this.rotation.w = w;
+        this.transformationDirty = true;
     }
 
     public void setRotationX(float x) {
         this.rotation.x = x;
+        this.transformationDirty = true;
     }
 
     public void setRotationY(float y) {
         this.rotation.y = y;
+        this.transformationDirty = true;
     }
 
     public void setRotationZ(float z) {
         this.rotation.z = z;
+        this.transformationDirty = true;
     }
 
     /**
@@ -299,30 +340,32 @@ public abstract class Shape implements Comparable<Shape> {
      */
     public void setTranslation(float x, float y, float z) {
         this.translation.set(x, y, z);
+        this.transformationDirty = true;
     }
 
     public void setTranslation(Vector3 translation) {
         this.translation.set(translation);
+        this.transformationDirty = true;
     }
 
     public void setTranslationX(float x) {
         this.translation.x = x;
+        this.transformationDirty = true;
     }
 
     public void setTranslationY(float y) {
         this.translation.y = y;
+        this.transformationDirty = true;
     }
 
     public void setTranslationZ(float z) {
         this.translation.z = z;
+        this.transformationDirty = true;
     }
 
-    public void set(Shape shape) {
-        shape.ID = ID;
-        shape.color.set(color);
-        shape.scale.set(scale);
-        shape.rotation.set(rotation);
-        shape.translation.set(translation);
+    public void setDirty() {
+        transformationDirty = true;
+        verticesDirty = true;
     }
 
     /**

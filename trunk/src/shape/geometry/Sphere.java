@@ -21,14 +21,15 @@ public class Sphere extends Shape {
         this.radius = radius;
 
         primitiveType = GL10.GL_TRIANGLE_STRIP;
-        calculateSphere();
+        create();
     }
 
-    private void calculateSphere() {
+    @Override
+    protected final void create() {
         int space = 20;
 
         int VertexCount = ((180 / space) * (360 / space) * 4);
-        float[] v = new float[VertexCount * 3];
+        vertices = new float[VertexCount * 3];
 
         float a;
         float b;
@@ -41,26 +42,27 @@ public class Sphere extends Shape {
 
             for (a = 0; a <= 360 - space; a += space) {
 
-                v[i++] = radius * MathUtils.sinDeg(a) * MathUtils.sinDeg(b);
-                v[i++] = radius * MathUtils.cosDeg(a) * MathUtils.sinDeg(b);
-                v[i++] = radius * MathUtils.cosDeg(b);
+                vertices[i++] = radius * MathUtils.sinDeg(a) * MathUtils.sinDeg(b);
+                vertices[i++] = radius * MathUtils.cosDeg(a) * MathUtils.sinDeg(b);
+                vertices[i++] = radius * MathUtils.cosDeg(b);
 
-                v[i++] = radius * MathUtils.sinDeg(a) * MathUtils.sinDeg(b + space);
-                v[i++] = radius * MathUtils.cosDeg(a) * MathUtils.sinDeg(b + space);
-                v[i++] = radius * MathUtils.cosDeg(b + space);
+                vertices[i++] = radius * MathUtils.sinDeg(a) * MathUtils.sinDeg(b + space);
+                vertices[i++] = radius * MathUtils.cosDeg(a) * MathUtils.sinDeg(b + space);
+                vertices[i++] = radius * MathUtils.cosDeg(b + space);
 
-                v[i++] = radius * MathUtils.sinDeg(a + space) * MathUtils.sinDeg(b);
-                v[i++] = radius * MathUtils.cosDeg(a + space) * MathUtils.sinDeg(b);
-                v[i++] = radius * MathUtils.cosDeg(b);
+                vertices[i++] = radius * MathUtils.sinDeg(a + space) * MathUtils.sinDeg(b);
+                vertices[i++] = radius * MathUtils.cosDeg(a + space) * MathUtils.sinDeg(b);
+                vertices[i++] = radius * MathUtils.cosDeg(b);
 
-                v[i++] = radius * MathUtils.sinDeg(a + space) * MathUtils.sinDeg(b + space);
-                v[i++] = radius * MathUtils.cosDeg(a + space) * MathUtils.sinDeg(b + space);
-                v[i++] = radius * MathUtils.cosDeg(b + space);
+                vertices[i++] = radius * MathUtils.sinDeg(a + space) * MathUtils.sinDeg(b + space);
+                vertices[i++] = radius * MathUtils.cosDeg(a + space) * MathUtils.sinDeg(b + space);
+                vertices[i++] = radius * MathUtils.cosDeg(b + space);
             }
 
         }
         mesh = new Mesh(true, VertexCount, 0, VertexAttribute.Position());
-        mesh.setVertices(v);
+        indices = new short[0];
+        super.create();
     }
 
     @Override
@@ -82,7 +84,7 @@ public class Sphere extends Shape {
 
     public void setRadius(float radius) {
         this.radius = radius;
-        calculateSphere();
+        create();
     }
 
     @Override

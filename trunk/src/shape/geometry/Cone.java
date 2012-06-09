@@ -20,15 +20,16 @@ public class Cone extends Shape {
         this.height = height;
 
         primitiveType = GL10.GL_TRIANGLES;
-        calculateCone();
+        create();
     }
 
-    private void calculateCone() {
+    @Override
+    protected final void create() {
         short slices = (short) (4 * Math.cbrt(bottomRadius) + 8);
 
         mesh = new Mesh(true, slices + 2, slices * 6, VertexAttribute.Position());
 
-        float[] vertices = new float[(slices + 2) * 3];
+        vertices = new float[(slices + 2) * 3];
         float angle = 360f / slices;
 
         int i = 0;
@@ -42,7 +43,7 @@ public class Cone extends Shape {
         vertices[i + 2] = height / 2;
         vertices[i++] = vertices[i + 2] = 0;
 
-        short[] indices = new short[slices * 6];
+        indices = new short[slices * 6];
 
         short p = 0;
         for (i = 0; i < indices.length - 6; i += 3) {
@@ -56,8 +57,7 @@ public class Cone extends Shape {
         indices[i++] = indices[i + 2] = slices;
         indices[i + 2]++;
 
-        mesh.setVertices(vertices);
-        mesh.setIndices(indices);
+        super.create();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Cone extends Shape {
 
     public void setBottomRadius(float bottomRadius) {
         this.bottomRadius = bottomRadius;
-        calculateCone();
+        create();
     }
 
     public float getHeight() {
@@ -83,7 +83,7 @@ public class Cone extends Shape {
 
     public void setHeight(float height) {
         this.height = height;
-        calculateCone();
+        create();
     }
 
     @Override

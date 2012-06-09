@@ -20,15 +20,16 @@ public class Cylinder extends Shape {
         this.radius = radius;
 
         primitiveType = GL10.GL_TRIANGLES;
-        calculateCylinder();
+        create();
     }
 
-    private void calculateCylinder() {
+    @Override
+    protected final void create() {
         short slices = (short) (4 * Math.cbrt(radius) + 8);
 
         mesh = new Mesh(true, (slices + 1) * 2, slices * 12, VertexAttribute.Position());
 
-        float[] vertices = new float[(slices + 1) * 6];
+        vertices = new float[(slices + 1) * 6];
         float angle = 360f / slices;
 
         int i = 0;
@@ -43,7 +44,7 @@ public class Cylinder extends Shape {
         vertices[i + 2] = height / 2;
         vertices[i++] = vertices[i + 2] = 0;
 
-        short[] indices = new short[slices * 12];
+        indices = new short[slices * 12];
 
         short p = 0;
         for (i = 0; i < indices.length - 12;) {
@@ -81,8 +82,7 @@ public class Cylinder extends Shape {
         indices[i++] = 1;
         indices[i++] = (short) (p + 1);
 
-        mesh.setVertices(vertices);
-        mesh.setIndices(indices);
+        super.create();
     }
 
     @Override
@@ -99,7 +99,7 @@ public class Cylinder extends Shape {
 
     public void setHeight(float height) {
         this.height = height;
-        calculateCylinder();
+        create();
     }
 
     public float getRadius() {
@@ -108,7 +108,7 @@ public class Cylinder extends Shape {
 
     public void setRadius(float radius) {
         this.radius = radius;
-        calculateCylinder();
+        create();
     }
 
     @Override
