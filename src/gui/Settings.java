@@ -13,9 +13,10 @@ public class Settings {
     private static String[] cameras;
     private static String language;
     private static boolean wireframe;
+    private static boolean vsync;
 
     /**
-     Load application settings
+     * Load application settings
      */
     static {
         properties = new Properties();
@@ -43,6 +44,8 @@ public class Settings {
         resource = ResourceBundle.getBundle("languages/" + language);
         // wireframe
         wireframe = Boolean.parseBoolean(properties.getProperty("wireframe", "false"));
+        // vsync
+        vsync = Boolean.parseBoolean(properties.getProperty("vsync", "true"));
     }
 
     public static String getLanguage() {
@@ -63,5 +66,9 @@ public class Settings {
 
     public static void setWireframe(boolean wireframe) {
         Settings.wireframe = wireframe;
+    }
+
+    public static boolean getVSync() {
+        return vsync;
     }
 }
