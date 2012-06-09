@@ -34,6 +34,9 @@ public abstract class Shape implements Comparable<Shape> {
 
     public abstract Shape copy();
 
+    /**
+     * Draw the current shape
+     */
     public void draw() {
 
         // identity
@@ -56,6 +59,14 @@ public abstract class Shape implements Comparable<Shape> {
         mesh.render(primitiveType);
     }
 
+    /**
+     * Intersects the shape with a Ray
+     *
+     * @see Ray
+     * @param ray the Ray that will be casted over the shape
+     * @param intersectionVector a Vector3 for the intersection point between the shape and the ray
+     * @return true if the Ray intersect this shape
+     */
     public boolean intersect(Ray ray, Vector3 intersectionVector) {
         float[] vertices = new float[mesh.getNumVertices() * 3];
         short[] indices = new short[mesh.getNumIndices()];
@@ -75,38 +86,83 @@ public abstract class Shape implements Comparable<Shape> {
         return Intersector.intersectRayTriangles(ray, vertices, indices, mesh.getVertexSize() / (Float.SIZE / 8), intersectionVector);
     }
 
+    /**
+     * Resets the static ID
+     */
     public static void reset() {
         ID_COUNTER = 1;
     }
 
+    /**
+     * Returns the shape's color
+     *
+     * @return
+     */
     public Color getColor() {
         return color;
     }
 
+    /**
+     * Returns the shape color as java.awt.Color
+     *
+     * @see java.awt.Color
+     * @return
+     */
     public java.awt.Color getColorAWT() {
         return new java.awt.Color(color.r, color.g, color.b, color.a);
     }
 
+    /**
+     * Set a new color to the shape
+     *
+     * @param color
+     */
     public void setColor(Color color) {
         this.color.set(color);
     }
 
+    /**
+     * Set only the color Red component
+     *
+     * @param red
+     */
     public void setColorR(float red) {
         this.color.r = red;
     }
 
+    /**
+     * Set only the color Green component
+     *
+     * @param green
+     */
     public void setColorG(float green) {
         this.color.g = green;
     }
 
+    /**
+     * Set only the color Blue component
+     *
+     * @param green
+     */
     public void setColorB(float blue) {
         this.color.b = blue;
     }
 
+    /**
+     * Set only the color Alpha component
+     *
+     * @param green
+     */
     public void setColorA(float alpha) {
         this.color.a = alpha;
     }
 
+    /**
+     * Set the color from a java.awt.Color object without the alpha component
+     *
+     * @see java.awt.Color
+     * @param color
+     */
     public void setColorRGB(java.awt.Color color) {
         float r = color.getRed() / 255f;
         float g = color.getGreen() / 255f;
@@ -116,6 +172,12 @@ public abstract class Shape implements Comparable<Shape> {
         this.color.b = b;
     }
 
+    /**
+     * Same as @link #setColorRGB but set alpha component too
+     *
+     * @see java.awt.Color
+     * @param color
+     */
     public void setColorAWT(java.awt.Color color) {
         float r = color.getRed() / 255f;
         float g = color.getGreen() / 255f;
@@ -124,18 +186,40 @@ public abstract class Shape implements Comparable<Shape> {
         this.color.set(r, g, b, a);
     }
 
+    /**
+     * Returns the shape ID
+     *
+     * @return
+     */
     public int getID() {
         return ID;
     }
 
+    /**
+     * Set the shape ID
+     *
+     * @param ID
+     */
     public void setID(int ID) {
         this.ID = ID;
     }
 
+    /**
+     * Get this shape scale
+     *
+     * @return
+     */
     public Vector3 getScale() {
         return scale;
     }
 
+    /**
+     * Set this shape scale
+     *
+     * @param x scale for x-axis
+     * @param y scale for y-axis
+     * @param z scale for z-axis
+     */
     public void setScale(float x, float y, float z) {
         this.scale.set(x, y, z);
     }
@@ -156,18 +240,23 @@ public abstract class Shape implements Comparable<Shape> {
         this.scale.z = z;
     }
 
+    /**
+     * Returns the rotation
+     *
+     * @return
+     */
     public Quaternion getRotation() {
         return rotation;
     }
 
-    public void set(Shape shape) {
-        shape.ID = ID;
-        shape.color.set(color);
-        shape.scale.set(scale);
-        shape.rotation.set(rotation);
-        shape.translation.set(translation);
-    }
-
+    /**
+     * Set the rotation
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @param angle angle of the rotation in degrees
+     */
     public void setRotation(float x, float y, float z, float angle) {
         this.rotation.set(x, y, z, angle);
     }
@@ -192,10 +281,22 @@ public abstract class Shape implements Comparable<Shape> {
         this.rotation.z = z;
     }
 
+    /**
+     * Returns the translation
+     *
+     * @return
+     */
     public Vector3 getTranslation() {
         return translation;
     }
 
+    /**
+     * Set the translation
+     *
+     * @param x
+     * @param y
+     * @param z
+     */
     public void setTranslation(float x, float y, float z) {
         this.translation.set(x, y, z);
     }
@@ -216,6 +317,20 @@ public abstract class Shape implements Comparable<Shape> {
         this.translation.z = z;
     }
 
+    public void set(Shape shape) {
+        shape.ID = ID;
+        shape.color.set(color);
+        shape.scale.set(scale);
+        shape.rotation.set(rotation);
+        shape.translation.set(translation);
+    }
+
+    /**
+     * Returns a String containing this shapes properties in VRML97 format
+     * http://www.web3d.org/x3d/specifications/vrml/ISO-IEC-14772-VRML97/
+     *
+     * @return
+     */
     public String printVrml() {
         return String.format(Locale.US, "# %s\r\n"
                 + "Transform {\r\n"
@@ -243,6 +358,12 @@ public abstract class Shape implements Comparable<Shape> {
                 (1.0f - color.a));
     }
 
+    /**
+     * Write the properties of this shape in binary format
+     *
+     * @param dataOutputStream a DataOutputStream where the content will be written to
+     * @throws IOException
+     */
     public void writeBinary(DataOutputStream dataOutputStream) throws IOException {
         // shape
         String clazz = getClass().getSimpleName();

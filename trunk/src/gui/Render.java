@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.google.common.collect.Ordering;
 import com.google.common.collect.TreeMultimap;
-import java.util.Enumeration;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
 import shape.Axis;
@@ -21,15 +20,22 @@ public class Render implements ApplicationListener {
     private TreeMultimap<Float, Shape> treeShapes;
     private Camera[] cameras;
     private int width, height;
+    // variable members for optimization
+    private final Vector3 intersection;
+    private final Ray ray;
 
     public Render(DefaultListModel shapes) {
         this.listShapes = shapes;
+        intersection = new Vector3();
+        ray = new Ray(Vector3.Zero, Vector3.Zero);
     }
 
     @Override
     public void create() {
         width = Gdx.graphics.getWidth();
         height = Gdx.graphics.getHeight();
+
+        Gdx.graphics.setVSync(Settings.getVSync());
 
         // create and configure cameras
         cameras = new Camera[4];
@@ -114,9 +120,10 @@ public class Render implements ApplicationListener {
             // sort alpha shapes
             if (shape.getColor().a < 1.0f) {
                 // calculate ray
-                Ray ray = new Ray(camera.position, shape.getTranslation().tmp().sub(camera.position).nor());
+                ray.origin.set(camera.position);
+                ray.direction.set(shape.getTranslation()).sub(camera.position).nor();
+
                 // try to intersect shape with ray
-                Vector3 intersection = new Vector3();
                 if (shape.intersect(ray, intersection)) {
                     float distance = camera.position.dst(intersection);
                     treeShapes.put(distance, shape);
