@@ -53,10 +53,15 @@ public class Box extends Shape {
             2, 3, 6, 3, 6, 7, // bottom
             0, 3, 4, 3, 4, 7, // left
         };
-        
+
         super.create();
     }
 
+    /**
+     * Return a copy of this box
+     *
+     * @return
+     */
     @Override
     public Box copy() {
         ID_COUNTER--;
@@ -65,28 +70,58 @@ public class Box extends Shape {
         return temp;
     }
 
+    /**
+     * Get box width
+     *
+     * @return
+     */
     public float getWidth() {
         return width;
     }
 
+    /**
+     * Set box width
+     *
+     * @param width
+     */
     public void setWidth(float width) {
         this.width = width;
         create();
     }
 
+    /**
+     * Get box height
+     *
+     * @return
+     */
     public float getHeight() {
         return height;
     }
 
+    /**
+     * Set box height
+     *
+     * @param height
+     */
     public void setHeight(float height) {
         this.height = height;
         create();
     }
 
+    /**
+     * Get box depth
+     *
+     * @return
+     */
     public float getDepth() {
         return depth;
     }
 
+    /**
+     * Set box depth
+     *
+     * @param depth
+     */
     public void setDepth(float depth) {
         this.depth = depth;
         create();
