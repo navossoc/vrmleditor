@@ -21,13 +21,14 @@ public class Box extends Shape {
         this.depth = depth;
 
         this.primitiveType = GL10.GL_TRIANGLES;
-        calculateBox();
+        create();
     }
 
-    private void calculateBox() {
+    @Override
+    protected final void create() {
         mesh = new Mesh(true, 8, 36, VertexAttribute.Position());
 
-        float[] vertices = {
+        vertices = new float[]{
             -1.0f, +1.0f, +1.0f, // 0
             +1.0f, +1.0f, +1.0f, // 1
             +1.0f, -1.0f, +1.0f, // 2
@@ -44,7 +45,7 @@ public class Box extends Shape {
             vertices[i++] *= depth / 2;
         }
 
-        short[] indices = {
+        indices = new short[]{
             0, 1, 2, 0, 2, 3, // front
             1, 2, 5, 2, 5, 6, // right
             0, 1, 5, 0, 4, 5, // top
@@ -52,9 +53,8 @@ public class Box extends Shape {
             2, 3, 6, 3, 6, 7, // bottom
             0, 3, 4, 3, 4, 7, // left
         };
-
-        mesh.setVertices(vertices);
-        mesh.setIndices(indices);
+        
+        super.create();
     }
 
     @Override
@@ -71,7 +71,7 @@ public class Box extends Shape {
 
     public void setWidth(float width) {
         this.width = width;
-        calculateBox();
+        create();
     }
 
     public float getHeight() {
@@ -80,7 +80,7 @@ public class Box extends Shape {
 
     public void setHeight(float height) {
         this.height = height;
-        calculateBox();
+        create();
     }
 
     public float getDepth() {
@@ -89,7 +89,7 @@ public class Box extends Shape {
 
     public void setDepth(float depth) {
         this.depth = depth;
-        calculateBox();
+        create();
     }
 
     @Override
