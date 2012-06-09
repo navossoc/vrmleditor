@@ -103,24 +103,22 @@ public class Render implements ApplicationListener {
         // enable depth test
         Gdx.gl10.glEnable(GL10.GL_DEPTH_TEST);
 
+        // clear tree for alpha shapes
+        if (!treeShapes.isEmpty()) {
+            treeShapes.clear();
+        }
+
         // drawing
-        treeShapes.clear();
-
-        float distance;
-        Shape shape;
-        Ray ray = new Ray(new Vector3(), new Vector3());
-        Vector3 intersection = new Vector3();
-
-        Enumeration e = listShapes.elements();
-        while (e.hasMoreElements()) {
-            shape = (Shape) e.nextElement();
+        for (int i = 0; i < listShapes.size(); i++) {
+            Shape shape = (Shape) listShapes.get(i);
             // sort alpha shapes
             if (shape.getColor().a < 1.0f) {
                 // calculate ray
-                ray.set(camera.position, shape.getTranslation().tmp().sub(camera.position).nor());
+                Ray ray = new Ray(camera.position, shape.getTranslation().tmp().sub(camera.position).nor());
                 // try to intersect shape with ray
+                Vector3 intersection = new Vector3();
                 if (shape.intersect(ray, intersection)) {
-                    distance = camera.position.dst(intersection);
+                    float distance = camera.position.dst(intersection);
                     treeShapes.put(distance, shape);
                     continue;
                 }
@@ -130,10 +128,12 @@ public class Render implements ApplicationListener {
         }
 
         // draw alpha shapes
-        Iterator<Shape> iterator = treeShapes.values().iterator();
-        while (iterator.hasNext()) {
-            shape = iterator.next();
-            shape.draw();
+        if (!treeShapes.isEmpty()) {
+            Iterator<Shape> iterator = treeShapes.values().iterator();
+            while (iterator.hasNext()) {
+                Shape shape = iterator.next();
+                shape.draw();
+            }
         }
 
         // disable depth and blend
