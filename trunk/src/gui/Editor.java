@@ -178,7 +178,7 @@ public class Editor extends javax.swing.JFrame {
         jMenuHelpAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("VRML Editor");
+        setTitle(Settings.getMessage("Window.Editor")); // NOI18N
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -242,82 +242,82 @@ public class Editor extends javax.swing.JFrame {
         });
         jScrollPaneList.setViewportView(jListShapes);
 
-        jTabbedPane.addTab("Objetos", jScrollPaneList);
+        jTabbedPane.addTab(Settings.getMessage("Tab.Objects"), jScrollPaneList); // NOI18N
 
         propertySheetPanel.setBorder(null);
-        jTabbedPane.addTab("Propriedades", propertySheetPanel);
+        jTabbedPane.addTab(Settings.getMessage("Tab.Properties"), propertySheetPanel); // NOI18N
 
-        jMenuFile.setMnemonic('a');
-        jMenuFile.setText("Arquivo");
+        jMenuFile.setMnemonic(Settings.getMessage("Menu.File.mnemonic").charAt(0));
+        jMenuFile.setText(Settings.getMessage("Menu.File")); // NOI18N
 
         jMenuFileNew.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuFileNew.setMnemonic('n');
-        jMenuFileNew.setText("Novo");
+        jMenuFileNew.setMnemonic(Settings.getMessage("Menu.File.New.mnemonic").charAt(0));
+        jMenuFileNew.setText(Settings.getMessage("Menu.File.New")); // NOI18N
         jMenuFile.add(jMenuFileNew);
 
         jMenuFileOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuFileOpen.setMnemonic('a');
-        jMenuFileOpen.setText("Abrir");
+        jMenuFileOpen.setMnemonic(Settings.getMessage("Menu.File.Open.mnemonic").charAt(0));
+        jMenuFileOpen.setText(Settings.getMessage("Menu.File.Open")); // NOI18N
         jMenuFile.add(jMenuFileOpen);
 
         jMenuFileSave.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuFileSave.setMnemonic('s');
-        jMenuFileSave.setText("Salvar");
+        jMenuFileSave.setMnemonic(Settings.getMessage("Menu.File.Save.mnemonic").charAt(0));
+        jMenuFileSave.setText(Settings.getMessage("Menu.File.Save")); // NOI18N
         jMenuFile.add(jMenuFileSave);
 
         jMenuFileExport.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuFileExport.setMnemonic('e');
-        jMenuFileExport.setText("Exportar");
+        jMenuFileExport.setMnemonic(Settings.getMessage("Menu.File.Export.mnemonic").charAt(0));
+        jMenuFileExport.setText(Settings.getMessage("Menu.File.Export")); // NOI18N
         jMenuFile.add(jMenuFileExport);
         jMenuFile.add(jSeparatorFile);
 
         jMenuFileExit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
-        jMenuFileExit.setMnemonic('i');
-        jMenuFileExit.setText("Sair");
+        jMenuFileExit.setMnemonic(Settings.getMessage("Menu.File.Exit.mnemonic").charAt(0));
+        jMenuFileExit.setText(Settings.getMessage("Menu.File.Exit")); // NOI18N
         jMenuFile.add(jMenuFileExit);
 
         jMenuBar.add(jMenuFile);
 
-        jMenuEdit.setMnemonic('e');
-        jMenuEdit.setText("Editar");
+        jMenuEdit.setMnemonic(Settings.getMessage("Menu.Edit.mnemonic").charAt(0));
+        jMenuEdit.setText(Settings.getMessage("Menu.Edit")); // NOI18N
 
         jMenuEditUndo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuEditUndo.setMnemonic('d');
-        jMenuEditUndo.setText("Desfazer");
+        jMenuEditUndo.setMnemonic(Settings.getMessage("Menu.Edit.Undo.mnemonic").charAt(0));
+        jMenuEditUndo.setText(Settings.getMessage("Menu.Edit.Undo")); // NOI18N
         jMenuEditUndo.setEnabled(false);
         jMenuEdit.add(jMenuEditUndo);
 
         jMenuEditRedo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuEditRedo.setMnemonic('r');
-        jMenuEditRedo.setText("Refazer");
+        jMenuEditRedo.setMnemonic(Settings.getMessage("Menu.Edit.Redo.mnemonic").charAt(0));
+        jMenuEditRedo.setText(Settings.getMessage("Menu.Edit.Redo")); // NOI18N
         jMenuEditRedo.setEnabled(false);
         jMenuEdit.add(jMenuEditRedo);
         jMenuEdit.add(jSeparatorEdit);
 
         jMenuEditDelete.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
-        jMenuEditDelete.setMnemonic('x');
-        jMenuEditDelete.setText("Excluir");
+        jMenuEditDelete.setMnemonic(Settings.getMessage("Menu.Edit.Delete.mnemonic").charAt(0));
+        jMenuEditDelete.setText(Settings.getMessage("Menu.Edit.Delete")); // NOI18N
         jMenuEditDelete.setEnabled(false);
         jMenuEdit.add(jMenuEditDelete);
 
         jMenuBar.add(jMenuEdit);
 
-        jMenuView.setMnemonic('x');
-        jMenuView.setText("Exibir");
+        jMenuView.setMnemonic(Settings.getMessage("Menu.View.mnemonic").charAt(0));
+        jMenuView.setText(Settings.getMessage("Menu.View")); // NOI18N
 
-        jMenuViewWireframe.setMnemonic('w');
+        jMenuViewWireframe.setMnemonic(Settings.getMessage("Menu.View.Wireframe.mnemonic").charAt(0));
         jMenuViewWireframe.setSelected(true);
-        jMenuViewWireframe.setText("Wireframe");
+        jMenuViewWireframe.setText(Settings.getMessage("Menu.View.Wireframe")); // NOI18N
         jMenuView.add(jMenuViewWireframe);
 
         jMenuBar.add(jMenuView);
 
-        jMenuHelp.setMnemonic('u');
-        jMenuHelp.setText("Ajuda");
+        jMenuHelp.setMnemonic(Settings.getMessage("Menu.Help.mnemonic").charAt(0));
+        jMenuHelp.setText(Settings.getMessage("Menu.Help")); // NOI18N
 
         jMenuHelpAbout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jMenuHelpAbout.setMnemonic('b');
-        jMenuHelpAbout.setText("Sobre");
+        jMenuHelpAbout.setMnemonic(Settings.getMessage("Menu.Help.About.mnemonic").charAt(0));
+        jMenuHelpAbout.setText(Settings.getMessage("Menu.Help.About")); // NOI18N
         jMenuHelp.add(jMenuHelpAbout);
 
         jMenuBar.add(jMenuHelp);
