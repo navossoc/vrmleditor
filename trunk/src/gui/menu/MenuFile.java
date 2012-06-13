@@ -2,6 +2,7 @@ package gui.menu;
 
 import gui.Constants;
 import gui.Editor;
+import gui.Settings;
 import gui.export.ExportVrml;
 import gui.format.FormatBin;
 import java.awt.event.ActionEvent;
@@ -82,7 +83,7 @@ public class MenuFile {
     private void actionNew() {
         if (editor.getHistory().isFileDirty()) {
             int option = JOptionPane.showConfirmDialog(editor,
-                    "Deseja salvar as alterações?", "Novo",
+                    Settings.getMessage("MsgBox.File.New.Question"), Settings.getMessage("MsgBox.File.New.Title"),
                     JOptionPane.YES_NO_CANCEL_OPTION,
                     JOptionPane.QUESTION_MESSAGE);
             switch (option) {
@@ -106,11 +107,11 @@ public class MenuFile {
      */
     private void actionOpen() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
+        fileChooser.setFileFilter(new ExtensionFileFilter(Settings.getMessage("File.Binary.Description"), Settings.getMessage("File.Binary.Extension")));
         if (fileChooser.showOpenDialog(editor) == JFileChooser.APPROVE_OPTION) {
             String file = fileChooser.getSelectedFile().getAbsolutePath();
-            if (!file.endsWith(".bin")) {
-                file += ".bin";
+            if (!file.endsWith("." + Settings.getMessage("File.Binary.Extension"))) {
+                file += "." + Settings.getMessage("File.Binary.Extension");
             }
 
             // erase all shapes
@@ -124,7 +125,7 @@ public class MenuFile {
                 }
                 shapes.clear();
             } else {
-                JOptionPane.showMessageDialog(editor, "Erro ao abrir o arquivo BIN", "Abrir", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Open.Failure", Settings.getMessage("File.Binary.Extension")), Settings.getMessage("MsgBox.File.Open.Title"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -134,17 +135,17 @@ public class MenuFile {
      */
     private void actionSave() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo BIN", "bin"));
+        fileChooser.setFileFilter(new ExtensionFileFilter(Settings.getMessage("File.Binary.Description"), Settings.getMessage("File.Binary.Extension")));
         if (fileChooser.showSaveDialog(editor) == JFileChooser.APPROVE_OPTION) {
             String file = fileChooser.getSelectedFile().getAbsolutePath();
-            if (!file.endsWith(".bin")) {
-                file += ".bin";
+            if (!file.endsWith("." + Settings.getMessage("File.Binary.Extension"))) {
+                file += "." + Settings.getMessage("File.Binary.Extension");
             }
             if (FormatBin.save(file, editor.getListModel())) {
                 editor.getHistory().setFileDirty(false);
-                JOptionPane.showMessageDialog(editor, "Arquivo salvo com sucesso!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Save.Success"), Settings.getMessage("MsgBox.File.Save.Title"), JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(editor, "Erro ao exportar o arquivo BIN", "Salvar", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Save.Failure", Settings.getMessage("File.Binary.Extension")), Settings.getMessage("MsgBox.File.Save.Title"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -154,16 +155,16 @@ public class MenuFile {
      */
     private void actionExport() {
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new ExtensionFileFilter("Arquivo VRML", "wrl"));
+        fileChooser.setFileFilter(new ExtensionFileFilter(Settings.getMessage("File.VRML.Description"), Settings.getMessage("File.VRML.Extension")));
         if (fileChooser.showSaveDialog(editor) == JFileChooser.APPROVE_OPTION) {
             String file = fileChooser.getSelectedFile().getAbsolutePath();
-            if (!file.endsWith(".wrl")) {
-                file += ".wrl";
+            if (!file.endsWith("." + Settings.getMessage("File.VRML.Extension"))) {
+                file += "." + Settings.getMessage("File.VRML.Extension");
             }
             if (ExportVrml.save(file, editor.getListModel())) {
-                JOptionPane.showMessageDialog(editor, "Arquivo salvo com sucesso!", "Exportar", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Export.Success"), Settings.getMessage("MsgBox.File.Export.Title"), JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(editor, "Erro ao exportar o arquivo VRML", "Exportar", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Export.Failure", Settings.getMessage("File.Export.Extension")), Settings.getMessage("MsgBox.File.Export.Title"), JOptionPane.ERROR_MESSAGE);
             }
         }
     }
