@@ -121,8 +121,8 @@ public class Editor extends javax.swing.JFrame {
 
         Shape shape = (Shape) jListShapes.getSelectedValue();
         if (JOptionPane.showConfirmDialog(this,
-                "Deseja remover o objeto?",
-                shape.toString(),
+                Settings.getMessage("MsgBox.Edit.Delete.Question", shape.toString()),
+                Settings.getMessage("MsgBox.Edit.Delete.Title"),
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             history.insertUndo(new HistoryInfo(shape, HistoryInfo.Type.DELETE));
@@ -452,6 +452,7 @@ public class Editor extends javax.swing.JFrame {
 
             @Override
             public void run() {
+                Settings.setLanguage();
                 // fix the problem with the menu items appearing behind drawing canvas
                 JPopupMenu.setDefaultLightWeightPopupEnabled(false);
                 new Editor().setVisible(true);

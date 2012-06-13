@@ -2,6 +2,8 @@ package gui;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -39,9 +41,6 @@ public class Settings {
         cameras[2] = properties.getProperty("camera3", "bottom");
         // camera4
         cameras[3] = properties.getProperty("camera4", "free");
-        // language
-        language = properties.getProperty("language", "pt_BR");
-        resource = ResourceBundle.getBundle("languages/" + language);
         // wireframe
         wireframe = Boolean.parseBoolean(properties.getProperty("wireframe", "false"));
         // vsync
@@ -52,8 +51,28 @@ public class Settings {
         return language;
     }
 
+    public static void setLanguage() {
+        // language
+        language = properties.getProperty("language", "en_US");
+        URL fileLanguage = ClassLoader.getSystemClassLoader().getResource("languages/" + language + ".properties");;
+        Locale locale = Locale.US;
+
+        if (fileLanguage == null) {
+            language = "en_US";
+        } else {
+            locale = new Locale(language.substring(0, 2).toLowerCase(), language.substring(3, 5).toUpperCase());
+        }
+
+        resource = ResourceBundle.getBundle("languages/" + language);
+        Locale.setDefault(locale);
+    }
+
     public static String getMessage(String key) {
         return resource.getString(key);
+    }
+
+    public static String getMessage(String key, Object... params) {
+        return String.format(resource.getString(key), params);
     }
 
     public static String getCamera(int index) {
