@@ -94,8 +94,9 @@ public class Editor extends javax.swing.JFrame {
         while (e.hasMoreElements()) {
             Shape list = (Shape) e.nextElement();
             if (list.equals(shape)) {
-                int index = getListModel().indexOf(list);
-                return (Shape) getListModel().set(index, shape);
+                Shape copy = list.copy();
+                list.set(shape);
+                return copy;
             }
         }
         return null;
