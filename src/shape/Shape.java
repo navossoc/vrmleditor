@@ -26,6 +26,7 @@ public abstract class Shape implements Comparable<Shape> {
     protected float[] tempVertices;
     protected boolean transformationDirty;
     protected boolean verticesDirty;
+    protected DistanceSorter sorter;
     protected static Vector3 tempVector = new Vector3();
 
     public Shape() {
@@ -36,6 +37,7 @@ public abstract class Shape implements Comparable<Shape> {
         rotation = new Quaternion(0, 0, 0, 0);
         translation = new Vector3(0, 0, 0);
         transformation = new Matrix4();
+        sorter = new DistanceSorter(this);
     }
 
     protected void create() {
@@ -130,6 +132,15 @@ public abstract class Shape implements Comparable<Shape> {
      */
     public static void reset() {
         ID_COUNTER = 1;
+    }
+
+    /**
+     * Get distance sorter
+     *
+     * @return
+     */
+    public DistanceSorter getSorter() {
+        return sorter;
     }
 
     /**
