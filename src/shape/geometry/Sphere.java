@@ -74,7 +74,7 @@ public class Sphere extends Shape {
     public Sphere copy() {
         ID_COUNTER--;
         Sphere temp = new Sphere(radius);
-        super.set(temp);
+        super.copy(temp);
         return temp;
     }
 

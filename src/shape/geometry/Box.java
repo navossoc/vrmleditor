@@ -66,7 +66,7 @@ public class Box extends Shape {
     public Box copy() {
         ID_COUNTER--;
         Box temp = new Box(width, height, depth);
-        super.set(temp);
+        super.copy(temp);
         return temp;
     }
 

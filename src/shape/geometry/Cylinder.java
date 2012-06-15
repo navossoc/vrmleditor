@@ -94,7 +94,7 @@ public class Cylinder extends Shape {
     public Cylinder copy() {
         ID_COUNTER--;
         Cylinder temp = new Cylinder(radius, height);
-        super.set(temp);
+        super.copy(temp);
         return temp;
     }
 

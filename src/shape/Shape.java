@@ -53,6 +53,19 @@ public abstract class Shape implements Comparable<Shape> {
     public abstract Shape copy();
 
     /**
+     * Copy shape's common values
+     *
+     * @param shape
+     */
+    protected void copy(Shape shape) {
+        shape.ID = ID;
+        shape.color.set(color);
+        shape.scale.set(scale);
+        shape.rotation.set(rotation);
+        shape.translation.set(translation);
+    }
+
+    /**
      * Draw the current shape
      */
     public void draw() {
@@ -125,11 +138,11 @@ public abstract class Shape implements Comparable<Shape> {
      * @param shape
      */
     public void set(Shape shape) {
-        shape.ID = ID;
-        shape.color.set(color);
-        shape.scale.set(scale);
-        shape.rotation.set(rotation);
-        shape.translation.set(translation);
+        ID = shape.ID;
+        color.set(shape.color);
+        scale.set(shape.scale);
+        rotation.set(shape.rotation);
+        translation.set(shape.translation);
         setDirty();
     }
 
@@ -245,7 +258,7 @@ public abstract class Shape implements Comparable<Shape> {
     }
 
     /**
-     * Same as @link #setColorRGB but set alpha component too
+     * Same as @link #setColorRGB but copy alpha component too
      *
      * @see java.awt.Color
      * @param color

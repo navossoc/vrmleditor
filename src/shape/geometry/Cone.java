@@ -69,7 +69,7 @@ public class Cone extends Shape {
     public Cone copy() {
         ID_COUNTER--;
         Cone temp = new Cone(bottomRadius, height);
-        super.set(temp);
+        super.copy(temp);
         return temp;
     }
 
