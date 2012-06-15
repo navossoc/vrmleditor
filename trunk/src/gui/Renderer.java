@@ -102,13 +102,6 @@ public class Renderer implements ApplicationListener {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_FILL);
         }
 
-        // enable blend
-        Gdx.gl10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl10.glEnable(GL10.GL_BLEND);
-
-        // enable depth test
-        Gdx.gl10.glEnable(GL10.GL_DEPTH_TEST);
-
         Iterator<Shape> iterator;
         // calculate distance
         iterator = listShapes.iterator();
@@ -129,6 +122,10 @@ public class Renderer implements ApplicationListener {
         // sort all shapes by distance
         listShapes.sort(DistanceSorter.getReverseComparator());
 
+        // enable depth test
+        Gdx.gl10.glDepthFunc(GL10.GL_LEQUAL);
+        Gdx.gl10.glEnable(GL10.GL_DEPTH_TEST);
+
         // draw opaque shapes
         iterator = listShapes.iterator();
         while (iterator.hasNext()) {
@@ -137,6 +134,10 @@ public class Renderer implements ApplicationListener {
                 shape.draw();
             }
         }
+
+        // enable blend
+        Gdx.gl10.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl10.glEnable(GL10.GL_BLEND);
 
         // draw alpha shapes
         iterator = listShapes.iterator();
