@@ -121,7 +121,7 @@ public class MenuFile {
             List<Shape> shapes = new ArrayList<Shape>();
             if (FormatBin.open(file, shapes)) {
                 for (Shape s : shapes) {
-                    editor.getListModel().addElement(s);
+                    editor.addShape(s);
                 }
                 shapes.clear();
             } else {
@@ -181,9 +181,7 @@ public class MenuFile {
      * Helpers
      */
     protected void fileNew() {
-        editor.getHistory().clear();
-        editor.getListModel().clear();
-        Shape.reset();
+        editor.clearAll();
     }
 }
 

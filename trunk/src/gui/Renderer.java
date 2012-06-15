@@ -6,26 +6,24 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
-import com.google.common.collect.Ordering;
-import com.google.common.collect.TreeMultimap;
+import com.badlogic.gdx.utils.Array;
 import java.util.Iterator;
-import javax.swing.DefaultListModel;
 import shape.Axis;
 import shape.Border;
+import shape.DistanceSorter;
 import shape.Shape;
 
-public class Render implements ApplicationListener {
+public class Renderer implements ApplicationListener {
 
-    private DefaultListModel listShapes;
-    private TreeMultimap<Float, Shape> treeShapes;
+    private Array<Shape> listShapes;
     private Camera[] cameras;
     private int width, height;
     // variable members for optimization
     private final Vector3 intersection;
     private final Ray ray;
 
-    public Render(DefaultListModel shapes) {
-        this.listShapes = shapes;
+    public Renderer() {
+        listShapes = new Array<Shape>(false, 16);
         intersection = new Vector3();
         ray = new Ray(Vector3.Zero, Vector3.Zero);
     }
@@ -42,9 +40,6 @@ public class Render implements ApplicationListener {
         for (int i = 0; i < cameras.length; i++) {
             cameras[i] = CameraUtil.configureCamera(Settings.getCamera(i));
         }
-
-        // temporary tree for alpha shapes
-        treeShapes = TreeMultimap.create(Ordering.natural().reverse(), Ordering.natural());
     }
 
     @Override
@@ -95,6 +90,11 @@ public class Render implements ApplicationListener {
         // draw axis
         Axis.draw();
 
+        // check if list is empty
+        if (listShapes.size == 0) {
+            return;
+        }
+
         // wireframe mode
         if (Settings.isWireframe()) {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_LINE);
@@ -109,36 +109,40 @@ public class Render implements ApplicationListener {
         // enable depth test
         Gdx.gl10.glEnable(GL10.GL_DEPTH_TEST);
 
-        // clear tree for alpha shapes
-        if (!treeShapes.isEmpty()) {
-            treeShapes.clear();
+        Iterator<Shape> iterator;
+        // calculate distance
+        iterator = listShapes.iterator();
+        while (iterator.hasNext()) {
+            Shape shape = iterator.next();
+
+            // calculate ray
+            ray.origin.set(camera.position);
+            ray.direction.set(shape.getTranslation()).sub(camera.position).nor();
+
+            // try to intersect shape with ray
+            if (shape.intersect(ray, intersection)) {
+                float distance = camera.position.dst(intersection);
+                shape.getSorter().setDistance(distance);
+            }
         }
 
-        // drawing
-        for (int i = 0; i < listShapes.size(); i++) {
-            Shape shape = (Shape) listShapes.get(i);
-            // sort alpha shapes
-            if (shape.getColor().a < 1.0f) {
-                // calculate ray
-                ray.origin.set(camera.position);
-                ray.direction.set(shape.getTranslation()).sub(camera.position).nor();
+        // sort all shapes by distance
+        listShapes.sort(DistanceSorter.getReverseComparator());
 
-                // try to intersect shape with ray
-                if (shape.intersect(ray, intersection)) {
-                    float distance = camera.position.dst(intersection);
-                    treeShapes.put(distance, shape);
-                    continue;
-                }
+        // draw opaque shapes
+        iterator = listShapes.iterator();
+        while (iterator.hasNext()) {
+            Shape shape = iterator.next();
+            if (shape.getColor().a >= 1.0f) {
+                shape.draw();
             }
-            // draw opaque shapes
-            shape.draw();
         }
 
         // draw alpha shapes
-        if (!treeShapes.isEmpty()) {
-            Iterator<Shape> iterator = treeShapes.values().iterator();
-            while (iterator.hasNext()) {
-                Shape shape = iterator.next();
+        iterator = listShapes.iterator();
+        while (iterator.hasNext()) {
+            Shape shape = iterator.next();
+            if (shape.getColor().a < 1.0f) {
                 shape.draw();
             }
         }
@@ -158,5 +162,14 @@ public class Render implements ApplicationListener {
 
     @Override
     public void dispose() {
+    }
+
+    /**
+     * Get list of rendered shapes
+     *
+     * @return
+     */
+    public Array<Shape> getListShapes() {
+        return listShapes;
     }
 }

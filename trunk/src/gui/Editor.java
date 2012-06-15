@@ -24,7 +24,7 @@ public class Editor extends javax.swing.JFrame {
     private LwjglCanvas canvas;
     private History history;
     private Properties properties;
-    private Render renderer;
+    private Renderer renderer;
 
     /**
      * Creates new form Editor
@@ -39,7 +39,7 @@ public class Editor extends javax.swing.JFrame {
         new MenuHelp(this).addActionListeners();
 
         // render
-        renderer = new Render(getListModel());
+        renderer = new Renderer();
         canvas = new LwjglCanvas(renderer, false);
         jPanelRender.add(canvas.getCanvas());
 
@@ -64,23 +64,39 @@ public class Editor extends javax.swing.JFrame {
     }
 
     /**
-     * Add a Shape to JList
+     * Add a Shape to JList and render list
      *
      * @param shape
      */
     public void addShape(Shape shape) {
         getListModel().addElement(shape);
-        jListShapes.setSelectedValue(shape, true);
+        renderer.getListShapes().add(shape);
         jTabbedPane.setSelectedIndex(0);
     }
 
     /**
-     * Remove a Shape from JList
+     * Clear all informations about shape
+     */
+    public void clearAll() {
+        // clear list shapes
+        getListModel().clear();
+        renderer.getListShapes().clear();
+        Shape.reset();
+        // clear history
+        history.clear();
+        // clear properties tab
+        properties.clear();
+        jTabbedPane.setSelectedIndex(0);
+    }
+
+    /**
+     * Remove a Shape from JList and render list
      *
      * @param shape
      */
     public void delShape(Shape shape) {
         getListModel().removeElement(shape);
+        renderer.getListShapes().removeValue(shape, false);
     }
 
     /**
