@@ -41,11 +41,14 @@ public class Editor extends javax.swing.JFrame {
         // render
         renderer = new Renderer();
         canvas = new LwjglCanvas(renderer, false);
+        
+        // input
+        canvas.getInput().setInputProcessor(new Input(this, renderer));  
 
         // editor
         history = new History(this);
         properties = new Properties(this, propertySheetPanel);
-        jPanelRender.add(canvas.getCanvas());
+        jPanelRender.add(canvas.getCanvas()); 
     }
 
     /**
@@ -124,8 +127,7 @@ public class Editor extends javax.swing.JFrame {
                 list.set(shape);
                 // update property grid values
                 Shape selected = (Shape) jListShapes.getSelectedValue();
-                if(shape.equals(selected))
-                {
+                if (shape.equals(selected)) {
                     properties.addProperties(shape);
                 }
                 // copy for history
@@ -161,6 +163,21 @@ public class Editor extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
             history.insertUndo(new HistoryInfo(shape, HistoryInfo.Type.DELETE));
             delShape(shape);
+        }
+    }
+    
+    /**
+     * Select a specific shape
+     *
+     * @param shape
+     */
+    public void selectShape(Shape shape) {
+        if (shape != null) {
+            properties.addProperties(shape);
+            jListShapes.setSelectedValue(shape, true);
+            jTabbedPane.setSelectedIndex(1);
+        } else {
+            clearProperties();
         }
     }
 
