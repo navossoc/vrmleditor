@@ -41,12 +41,11 @@ public class Editor extends javax.swing.JFrame {
         // render
         renderer = new Renderer();
         canvas = new LwjglCanvas(renderer, false);
-        jPanelRender.add(canvas.getCanvas());
 
         // editor
         history = new History(this);
         properties = new Properties(this, propertySheetPanel);
-        properties.clear();
+        jPanelRender.add(canvas.getCanvas());
     }
 
     /**
@@ -71,7 +70,8 @@ public class Editor extends javax.swing.JFrame {
     public void addShape(Shape shape) {
         getListModel().addElement(shape);
         renderer.getListShapes().add(shape);
-        jTabbedPane.setSelectedIndex(0);
+        // clear properties tab
+        clearProperties();
     }
 
     /**
@@ -85,6 +85,13 @@ public class Editor extends javax.swing.JFrame {
         // clear history
         history.clear();
         // clear properties tab
+        clearProperties();
+    }
+
+    /**
+     * Clear properties tab
+     */
+    public void clearProperties() {
         properties.clear();
         jTabbedPane.setSelectedIndex(0);
     }
@@ -97,6 +104,9 @@ public class Editor extends javax.swing.JFrame {
     public void delShape(Shape shape) {
         getListModel().removeElement(shape);
         renderer.getListShapes().removeValue(shape, false);
+        if (jListShapes.isSelectionEmpty()) {
+            clearProperties();
+        }
     }
 
     /**
@@ -112,6 +122,13 @@ public class Editor extends javax.swing.JFrame {
             if (list.equals(shape)) {
                 Shape copy = list.copy();
                 list.set(shape);
+                // update property grid values
+                Shape selected = (Shape) jListShapes.getSelectedValue();
+                if(shape.equals(selected))
+                {
+                    properties.addProperties(shape);
+                }
+                // copy for history
                 return copy;
             }
         }

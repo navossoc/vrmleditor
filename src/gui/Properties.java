@@ -22,6 +22,7 @@ public final class Properties {
     public Properties(Editor instance, PropertySheetPanel panel) {
         this.editor = instance;
         this.panel = panel;
+        clear();
     }
 
     public void addProperties(Shape shape) {
