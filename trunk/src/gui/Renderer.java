@@ -166,6 +166,15 @@ public class Renderer implements ApplicationListener {
     }
 
     /**
+     * Return the cameras used in the renderer
+     *
+     * @return
+     */
+    public Camera[] getCameras() {
+        return cameras;
+    }
+
+    /**
      * Get list of rendered shapes
      *
      * @return
