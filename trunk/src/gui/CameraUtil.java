@@ -14,14 +14,17 @@ public class CameraUtil {
         if (option.equalsIgnoreCase("free")) {
             PerspectiveCamera temp = new PerspectiveCamera(45, width, height);
             temp.far = Short.MAX_VALUE;
-            temp.position.set(3, 6, 5);
+            temp.position.set(5, 9, 8);
             temp.lookAt(0, 0, 0);
             return temp;
         } else {
             OrthographicCamera temp = new OrthographicCamera(width, height);
             temp.far = Short.MAX_VALUE;
-            temp.zoom = 1.0f / 100;
-
+            if (width < height) {
+                temp.zoom = 15f / width;
+            } else {
+                temp.zoom = 15f / height;
+            }
             // Cameras
             if (option.equalsIgnoreCase("front")) {
                 // Camera Front (x+/y)

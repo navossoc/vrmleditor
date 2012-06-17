@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.utils.Array;
@@ -17,7 +18,7 @@ public class Renderer implements ApplicationListener {
 
     private Array<Shape> listShapes;
     private Camera[] cameras;
-    private int width, height;
+    private Vector2[] viewports;
     // variable members for optimization
     private final Vector3 intersection;
     private final Ray ray;
@@ -30,26 +31,30 @@ public class Renderer implements ApplicationListener {
 
     @Override
     public void create() {
-        width = Gdx.graphics.getWidth();
-        height = Gdx.graphics.getHeight();
-
         Gdx.graphics.setVSync(Settings.getVSync());
 
         // create and configure cameras
         cameras = new Camera[4];
+        viewports = new Vector2[cameras.length];
         for (int i = 0; i < cameras.length; i++) {
             cameras[i] = CameraUtil.configureCamera(Settings.getCamera(i));
+            viewports[i] = new Vector2();
         }
     }
 
     @Override
     public void resize(int width, int height) {
-        this.width = width;
-        this.height = height;
+        width /= 2;
+        height /= 2;
         for (int i = 0; i < cameras.length; i++) {
             cameras[i].viewportWidth = width;
             cameras[i].viewportHeight = height;
         }
+
+        viewports[0].set(0, height);
+        viewports[1].set(width, height);
+        viewports[2].set(0, 0);
+        viewports[3].set(width, 0);
     }
 
     @Override
@@ -57,36 +62,27 @@ public class Renderer implements ApplicationListener {
         Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
         Gdx.gl10.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
-        // Camera 1 - (Top/Left)
-        adjustCamera(cameras[0], 0, height);
-        drawShapes(cameras[0]);
-
-        // Camera 2 - (Top/Right)
-        adjustCamera(cameras[1], width, height);
-        drawShapes(cameras[1]);
-
-        // Camera 3 - (Bottom/Left)
-        adjustCamera(cameras[2], 0, 0);
-        drawShapes(cameras[2]);
-
-        // Camera 4 - (Bottom/Right)
-        adjustCamera(cameras[3], width, 0);
-        drawShapes(cameras[3]);
+        for (int i = 0; i < cameras.length; i++) {
+            adjustCamera(i);
+            drawShapes(i);
+        }
 
         // All - Draw borders
-        Border.draw(width, height);
+        Border.draw(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
-    private void adjustCamera(Camera camera, int x, int y) {
+    private void adjustCamera(int index) {
+        Camera camera = cameras[index];
+        Vector2 viewport = viewports[index];
         camera.update();
         Gdx.gl10.glMatrixMode(GL10.GL_PROJECTION);
         Gdx.gl10.glLoadMatrixf(camera.combined.val, 0);
         Gdx.gl10.glMatrixMode(GL10.GL_MODELVIEW);
         Gdx.gl10.glLoadIdentity();
-        Gdx.gl10.glViewport(x / 2, y / 2, width / 2, height / 2);
+        Gdx.gl10.glViewport((int) viewport.x, (int) viewport.y, (int) camera.viewportWidth, (int) camera.viewportHeight);
     }
 
-    private void drawShapes(Camera camera) {
+    private void drawShapes(int index) {
         // draw axis
         Axis.draw();
 
@@ -102,6 +98,7 @@ public class Renderer implements ApplicationListener {
             Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_FILL);
         }
 
+        Camera camera = cameras[index];
         Iterator<Shape> iterator;
         // calculate distance
         iterator = listShapes.iterator();
@@ -166,7 +163,17 @@ public class Renderer implements ApplicationListener {
     }
 
     /**
-     * Return the cameras used in the renderer
+     * Get a specific camera
+     *
+     * @param index
+     * @return
+     */
+    public Camera getCamera(int index) {
+        return cameras[index];
+    }
+
+    /**
+     * Return the cameras
      *
      * @return
      */
@@ -181,5 +188,24 @@ public class Renderer implements ApplicationListener {
      */
     public Array<Shape> getListShapes() {
         return listShapes;
+    }
+
+    /**
+     * Get a specific viewport
+     *
+     * @param index
+     * @return
+     */
+    public Vector2 getViewPort(int index) {
+        return viewports[index];
+    }
+
+    /**
+     * Return the viewports
+     *
+     * @return
+     */
+    public Vector2[] getViewports() {
+        return viewports;
     }
 }

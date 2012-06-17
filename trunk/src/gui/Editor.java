@@ -41,14 +41,14 @@ public class Editor extends javax.swing.JFrame {
         // render
         renderer = new Renderer();
         canvas = new LwjglCanvas(renderer, false);
-        
+
         // input
-        canvas.getInput().setInputProcessor(new Input(this, renderer));  
+        canvas.getInput().setInputProcessor(new Input(this, renderer));
 
         // editor
         history = new History(this);
         properties = new Properties(this, propertySheetPanel);
-        jPanelRender.add(canvas.getCanvas()); 
+        jPanelRender.add(canvas.getCanvas());
     }
 
     /**
@@ -165,7 +165,7 @@ public class Editor extends javax.swing.JFrame {
             delShape(shape);
         }
     }
-    
+
     /**
      * Select a specific shape
      *
