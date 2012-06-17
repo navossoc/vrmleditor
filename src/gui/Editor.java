@@ -96,7 +96,7 @@ public class Editor extends javax.swing.JFrame {
      */
     public void clearProperties() {
         properties.clear();
-        jTabbedPane.setSelectedIndex(0);
+        jTabbedPane.setSelectedIndex(Constants.TAB_OBJECTS);
     }
 
     /**
@@ -175,7 +175,7 @@ public class Editor extends javax.swing.JFrame {
         if (shape != null) {
             properties.addProperties(shape);
             jListShapes.setSelectedValue(shape, true);
-            jTabbedPane.setSelectedIndex(1);
+            jTabbedPane.setSelectedIndex(Constants.TAB_PROPERTIES);
         } else {
             clearProperties();
         }
@@ -449,7 +449,7 @@ public class Editor extends javax.swing.JFrame {
         if (evt.getButton() == MouseEvent.BUTTON1) {
             if (evt.getClickCount() == 2) {
                 if (!jListShapes.isSelectionEmpty()) {
-                    jTabbedPane.setSelectedIndex(1);
+                    jTabbedPane.setSelectedIndex(Constants.TAB_PROPERTIES);
                 }
             }
         }
@@ -464,7 +464,7 @@ public class Editor extends javax.swing.JFrame {
      */
     private void jTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPaneStateChanged
         // properties tab
-        if (jTabbedPane.getSelectedIndex() == 1) {
+        if (jTabbedPane.getSelectedIndex() == Constants.TAB_PROPERTIES) {
             // selected shape on list
             Shape shape = (Shape) jListShapes.getSelectedValue();
             if (shape != null) {

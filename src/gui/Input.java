@@ -33,9 +33,9 @@ public class Input extends InputAdapter {
 
         if (camera instanceof OrthographicCamera) {
             OrthographicCamera cam = (OrthographicCamera) camera;
-            cam.zoom += ((float) amount / 2000f);
+            cam.zoom += ((float) amount / Constants.ZOOM_ORTHOGRAPHIC);
         } else if (camera instanceof PerspectiveCamera) {
-            camera.position.sub(camera.direction.tmp().mul((float) amount / 2f));
+            camera.position.sub(camera.direction.tmp().mul((float) amount / Constants.ZOOM_PERSPECTIVE));
         }
 
         return true;
