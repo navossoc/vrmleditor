@@ -141,7 +141,7 @@ public class MenuFile {
             if (!file.endsWith("." + Settings.getMessage("File.Binary.Extension"))) {
                 file += "." + Settings.getMessage("File.Binary.Extension");
             }
-            if (FormatBin.save(file, editor.getListModel())) {
+            if (FormatBin.save(file, editor.getListModel().toArray())) {
                 editor.getHistory().setFileDirty(false);
                 JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Save.Success"), Settings.getMessage("MsgBox.File.Save.Title"), JOptionPane.INFORMATION_MESSAGE);
             } else {

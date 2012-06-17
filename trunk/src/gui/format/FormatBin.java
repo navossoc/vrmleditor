@@ -1,5 +1,6 @@
 package gui.format;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Quaternion;
 import com.badlogic.gdx.math.Vector3;
@@ -7,9 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.Enumeration;
 import java.util.List;
-import javax.swing.DefaultListModel;
 import shape.Shape;
 import shape.geometry.Box;
 import shape.geometry.Cone;
@@ -110,18 +109,17 @@ public class FormatBin {
 
     }
 
-    public static boolean save(String filename, DefaultListModel listModel) {
+    public static boolean save(String filename, Object[] arrayShapes) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(filename);
             DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
 
             // header
             dataOutputStream.writeBytes("VRML");
-            dataOutputStream.writeInt(listModel.getSize());
+            dataOutputStream.writeInt(arrayShapes.length);
 
-            Enumeration e = listModel.elements();
-            while (e.hasMoreElements()) {
-                Shape shape = (Shape) e.nextElement();
+            for (Object obj : arrayShapes) {
+                Shape shape = (Shape) obj;
                 shape.writeBinary(dataOutputStream);
             }
 
