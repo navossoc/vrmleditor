@@ -161,7 +161,7 @@ public class MenuFile {
             if (!file.endsWith("." + Settings.getMessage("File.VRML.Extension"))) {
                 file += "." + Settings.getMessage("File.VRML.Extension");
             }
-            if (ExportVrml.save(file, editor.getListModel())) {
+            if (ExportVrml.save(file, editor.getListModel().toArray())) {
                 JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Export.Success"), Settings.getMessage("MsgBox.File.Export.Title"), JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(editor, Settings.getMessage("MsgBox.File.Export.Failure", Settings.getMessage("File.Export.Extension")), Settings.getMessage("MsgBox.File.Export.Title"), JOptionPane.ERROR_MESSAGE);
