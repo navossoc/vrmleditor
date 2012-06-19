@@ -28,7 +28,7 @@ public class Settings {
             // fallback to default settings
         }
         // Read common settings
-        cameras = new String[4];
+        cameras = new String[Constants.CAMERAS_TOTAL];
         initSettings();
     }
 

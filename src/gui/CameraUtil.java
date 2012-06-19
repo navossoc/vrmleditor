@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.PerspectiveCamera;
 public class CameraUtil {
 
     public static Camera configureCamera(String option) {
-        int width = Gdx.graphics.getWidth();
-        int height = Gdx.graphics.getHeight();
+        int width = Gdx.graphics.getWidth() / 2;
+        int height = Gdx.graphics.getHeight() / 2;
 
         if (option.equalsIgnoreCase("free")) {
             PerspectiveCamera temp = new PerspectiveCamera(Constants.CAMERA_PERSPECTIVE_FOV, width, height);
@@ -27,27 +27,27 @@ public class CameraUtil {
             }
             // Cameras
             if (option.equalsIgnoreCase("front")) {
-                // Camera Front (x+/y)
+                // Camera Front (+x/y)
                 //temp.rotate(0, 0, 1, 0);
                 temp.position.set(0, 0, Constants.CAMERA_ORTHOGRAPHIC_POSITION);
             } else if (option.equalsIgnoreCase("back")) {
-                // Camera Back (x-/y)
+                // Camera Back (-x/y)
                 temp.rotate(180, 0, 1, 0);
                 temp.position.set(0, 0, -Constants.CAMERA_ORTHOGRAPHIC_POSITION);
             } else if (option.equalsIgnoreCase("left")) {
-                // Camera Left (z+/y)
+                // Camera Left (+z/y)
                 temp.rotate(90, 0, -1, 0);
                 temp.position.set(-Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0, 0);
             } else if (option.equalsIgnoreCase("right")) {
-                // Camera Right (z-/y)
+                // Camera Right (-z/y)
                 temp.rotate(90, 0, 1, 0);
                 temp.position.set(Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0, 0);
             } else if (option.equalsIgnoreCase("bottom")) {
-                // Camera Bottom (x+/z)
+                // Camera Bottom (+x/z)
                 temp.rotate(90, 1, 0, 0);
                 temp.position.set(0, -Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0);
             } else if (option.equalsIgnoreCase("top")) {
-                // Camera Top (x-/z)
+                // Camera Top (-x/z)
                 temp.rotate(90, -1, 0, 0);
                 temp.position.set(0, Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0);
             }
