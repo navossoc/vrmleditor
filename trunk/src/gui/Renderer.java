@@ -34,7 +34,7 @@ public class Renderer implements ApplicationListener {
         Gdx.graphics.setVSync(Settings.getVSync());
 
         // create and configure cameras
-        cameras = new Camera[4];
+        cameras = new Camera[Constants.CAMERAS_TOTAL];
         viewports = new Vector2[cameras.length];
         for (int i = 0; i < cameras.length; i++) {
             cameras[i] = CameraUtil.configureCamera(Settings.getCamera(i));
