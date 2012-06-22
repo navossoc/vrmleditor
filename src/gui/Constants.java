@@ -12,6 +12,7 @@ public class Constants {
     public static final int CAMERAS_TOTAL = 4;
     public static final int CAMERAS_MODE = 7;
     public static final int CAMERA_DESCRIPTION_PADDING = 5;
+    public static final float PAN_ORTHOGRAPHIC = 10;
     public static final float ZOOM_ORTHOGRAPHIC = 2000;
     public static final float ZOOM_PERSPECTIVE = 2;
     // menus

@@ -32,38 +32,32 @@ public class CameraUtil {
             }
             // Cameras
             switch (mode) {
-                case Front: {
-                    // Camera Front (+x/y)
+                case Front: {   // (+x/+y)
                     //temp.rotate(0, 0, 1, 0);
                     temp.position.set(0, 0, Constants.CAMERA_ORTHOGRAPHIC_POSITION);
                     break;
                 }
-                case Back: {
-                    // Camera Back (-x/y)
+                case Back: { // (-x/+y)
                     temp.rotate(180, 0, 1, 0);
                     temp.position.set(0, 0, -Constants.CAMERA_ORTHOGRAPHIC_POSITION);
                     break;
                 }
-                case Left: {
-                    // Camera Left (+z/y)
+                case Left: { // (+z/+y)
                     temp.rotate(90, 0, -1, 0);
                     temp.position.set(-Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0, 0);
                     break;
                 }
-                case Right: {
-                    // Camera Right (-z/y)
+                case Right: { // (-z/+y)
                     temp.rotate(90, 0, 1, 0);
                     temp.position.set(Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0, 0);
                     break;
                 }
-                case Bottom: {
-                    // Camera Bottom (+x/z)
+                case Bottom: {  // (+x/+z)
                     temp.rotate(90, 1, 0, 0);
                     temp.position.set(0, -Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0);
                     break;
                 }
-                case Top: {
-                    // Camera Top (-x/z)
+                case Top: { // (-x/+z)
                     temp.rotate(90, -1, 0, 0);
                     temp.position.set(0, Constants.CAMERA_ORTHOGRAPHIC_POSITION, 0);
                     break;
