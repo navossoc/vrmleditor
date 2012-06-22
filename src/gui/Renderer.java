@@ -4,6 +4,9 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -22,6 +25,8 @@ public class Renderer implements ApplicationListener {
     // variable members for optimization
     private final Vector3 intersection;
     private final Ray ray;
+    private SpriteBatch spriteBatch;
+    private BitmapFont font;
 
     public Renderer() {
         listShapes = new Array<Shape>(false, 16);
@@ -40,10 +45,16 @@ public class Renderer implements ApplicationListener {
             cameras[i] = CameraUtil.configureCamera(Settings.getCamera(i));
             viewports[i] = new Vector2();
         }
+
+        // initialize SpriteBacth
+        spriteBatch = new SpriteBatch();
+        font = new BitmapFont(Gdx.files.internal("resources/fonts/font.fnt"), false);
     }
 
     @Override
     public void resize(int width, int height) {
+        spriteBatch.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, width, height));
+
         width /= 2;
         height /= 2;
         for (int i = 0; i < cameras.length; i++) {
@@ -67,8 +78,14 @@ public class Renderer implements ApplicationListener {
             drawShapes(i);
         }
 
+        int width = Gdx.graphics.getWidth();
+        int height = Gdx.graphics.getHeight();
+
         // All - Draw borders
-        Border.draw(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        Border.draw(width, height);
+
+        // camera descriptions
+        drawCameraDescription(width, height);
     }
 
     private void adjustCamera(int index) {
@@ -80,6 +97,16 @@ public class Renderer implements ApplicationListener {
         Gdx.gl10.glMatrixMode(GL10.GL_MODELVIEW);
         Gdx.gl10.glLoadIdentity();
         Gdx.gl10.glViewport((int) viewport.x, (int) viewport.y, (int) camera.viewportWidth, (int) camera.viewportHeight);
+    }
+
+    private void drawCameraDescription(int width, int height) {
+        Gdx.gl10.glViewport(0, 0, width, height);
+        spriteBatch.begin();
+        font.draw(spriteBatch, Settings.getCameraDescription(0), Constants.CAMERA_DESCRIPTION_PADDING, height - Constants.CAMERA_DESCRIPTION_PADDING);
+        font.draw(spriteBatch, Settings.getCameraDescription(1), width / 2 + Constants.CAMERA_DESCRIPTION_PADDING, height - Constants.CAMERA_DESCRIPTION_PADDING);
+        font.draw(spriteBatch, Settings.getCameraDescription(2), Constants.CAMERA_DESCRIPTION_PADDING, height / 2 - Constants.CAMERA_DESCRIPTION_PADDING);
+        font.draw(spriteBatch, Settings.getCameraDescription(3), width / 2 + Constants.CAMERA_DESCRIPTION_PADDING, height / 2 - Constants.CAMERA_DESCRIPTION_PADDING);
+        spriteBatch.end();
     }
 
     private void drawShapes(int index) {

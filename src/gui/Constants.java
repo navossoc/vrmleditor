@@ -11,6 +11,7 @@ public class Constants {
     public static final Vector3 CAMERA_PERSPECTIVE_POSITION = new Vector3(5, 9, 8);
     public static final int CAMERAS_TOTAL = 4;
     public static final int CAMERAS_MODE = 7;
+    public static final int CAMERA_DESCRIPTION_PADDING = 5;
     public static final float ZOOM_ORTHOGRAPHIC = 2000;
     public static final float ZOOM_PERSPECTIVE = 2;
     // menus

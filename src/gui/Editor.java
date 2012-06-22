@@ -196,7 +196,7 @@ public class Editor extends javax.swing.JFrame {
     /*
      * Setters
      */
-    public void setCamera(int camera, String mode) {
+    public void setCamera(int camera, CameraUtil.Mode mode) {
         renderer.getCameras()[camera] = CameraUtil.configureCamera(mode);
     }
 
