@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.Ray;
@@ -16,6 +17,7 @@ public class Input extends InputAdapter {
 
     private Editor editor;
     private Renderer renderer;
+    private int cameraIndex;
 
     public Input(Editor editor, Renderer renderer) {
         this.editor = editor;
@@ -69,6 +71,70 @@ public class Input extends InputAdapter {
 
             // select shape on JList
             editor.selectShape(selected);
+            return true;
+        } // right mouse button
+        else if (button == Buttons.RIGHT) {
+            // get camera
+            cameraIndex = getCameraCode(x, y);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int x, int y, int pointer) {
+
+        // right mouse button
+        if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
+
+            float deltaX = Gdx.input.getDeltaX();
+            deltaX = MathUtils.clamp(deltaX, -1, 1);
+            deltaX /= Constants.PAN_ORTHOGRAPHIC;
+
+            float deltaY = Gdx.input.getDeltaY();
+            deltaY = MathUtils.clamp(deltaY, -1, 1);
+            deltaY /= Constants.PAN_ORTHOGRAPHIC;
+
+            final Camera cameraSelected = renderer.getCamera(cameraIndex);
+            CameraUtil.Mode mode = Settings.getCamera(cameraIndex);
+
+            if (cameraSelected instanceof OrthographicCamera) {
+                switch (mode) {
+                    case Front: {   // (+x/+y)
+                        cameraSelected.position.x -= deltaX;
+                        cameraSelected.position.y += deltaY;
+                        break;
+                    }
+                    case Back: { // (-x/+y)
+                        cameraSelected.position.x += deltaX;
+                        cameraSelected.position.y += deltaY;
+                        break;
+                    }
+                    case Left: { // (+z/+y)
+                        cameraSelected.position.z -= deltaX;
+                        cameraSelected.position.y += deltaY;
+                        break;
+                    }
+                    case Right: { // (-z/+y)
+                        cameraSelected.position.z += deltaX;
+                        cameraSelected.position.y += deltaY;
+                        break;
+                    }
+                    case Bottom: {  // (+x/+z)
+                        cameraSelected.position.x -= deltaX;
+                        cameraSelected.position.z += deltaY;
+                        break;
+                    }
+                    case Top: { // (-x/+z)
+                        cameraSelected.position.x -= deltaX;
+                        cameraSelected.position.z -= deltaY;
+                        break;
+                    }
+                }
+            } else if (cameraSelected instanceof PerspectiveCamera) {
+                //TODO : perspectiveCamera movement
+            }
+
             return true;
         }
 
