@@ -1,5 +1,6 @@
 package gui;
 
+import gui.CameraUtil.Mode;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -12,7 +13,7 @@ public class Settings {
     private static final Properties properties;
     private static ResourceBundle resource;
     // custom
-    private static String[] cameras;
+    private static Mode[] modes;
     private static String language;
     private static boolean wireframe;
     private static boolean vsync;
@@ -28,19 +29,22 @@ public class Settings {
             // fallback to default settings
         }
         // Read common settings
-        cameras = new String[Constants.CAMERAS_TOTAL];
+        modes = new Mode[Constants.CAMERAS_TOTAL];
         initSettings();
     }
 
     public static void initSettings() {
-        // camera1
-        cameras[0] = properties.getProperty("camera1", "front");
-        // camera2
-        cameras[1] = properties.getProperty("camera2", "left");
-        // camera3
-        cameras[2] = properties.getProperty("camera3", "bottom");
-        // camera4
-        cameras[3] = properties.getProperty("camera4", "free");
+        // cameras
+        final String[] defaultModes = new String[]{"front", "left", "bottom", "free"};
+        for (int i = 0; i < Constants.CAMERAS_TOTAL; i++) {
+            String s = properties.getProperty("camera" + (i + 1), defaultModes[i]);
+            for (Mode m : CameraUtil.Mode.values()) {
+                if (m.toString().equalsIgnoreCase(s)) {
+                    modes[i] = m;
+                    break;
+                }
+            }
+        }
         // wireframe
         wireframe = Boolean.parseBoolean(properties.getProperty("wireframe", "false"));
         // vsync
@@ -75,8 +79,16 @@ public class Settings {
         return String.format(resource.getString(key), params);
     }
 
-    public static String getCamera(int index) {
-        return cameras[index];
+    public static Mode getCamera(int index) {
+        return modes[index];
+    }
+
+    public static void setCamera(int index, Mode mode) {
+        modes[index] = mode;
+    }
+    
+    public static String getCameraDescription(int index) {
+        return resource.getString("Menu.View.Camera." + modes[index].toString());
     }
 
     public static boolean isWireframe() {
