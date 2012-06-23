@@ -52,4 +52,8 @@ public class Constants {
     // tabs
     public static final int TAB_OBJECTS = 0;
     public static final int TAB_PROPERTIES = 1;
+    // version
+    public static final int VERSION_MAJOR = 1;
+    public static final int VERSION_MINOR = 0;
+    public static final int VERSION_REVISION = 0;
 }
