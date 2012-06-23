@@ -48,7 +48,14 @@ public class Renderer implements ApplicationListener {
 
         // initialize SpriteBacth
         spriteBatch = new SpriteBatch();
-        font = new BitmapFont(Gdx.files.internal("resources/fonts/font.fnt"), false);
+        if(!Settings.isFontBold())
+        {
+            font = new BitmapFont(Gdx.files.internal("resources/fonts/font_regular.fnt"), false);
+        }
+        else
+        {
+            font = new BitmapFont(Gdx.files.internal("resources/fonts/font_bold.fnt"), false);
+        }
     }
 
     @Override
