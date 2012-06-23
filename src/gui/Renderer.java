@@ -175,6 +175,11 @@ public class Renderer implements ApplicationListener {
         // disable depth and blend
         Gdx.gl10.glDisable(GL10.GL_DEPTH_TEST);
         Gdx.gl10.glDisable(GL10.GL_BLEND);
+
+        //  fix fonts in wireframe mode
+        if (Settings.isWireframe()) {
+            Gdx.gl10.glPolygonMode(GL10.GL_FRONT_AND_BACK, GL10.GL_FILL);
+        }
     }
 
     @Override

@@ -8,6 +8,8 @@ public class About extends javax.swing.JDialog {
     public About(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        // application version
+        jLabelVersionNumber.setText(Constants.VERSION_MAJOR + "." + Constants.VERSION_MINOR + "." + Constants.VERSION_REVISION);
     }
 
     /**
@@ -18,33 +20,129 @@ public class About extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitle = new javax.swing.JLabel();
+        jLabelCube2 = new javax.swing.JLabel();
+        jSeparator = new javax.swing.JSeparator();
+        jLabelDevelopers = new javax.swing.JLabel();
+        jLabelDeveloper1 = new javax.swing.JLabel();
+        jLabelDeveloper2 = new javax.swing.JLabel();
+        jLabelThanks = new javax.swing.JLabel();
+        jLabelThanks1 = new javax.swing.JLabel();
+        jLabelThanks2 = new javax.swing.JLabel();
+        jLabelCourse = new javax.swing.JLabel();
+        jLabelUniversity = new javax.swing.JLabel();
+        jLabelVersionText = new javax.swing.JLabel();
+        jLabelVersionNumber = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(Settings.getMessage("Window.About")); // NOI18N
+        setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        jLabel1.setText("VRML Editor");
+        jLabelTitle.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        jLabelTitle.setText(Settings.getMessage("About.Title")); // NOI18N
+
+        jLabelCube2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/icons/box-64.png"))); // NOI18N
+
+        jLabelDevelopers.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelDevelopers.setText(Settings.getMessage("About.Developers")); // NOI18N
+
+        jLabelDeveloper1.setText("Guilherme Maganha Moreira <guilhermerx7@gmail.com>");
+
+        jLabelDeveloper2.setText("Rafael Cossovan de França <navossoc@gmail.com>");
+
+        jLabelThanks.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabelThanks.setText(Settings.getMessage("About.Thanks")); // NOI18N
+
+        jLabelThanks1.setText("Badlogic Games - libgdx <http://libgdx.badlogicgames.com>");
+
+        jLabelThanks2.setText("L2FProd - Common Components <http://common.l2fprod.com>");
+
+        jLabelCourse.setText(Settings.getMessage("About.Course")); // NOI18N
+
+        jLabelUniversity.setText("Fundação Santo André <http://www.fsa.br>");
+
+        jLabelVersionText.setText(Settings.getMessage("About.Version")); // NOI18N
+
+        jLabelVersionNumber.setText("0.0.0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(197, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelCube2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCourse)
+                            .addComponent(jLabelDeveloper2)
+                            .addComponent(jLabelThanks)
+                            .addComponent(jLabelThanks1)
+                            .addComponent(jLabelThanks2)
+                            .addComponent(jLabelDevelopers)
+                            .addComponent(jLabelDeveloper1))
+                        .addGap(0, 76, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelUniversity)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabelVersionText)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelVersionNumber)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(245, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelCube2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11)
+                .addComponent(jSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelDevelopers)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelDeveloper1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelDeveloper2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelThanks)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelThanks1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelThanks2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addComponent(jLabelCourse)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelUniversity)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelVersionText)
+                        .addComponent(jLabelVersionNumber)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelCourse;
+    private javax.swing.JLabel jLabelCube2;
+    private javax.swing.JLabel jLabelDeveloper1;
+    private javax.swing.JLabel jLabelDeveloper2;
+    private javax.swing.JLabel jLabelDevelopers;
+    private javax.swing.JLabel jLabelThanks;
+    private javax.swing.JLabel jLabelThanks1;
+    private javax.swing.JLabel jLabelThanks2;
+    private javax.swing.JLabel jLabelTitle;
+    private javax.swing.JLabel jLabelUniversity;
+    private javax.swing.JLabel jLabelVersionNumber;
+    private javax.swing.JLabel jLabelVersionText;
+    private javax.swing.JSeparator jSeparator;
     // End of variables declaration//GEN-END:variables
 }
