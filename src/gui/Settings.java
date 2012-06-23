@@ -14,6 +14,7 @@ public class Settings {
     private static ResourceBundle resource;
     // custom
     private static Mode[] modes;
+    private static boolean fontBold;
     private static String language;
     private static boolean wireframe;
     private static boolean vsync;
@@ -45,10 +46,16 @@ public class Settings {
                 }
             }
         }
+        // font bold
+        fontBold = Boolean.parseBoolean(properties.getProperty("font-bold", "false"));
         // wireframe
         wireframe = Boolean.parseBoolean(properties.getProperty("wireframe", "false"));
         // vsync
         vsync = Boolean.parseBoolean(properties.getProperty("vsync", "true"));
+    }
+
+    public static boolean isFontBold() {
+        return fontBold;
     }
 
     public static String getLanguage() {
@@ -86,7 +93,7 @@ public class Settings {
     public static void setCamera(int index, Mode mode) {
         modes[index] = mode;
     }
-    
+
     public static String getCameraDescription(int index) {
         return resource.getString("Menu.View.Camera." + modes[index].toString());
     }
