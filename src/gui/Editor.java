@@ -2,6 +2,7 @@ package gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglCanvas;
+import com.badlogic.gdx.graphics.Camera;
 import gui.menu.MenuEdit;
 import gui.menu.MenuFile;
 import gui.menu.MenuHelp;
@@ -89,6 +90,11 @@ public class Editor extends javax.swing.JFrame {
         history.clear();
         // clear properties tab
         clearProperties();
+        // reset cameras position & zoom
+        Camera[] cameras = renderer.getCameras();
+        for (int i = 0; i < cameras.length; i++) {
+            cameras[i] = CameraUtil.configureCamera(Settings.getCamera(i));
+        }
     }
 
     /**
