@@ -39,7 +39,7 @@ public class DefaultObjectRenderer implements ObjectRenderer {
             return null;
         }
         if (object instanceof Float) {
-            return String.format("%.2f", object);
+            return String.format("%.3f", object);
         }
 
         // lookup the shared ConverterRegistry

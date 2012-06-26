@@ -93,7 +93,7 @@ public class NumberPropertyEditor extends AbstractPropertyEditor {
     public void setValue(Object value) {
         JFormattedTextField text = (JFormattedTextField) editor;
         if (value instanceof Number) {
-            text.setText(String.format("%.2f", value));
+            text.setText(String.format("%.3f", value));
         } else {
             text.setValue(getDefaultValue());
         }
