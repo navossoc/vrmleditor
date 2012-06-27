@@ -88,50 +88,49 @@ public class Input extends InputAdapter {
         if (Gdx.input.isButtonPressed(Buttons.RIGHT)) {
 
             float deltaX = Gdx.input.getDeltaX();
-            deltaX = MathUtils.clamp(deltaX, -1, 1);
-            deltaX /= Constants.PAN_ORTHOGRAPHIC;
-
             float deltaY = Gdx.input.getDeltaY();
-            deltaY = MathUtils.clamp(deltaY, -1, 1);
-            deltaY /= Constants.PAN_ORTHOGRAPHIC;
 
-            final Camera cameraSelected = renderer.getCamera(cameraIndex);
+            final Camera selectedCamera = renderer.getCamera(cameraIndex);
             CameraUtil.Mode mode = Settings.getCamera(cameraIndex);
 
-            if (cameraSelected instanceof OrthographicCamera) {
+            if (selectedCamera instanceof OrthographicCamera) {
+                OrthographicCamera camera = (OrthographicCamera) selectedCamera;
+                deltaX = (deltaX / Constants.PAN_ORTHOGRAPHIC) * camera.zoom;
+                deltaY = (deltaY / Constants.PAN_ORTHOGRAPHIC) * camera.zoom;
+
                 switch (mode) {
                     case Front: {   // (+x/+y)
-                        cameraSelected.position.x -= deltaX;
-                        cameraSelected.position.y += deltaY;
+                        camera.position.x -= deltaX;
+                        camera.position.y += deltaY;
                         break;
                     }
                     case Back: { // (-x/+y)
-                        cameraSelected.position.x += deltaX;
-                        cameraSelected.position.y += deltaY;
+                        camera.position.x += deltaX;
+                        camera.position.y += deltaY;
                         break;
                     }
                     case Left: { // (+z/+y)
-                        cameraSelected.position.z -= deltaX;
-                        cameraSelected.position.y += deltaY;
+                        camera.position.z -= deltaX;
+                        camera.position.y += deltaY;
                         break;
                     }
                     case Right: { // (-z/+y)
-                        cameraSelected.position.z += deltaX;
-                        cameraSelected.position.y += deltaY;
+                        camera.position.z += deltaX;
+                        camera.position.y += deltaY;
                         break;
                     }
                     case Bottom: {  // (+x/+z)
-                        cameraSelected.position.x -= deltaX;
-                        cameraSelected.position.z += deltaY;
+                        camera.position.x -= deltaX;
+                        camera.position.z += deltaY;
                         break;
                     }
                     case Top: { // (-x/+z)
-                        cameraSelected.position.x -= deltaX;
-                        cameraSelected.position.z -= deltaY;
+                        camera.position.x -= deltaX;
+                        camera.position.z -= deltaY;
                         break;
                     }
                 }
-            } else if (cameraSelected instanceof PerspectiveCamera) {
+            } else if (selectedCamera instanceof PerspectiveCamera) {
                 //TODO : perspectiveCamera movement
             }
 
