@@ -1,0 +1,9 @@
+These files are not in their original condition, they have been
+modified.
+
+You may obtain a copy of the original source code inside the zip file
+l2fprod-common~svn-trunk-673.zip or through the website:
+https://java.net/projects/l2fprod-common/
+
+For more information, please visit the author's website.
+http://l2fprod.com/common/
