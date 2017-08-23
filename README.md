@@ -1,6 +1,6 @@
-#VRML Editor
+# VRML Editor
 
-##Description
+## Description
 The goal of the activity proposed by our teacher was to create a simple 2D editor to exercise our expertise in VRML _(Virtual Reality Modeling Language)_.
 
 So everything that was drawn in the editor could be converted to VRML and rendered by compatible viewers.
@@ -13,7 +13,7 @@ The result can be seen through some pictures below:
 |------|------|
 |![Transparency](http://www.navossoc.com/wp-content/uploads/2013/05/vrml_transparency.png)|![Transparency rendered in wireframe mode](http://www.navossoc.com/wp-content/uploads/2013/05/vrml_wireframe-e1368393527316.png)|
 
-###Supported Nodes/Fields
+### Supported Nodes/Fields
 
 * Box (Width, Height, Depth)
 * Cylinder (Radius, Height)
@@ -22,14 +22,14 @@ The result can be seen through some pictures below:
 
 _Scale, Rotation, Translation fields are common for all nodes._
 
-##Source code
+## Source code
 This source was written in Java language using [NetBeans 7.x](https://netbeans.org/) as IDE and the [Libgdx](http://libgdx.badlogicgames.com/) framework to render the scene.
 
 Additional libraries such as [l2fprod-common](http://l2fprod.com/common/) were used to create the property editor.
 
 This code was co-authored in collaboration with my classmate [Guilherme Maganha Moreira](https://github.com/gmmoreira).
 
-##License:
+## License:
 We decided to release our source code under the [MIT License](http://opensource.org/licenses/MIT).
 
 The [Libgdx](http://libgdx.badlogicgames.com/) framework is licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0) and is included in binary form.
